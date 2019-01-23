@@ -21,7 +21,7 @@ export class InviteYourFriendsPage {
   data: any = {};
   isLoading: boolean = true;
   filterContacts: any[] = [];
-  originalContacts : any[] =[]
+  originalContacts: any[] = [];
   constructor(
     public navCtrl: NavController,
     private contacts: Contacts,
@@ -85,9 +85,9 @@ export class InviteYourFriendsPage {
 
     this.api.sendUserContacts(params).subscribe(
       data => {
-        console.log("my data is : ", data)
-        this.originalContacts = data.data
-        this.filterContacts = this.originalContacts
+        console.log("my data is : ", data);
+        this.originalContacts = data.data;
+        this.filterContacts = this.originalContacts;
         console.log("My Final Contacts are : ", this.filterContacts);
         this.isLoading = false;
       },
@@ -98,18 +98,13 @@ export class InviteYourFriendsPage {
   }
 
   Search() {
-    console.log("before search contacts array :",this.filterContacts);
-    console.log("this.data.search : ",this.data.search);
-    
-    this.filterContacts = this.filterContacts.filter(item => {
-      return (
-        item.name.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1
-        ||
-        item.phone.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1
-      );
-    })
-    console.log('====================================');
-    console.log('filterContacts after search is : ', this.filterContacts);
-    console.log('====================================');
+    this.filterContacts = this.originalContacts.filter(item => {
+      if (item.name != null && item.phone != null) {
+        return (
+          item.name.toLowerCase().indexOf(this.data.search.toLowerCase()) >-1 ||
+          item.phone.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1
+        );
+      }
+    });
   }
 }
