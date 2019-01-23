@@ -1,0 +1,76 @@
+page-register {
+    .verify-phone-number {
+        color: white;
+        font-size: 1.7rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .sms-message-txt {
+        color: #8da6c1;
+        font-size: 1.4rem;
+        line-height: 1.5;
+    }
+    .verification-grid{
+        padding: 15px;
+    }
+
+    .select{
+        padding-top: 0 !important;
+    }
+
+    .select-icon-inner{
+        color: white !important;
+    }
+
+    .custom-item{
+        color: white;
+        padding-left : 0 !important;
+        background-color: transparent;
+        font-size: 1.4rem;
+    }
+    .text-input{
+        margin-top: 0px !important;
+    }
+    .img-container{
+        position: relative;
+        width: 50%;
+        margin: auto;
+        .smile-img {
+            width: 100px;
+            margin: auto;
+            display: block;
+            position: relative;
+            margin-top: 3rem;
+            border-radius: 50%;
+            border: 3px solid #24df73;
+            border-bottom-color: #7b2fff;
+            border-right-color: #7b2fff;
+            transform: rotate(5deg);
+        }
+        .upload-img {
+            width: 35px;
+            position: absolute;
+            left: 2rem;
+            z-index: 100;
+            background: white;
+            padding: 5px;
+            border-radius: 100%;
+        }
+    }
+    .submit-btn{
+        margin: auto;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        width: 95%;
+    }
+
+    .upload-img{
+        width: 29px;
+        position: absolute;
+    }
+
+    ion-footer{
+        background: #142f4c;
+    }
+    
+}

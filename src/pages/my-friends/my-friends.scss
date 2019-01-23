@@ -1,0 +1,52 @@
+page-my-friends {
+    .title-image {
+        margin-top: 8px;
+        height: 27px;
+    }
+    .avatar-img{
+        width: 3rem;
+    }
+
+    .segment-button.segment-activated{
+        background-color: transparent !important;
+        border-bottom: 2px solid white !important;
+        border-radius: 0 !important;
+    }
+    .segment-button{
+        border-color: transparent !important;
+    }
+    .toolbar{
+        // padding: 14px;
+    }
+    .segment-button{
+        max-width: none !important;
+        color: white !important;
+        height: 3.6rem !important;
+    }
+    .segment-toolbar{
+        min-height: none !important;
+    }
+    .toolbar .segment{
+        bottom: -7px !important;
+    }
+
+    .friend-item{
+        margin-bottom: 1rem;
+        border-radius: 5px;
+    }
+    .wishlist-block{
+        margin-bottom: 0.5rem;
+    }
+    .ion-ios-heart-outline:before{
+        color: #7b2fff;
+        font-weight: bold;
+        vertical-align: middle;
+        font-size: 2.3rem;
+    }
+
+    .wishlist-txt , .gift-txt{
+    }
+    .normal-size{
+      font-size:1.4rem;
+    }
+}

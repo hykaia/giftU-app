@@ -1,0 +1,55 @@
+page-login {
+    .logo-img{
+        width: 50px;
+    }
+    .login-grid{
+        padding: 15px;
+        padding-top: 0;
+    }
+
+    .hello{
+        color: white;
+        font-weight: bold;
+    }
+    .gift-txt{
+        color: #7b2fff;
+        font-size: 2rem;
+    }
+    .welcome-txt{
+        font-size: 1.7rem;
+        color: white;
+    }
+    .confirm-country-code {
+        color: #8da6c1;
+        font-size: 1.4rem;
+        line-height: 1.5;
+    }
+    .login-item{
+        color: white;
+        padding-left : 0 !important;
+        background-color: transparent;
+    }
+    .login-item.item-block .item-inner{
+        border-bottom: 0.55px solid #00e464;
+    }
+    .login-btn{
+        height: 2.3em;
+    }
+    ion-icon[class*="custom-check-mark"]{
+        position: relative;
+        top: 0.4rem;
+        left: 1.6rem;
+        color: #24df73;
+    }
+    .gift-img{
+        width: 93%;
+        margin: auto;
+        display: block;
+    }
+    .welcome-wrapper{
+        margin-top: 0;
+    }
+    .select-icon-inner{
+        color: white !important;
+    }
+}

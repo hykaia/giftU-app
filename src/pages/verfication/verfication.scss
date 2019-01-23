@@ -1,0 +1,38 @@
+page-verfication {
+    .toolbar-background {
+        border-style: none !important;
+    }
+    .verification-grid{
+        padding: 15px;
+    }
+    .sms-message-txt {
+        color: #8da6c1;
+        font-size: 1.4rem;
+        line-height: 1.5;
+    }
+
+    .verify-item{
+        color: white;
+        padding-left : 0 !important;
+        background-color: transparent;
+    }
+    .verify-item.item-block .item-inner{
+        border-bottom: 0.55px solid #00e464;
+    }
+    .verify-phone-number {
+        color: white;
+        font-size: 1.7rem;
+    }
+
+    .next-row{
+        margin-top: 6rem;
+    }
+    .next-btn{
+        height: 2.1em;
+    }
+
+    .resend-btn{
+        height: 2.2em;
+    }
+
+}

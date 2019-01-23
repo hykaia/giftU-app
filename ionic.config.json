@@ -1,0 +1,7 @@
+{
+  "name": "giftU",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

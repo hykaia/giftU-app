@@ -1,0 +1,57 @@
+<ion-header no-border>
+  <ion-navbar transparent></ion-navbar>
+  <ion-grid no-padding class="custom-grid-wrapper">
+    <ion-row class="custom-row-wrapper">
+
+      <ion-col col-8 align-self-center>
+        <div class="invite-friends-txt">Invite your friends</div>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button round color="secondary" class="invite-btn">Invite</button>
+      </ion-col>
+
+      <ion-col col-12>
+        <div class="line-2" ion-text color="white">Invite your friends to use the application and view your wish list</div>
+        <ion-searchbar animated="true" autocomplete="on" debounce="100" [(ngModel)]="data.search" showCancelButton="false" placeholder="Search" (ionInput)="Search($event)"
+          (ionCancel)="onCancel($event)">
+        </ion-searchbar>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+
+<ion-content fullscreen>
+  <loading *ngIf="isLoading"></loading>
+  <!-- <button ion-button color="primary" (click)="getContacts()">Load Contact</button> -->
+
+
+  <ion-list *ngIf="!isLoading">
+    <ion-item *ngFor="let contact of filterContacts" (click)="openContact(contact)">
+      <div ion-text text-wrap color="primary">{{contact.name}}</div>
+      <div ion-text color="light">{{contact.phone}}</div>
+
+      <ion-avatar item-left>
+        <img [src]="contact.img">
+      </ion-avatar>
+
+      <button block class="invite-uninvite-btn" ion-button item-right [color]="!contact.match ? 'secondary' : 'primary'">
+        <span *ngIf="!contact.match">Invite</span>
+        <span *ngIf="contact.match">uninvite</span>
+      </button>
+
+    </ion-item>
+  </ion-list>
+
+
+
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
+
+<ion-footer>
+  <button ion-button round block color="purple" class="submit-btn">Submit</button>
+</ion-footer>
