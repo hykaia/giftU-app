@@ -20,7 +20,7 @@ import { ContactList } from "./mocks";
 export class InviteYourFriendsPage {
   data: any = {};
   isLoading: boolean = true;
-  filterContacts: any[] = [];
+  filterContacts: any[] = ContactList;
   originalContacts: any[] = [];
   constructor(
     public navCtrl: NavController,
@@ -32,21 +32,8 @@ export class InviteYourFriendsPage {
   ) {
     this.platform.ready().then(() => {
       if (this.platform.is("cordova")) {
-        this.getContacts();
+        // this.getContacts();
       }
-    });
-    // this.testContacts()
-  }
-
-  testContacts() {
-    console.log("contacts  is  : ", this.filterContacts);
-    let params: any = {
-      data: JSON.stringify({ data: this.filterContacts })
-    };
-
-    this.api.sendUserContacts(params).subscribe(data => {
-      console.log("my data is : ", data);
-      this.filterContacts = data.data;
     });
   }
 
@@ -55,12 +42,13 @@ export class InviteYourFriendsPage {
   }
 
   getContacts(): void {
-    let contactList: any[] = [];
+    let contactList: any[] = []
+    let options: any = {
+      multiple: true,
+      hasPhoneNumber: true
+    }
     this.contacts
-      .find(["displayName", "phoneNumbers", "photos"], {
-        multiple: true,
-        hasPhoneNumber: true
-      })
+      .find(["displayName", "phoneNumbers", "photos"],options)
       .then(contacts => {
         console.log("original contacts : ", contacts);
         contacts.forEach(item => {
@@ -70,25 +58,22 @@ export class InviteYourFriendsPage {
               ? item["_objectInstance"].phoneNumbers[0].value
               : null,
             img: Array.isArray(item["_objectInstance"].photos)
-              ? item["_objectInstance"].photos[0].value
+              ? this.sanitizer.bypassSecurityTrustUrl(item["_objectInstance"].photos[0].value) 
               : "assets/imgs/1.jpg"
           });
-        });
-        this.sendContactListToServer(contactList);
+        })
+        this.sendContactListToServer(contactList)
       });
   }
 
   sendContactListToServer(contactList) {
     let params: any = {
       data: JSON.stringify({ data: contactList })
-    };
-
+    }
     this.api.sendUserContacts(params).subscribe(
       data => {
-        console.log("my data is : ", data);
         this.originalContacts = data.data;
-        this.filterContacts = this.originalContacts;
-        console.log("My Final Contacts are : ", this.filterContacts);
+        this.filterContacts = this.originalContacts
         this.isLoading = false;
       },
       err => {
@@ -101,10 +86,10 @@ export class InviteYourFriendsPage {
     this.filterContacts = this.originalContacts.filter(item => {
       if (item.name != null && item.phone != null) {
         return (
-          item.name.toLowerCase().indexOf(this.data.search.toLowerCase()) >-1 ||
+          item.name.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1 ||
           item.phone.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1
-        );
+        )
       }
-    });
+    })
   }
 }

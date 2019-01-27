@@ -1,4 +1,4 @@
-import { Component, NgZone } from "@angular/core";
+import { Component, NgZone, OnInit, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, Events } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
 import { GeneralProvider } from "../../providers/general/general";
@@ -9,10 +9,11 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
   selector: "page-verfication",
   templateUrl: "verfication.html"
 })
-export class VerficationPage {
+export class VerficationPage implements OnInit {
   isWaiting: boolean = false;
+  // @ViewChild("passwordInput") passwordInput;
   isDisabled: boolean = false;
-  time: number = 10;
+  time: number = 15;
   subscription: any;
   loginData: any = this.navParams.get("loginData");
   constructor(
@@ -25,6 +26,16 @@ export class VerficationPage {
   ) {
     console.log("loginData : ", this.loginData);
   }
+
+  ngOnInit() {
+    this.timeCount();
+  }
+
+  // ngAfterViewChecked() {
+  //   setTimeout(() => {
+  //     this.passwordInput.nativeElement.focus();
+  //   }, 1000);
+  // }
 
   verify() {
     this.isWaiting = true;
@@ -40,9 +51,10 @@ export class VerficationPage {
           localStorage.setItem("isLogin", JSON.stringify(true));
           localStorage.setItem("access_token", data.access_token);
           this.event.publish("loginSuccess");
-          if(data.exist_user){
+          if (data.exist_user) {
+            localStorage.setItem("isUserExist", JSON.stringify(true));
             this.navCtrl.setRoot("MyFriendsPage");
-          }else{
+          } else {
             this.navCtrl.setRoot("RegisterPage");
           }
         }
@@ -56,7 +68,7 @@ export class VerficationPage {
   }
 
   timeCount() {
-    this.time = 10;
+    this.time = 15;
     this.isDisabled = true;
     let timer = TimerObservable.create(1000, 1000);
     this.subscription = timer.subscribe(t => {

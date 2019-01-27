@@ -27,8 +27,12 @@ page-invite-your-friends {
     margin-bottom: 1.5rem;
       .searchbar-input{
         color: white;
+        height: 4rem;
         background-color: #7b2fff;
         border-radius: 16px;
+      }
+      .searchbar-search-icon{
+        top: 14px;
       }
       .searchbar-search-icon{
         background-image : url('../assets/imgs/search.svg')
@@ -49,6 +53,18 @@ page-invite-your-friends {
   .submit-btn{
     width: 90%;
     margin: auto;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
+  }
+  .item{
+    .invite-uninvite-btn{
+      height: 30px !important;
+    }
+  }
+  ion-footer{
+    background: white;
+    padding: 1rem;
+  }
+  .list .item-block .item-inner{
+    border-bottom: 0.55px solid #e8e8e8;
   }
 }

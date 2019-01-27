@@ -10,8 +10,8 @@ import { Keyboard } from "@ionic-native/keyboard";
 export class MyApp {
   isLogin: boolean = JSON.parse(localStorage.getItem('isLogin'))
   isProfileComplete: boolean = JSON.parse(localStorage.getItem('isProfileComplete'))
-  rootPage: string = ''
-  // rootPage: string = 'MyFriendsPage'
+  rootPage: string = 'LoginPage'
+  // rootPage: string = 'InviteYourFriendsPage'
 
   constructor(
     private keyboard: Keyboard,
@@ -19,7 +19,7 @@ export class MyApp {
     private statusBar: StatusBar,
     private splashScreen: SplashScreen
   ) {
-    this.checkDefaultRoute()
+    // this.checkDefaultRoute()
     this.intialize()
   }
 
@@ -34,8 +34,12 @@ export class MyApp {
   }
 
   checkDefaultRoute() {
-    if (localStorage.hasOwnProperty("isLogin") && !localStorage.hasOwnProperty("isProfileComplete")) {
-      this.rootPage = 'RegisterPage'
+    if (localStorage.hasOwnProperty("isLogin")) {
+      if (!localStorage.hasOwnProperty("isProfileComplete") && !localStorage.hasOwnProperty("isUserExist")) {
+        this.rootPage = 'RegisterPage'
+      } else {
+        this.rootPage = 'MyFriendsPage'
+      }
     } else if (localStorage.hasOwnProperty("isLogin") && localStorage.hasOwnProperty("isProfileComplete")) {
       this.rootPage = 'InviteYourFriendsPage'
     } else {

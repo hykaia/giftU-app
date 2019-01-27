@@ -26,5 +26,9 @@ export class ApiProvider {
     return this.http.post(`${this.settingService.URL}mutual`, JSON.stringify(params))
   }
 
+  getFriends(params): Observable<any> {
+    return this.http.post(`${this.settingService.URL}firends`, JSON.stringify(params))
+  }
+
 
 }

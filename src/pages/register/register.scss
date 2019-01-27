@@ -1,4 +1,7 @@
 page-register {
+    .scroll-content{
+        padding: 8px !important;
+    }
     .verify-phone-number {
         color: white;
         font-size: 1.7rem;
@@ -10,13 +13,12 @@ page-register {
         font-size: 1.4rem;
         line-height: 1.5;
     }
-    .verification-grid{
-        padding: 15px;
-    }
 
     .select{
         padding-top: 0 !important;
     }
+
+
 
     .select-icon-inner{
         color: white !important;
@@ -32,28 +34,42 @@ page-register {
         margin-top: 0px !important;
     }
     .img-container{
-        position: relative;
+        position: absolute;
         width: 50%;
+        left: 0;
+        right: 0;
+        top: 4rem;
         margin: auto;
-        .smile-img {
-            width: 100px;
+        .smile-img-wrapper{
+            width: 130px;
+            height: 130px;
             margin: auto;
-            display: block;
             position: relative;
-            margin-top: 3rem;
+            background: white;
             border-radius: 50%;
             border: 3px solid #24df73;
             border-bottom-color: #7b2fff;
             border-right-color: #7b2fff;
-            transform: rotate(5deg);
+            box-shadow: 0px 0px 81px -12px #15ff7b;
+            transform: rotate(-3deg);
+        }
+        .smile-img {
+            width: 78px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 23px;
         }
         .upload-img {
             width: 35px;
             position: absolute;
-            left: 2rem;
+            left: 2.1rem;
+            top: 1rem;
             z-index: 100;
             background: white;
             padding: 5px;
+            box-shadow: 3px 5px 20px 0px #79ffb3;
             border-radius: 100%;
         }
     }
@@ -73,4 +89,10 @@ page-register {
         background: #142f4c;
     }
     
+    .info-row{
+        // margin-top: 2rem;
+    }
+    .background-happy{
+        position: relative;
+    }
 }

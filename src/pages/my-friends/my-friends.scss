@@ -5,6 +5,8 @@ page-my-friends {
     }
     .avatar-img{
         width: 3rem;
+        border-radius: 100%;
+        box-shadow: 0px 2px 9px 0px #1f2522;
     }
 
     .segment-button.segment-activated{
@@ -30,23 +32,59 @@ page-my-friends {
         bottom: -7px !important;
     }
 
-    .friend-item{
-        margin-bottom: 1rem;
-        border-radius: 5px;
-    }
-    .wishlist-block{
-        margin-bottom: 0.5rem;
-    }
-    .ion-ios-heart-outline:before{
+    .ion-ios-heart-outline:before , 
+    .ion-ios-help-buoy:before,
+    .ion-md-heart-outline:before,
+    .ion-md-help-buoy:before,{
         color: #7b2fff;
         font-weight: bold;
         vertical-align: middle;
-        font-size: 2.3rem;
+        font-size: 1.8rem;
     }
 
-    .wishlist-txt , .gift-txt{
+    .ion-ios-help-buoy:before,
+    .ion-md-help-buoy:before{
+        color: #132f4c;
     }
+
     .normal-size{
-      font-size:1.4rem;
+      font-size:1.2rem;
+      margin-left: 3px;
+    }
+    .friend-img{
+        width: 5rem;
+        display: inline-block;
+        border-radius: 100%;
+    }
+
+    .friend-wrapper-row{
+        background: white;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        height: 7rem;
+    }
+    .heart-wrapper{
+        margin-bottom: 0.5rem;
+        margin-left: 4rem;
+    }
+    .gift-wrapper{
+        margin-left: 4rem;
+    }
+    .ion-ios-search:before{
+        font-size: 2.9rem !important;
+    }
+
+    .my-friends{
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+    .dot{
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        background: white;
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 }

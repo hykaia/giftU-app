@@ -7,11 +7,11 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding no-bounce>
   <ion-grid class="verification-grid">
     <ion-row>
       <ion-col col-12>
-        <p class="verify-phone-number">Welcome again,</p>
+        <h4 class="verify-phone-number">Welcome again,</h4>
         <div class="sms-message-txt">Enter some information that helps your friends recognize you
           and achieve your dreams</div>
       </ion-col>
@@ -20,16 +20,19 @@
     <ion-row>
       <ion-col col-12>
         <div class="all-img-container">
+          <img src="assets/imgs/background-happy.png" class="background-happy">
           <div class="img-container">
             <img src="assets/imgs/upload.svg" class="upload-img">
-            <img src="assets/imgs/smile.png" class="smile-img">
+            <div class="smile-img-wrapper">
+                <img src="assets/imgs/smill-face.png" class="smile-img">
+            </div>
           </div>
         </div>
       </ion-col>
     </ion-row>
 
 
-    <ion-row>
+    <ion-row class="info-row">
       <!-- Your name -->
       <ion-col col-12>
         <ion-item class="custom-item">

@@ -23,11 +23,11 @@
 
 
 <ion-content fullscreen>
-  <loading *ngIf="isLoading"></loading>
+  <!-- <loading *ngIf="isLoading"></loading> -->
   <!-- <button ion-button color="primary" (click)="getContacts()">Load Contact</button> -->
 
-
-  <ion-list *ngIf="!isLoading">
+  <!-- *ngIf="!isLoading" -->
+  <ion-list >
     <ion-item *ngFor="let contact of filterContacts" (click)="openContact(contact)">
       <div ion-text text-wrap color="primary">{{contact.name}}</div>
       <div ion-text color="light">{{contact.phone}}</div>

@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content no-bounce>
   <ion-grid class="login-grid">
     <ion-row>
       <ion-col col-12>
@@ -44,23 +44,18 @@
         <ion-item class="login-item">
           <ion-label color="light" stacked>Phone number</ion-label>
           <ion-input type="tel" placeholder="Phone number" [(ngModel)]="data.phone"></ion-input>
-          <ion-icon name="custom-check-mark" item-right></ion-icon>
+          <!-- <ion-icon name="custom-check-mark" item-right></ion-icon> -->
         </ion-item>
       </ion-col>
 
       <ion-col offset-6 col-6>
         <button float-right ion-button round color="purple" class="login-btn" (click)="Login()">
-            <span *ngIf="!isWaiting">Login</span>
-            <ion-spinner name="ios-small" *ngIf="isWaiting" color="light"></ion-spinner>
-          </button>
+          <span *ngIf="!isWaiting">Login</span>
+          <ion-spinner name="ios-small" *ngIf="isWaiting" color="light"></ion-spinner>
+        </button>
       </ion-col>
-    </ion-row>
 
-
-    <ion-row>
-      <ion-col col-12>
-        <img src="assets/imgs/gift.svg" class="gift-img">
-      </ion-col>
     </ion-row>
   </ion-grid>
+  <img src="assets/imgs/happy.png" >
 </ion-content>
