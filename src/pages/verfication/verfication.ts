@@ -38,33 +38,34 @@ export class VerficationPage implements OnInit {
   // }
 
   verify() {
-    this.isWaiting = true;
-    let params = {
-      phone: `${this.loginData.countryCode}${this.loginData.phone}`,
-      password: this.loginData.password
-    };
-    this.api.verify(params).subscribe(
-      data => {
-        console.log("verify result :", data);
-        if (data.success) {
-          this.general.presentToast(data.message);
-          localStorage.setItem("isLogin", JSON.stringify(true));
-          localStorage.setItem("access_token", data.access_token);
-          this.event.publish("loginSuccess");
-          if (data.exist_user) {
-            localStorage.setItem("isUserExist", JSON.stringify(true));
-            this.navCtrl.setRoot("MyFriendsPage");
-          } else {
-            this.navCtrl.setRoot("RegisterPage");
-          }
-        }
-        this.isWaiting = false;
-      },
-      err => {
-        this.general.showErrors(err);
-        this.isWaiting = false;
-      }
-    );
+    this.navCtrl.setRoot("RegisterPage"); // for test purpose
+    // this.isWaiting = true;
+    // let params = {
+    //   phone: `${this.loginData.countryCode}${this.loginData.phone}`,
+    //   password: this.loginData.password
+    // };
+    // this.api.verify(params).subscribe(
+    //   data => {
+    //     console.log("verify result :", data);
+    //     if (data.success) {
+    //       this.general.presentToast(data.message);
+    //       localStorage.setItem("isLogin", JSON.stringify(true));
+    //       localStorage.setItem("access_token", data.access_token);
+    //       this.event.publish("loginSuccess");
+    //       if (data.exist_user) {
+    //         localStorage.setItem("isUserExist", JSON.stringify(true));
+    //         this.navCtrl.setRoot("MyFriendsPage");
+    //       } else {
+    //         this.navCtrl.setRoot("RegisterPage");
+    //       }
+    //     }
+    //     this.isWaiting = false;
+    //   },
+    //   err => {
+    //     this.general.showErrors(err);
+    //     this.isWaiting = false;
+    //   }
+    // );
   }
 
   timeCount() {

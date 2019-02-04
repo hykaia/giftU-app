@@ -1,5 +1,12 @@
 <ion-header no-border>
-  <ion-navbar transparent></ion-navbar>
+  <ion-navbar transparent *ngIf="!isModal"></ion-navbar>
+  <ion-navbar *ngIf="isModal" color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
   <ion-grid no-padding class="custom-grid-wrapper">
     <ion-row class="custom-row-wrapper">
 
@@ -12,8 +19,8 @@
 
       <ion-col col-12>
         <div class="line-2" ion-text color="white">Invite your friends to use the application and view your wish list</div>
-        <ion-searchbar animated="true" autocomplete="on" debounce="100" [(ngModel)]="data.search" showCancelButton="false" placeholder="Search" (ionInput)="Search($event)"
-          (ionCancel)="onCancel($event)">
+        <ion-searchbar animated="true" autocomplete="on" debounce="100" [(ngModel)]="data.search" showCancelButton="false"
+          placeholder="Search" (ionInput)="Search($event)" (ionCancel)="onCancel($event)">
         </ion-searchbar>
       </ion-col>
 
@@ -23,11 +30,10 @@
 
 
 <ion-content fullscreen>
-  <!-- <loading *ngIf="isLoading"></loading> -->
+  <loading *ngIf="isLoading"></loading>
   <!-- <button ion-button color="primary" (click)="getContacts()">Load Contact</button> -->
 
-  <!-- *ngIf="!isLoading" -->
-  <ion-list >
+  <ion-list *ngIf="!isLoading">
     <ion-item *ngFor="let contact of filterContacts" (click)="openContact(contact)">
       <div ion-text text-wrap color="primary">{{contact.name}}</div>
       <div ion-text color="light">{{contact.phone}}</div>
@@ -44,14 +50,12 @@
     </ion-item>
   </ion-list>
 
-
-
   <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
 </ion-content>
 
-<ion-footer>
-  <button ion-button round block color="purple" class="submit-btn">Submit</button>
+<ion-footer *ngIf="!isModal">
+  <button ion-button round block color="purple" class="submit-btn" (click)="submit()">Submit</button>
 </ion-footer>

@@ -74,10 +74,12 @@ page-register {
         }
     }
     .submit-btn{
+        width: 95%;
+        display: block;
         margin: auto;
         margin-top: 3rem;
         margin-bottom: 1rem;
-        width: 95%;
+        margin-left: 2px;
     }
 
     .upload-img{
@@ -95,4 +97,9 @@ page-register {
     .background-happy{
         position: relative;
     }
+
+    .custom-col{
+        position: initial;
+    }
+
 }

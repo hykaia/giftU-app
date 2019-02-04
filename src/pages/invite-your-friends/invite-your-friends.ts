@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Platform, ViewController } from "ionic-angular";
 import {
   Contacts,
   Contact,
@@ -20,16 +20,20 @@ import { ContactList } from "./mocks";
 export class InviteYourFriendsPage {
   data: any = {};
   isLoading: boolean = true;
+  isModal : boolean = this.navParams.get('isModal')
   filterContacts: any[] = ContactList;
-  originalContacts: any[] = [];
+  originalContacts: any[] = ContactList
   constructor(
     public navCtrl: NavController,
     private contacts: Contacts,
     private api: ApiProvider,
     private sanitizer: DomSanitizer,
+    private viewCtrl: ViewController,
     private platform: Platform,
     public navParams: NavParams
   ) {
+    console.log("filterContacts : ",this.filterContacts);
+    this.isLoading = false
     this.platform.ready().then(() => {
       if (this.platform.is("cordova")) {
         // this.getContacts();
@@ -38,7 +42,7 @@ export class InviteYourFriendsPage {
   }
 
   openContact(contact) {
-    console.log("contact : ", contact);
+    // code here
   }
 
   getContacts(): void {
@@ -48,7 +52,7 @@ export class InviteYourFriendsPage {
       hasPhoneNumber: true
     }
     this.contacts
-      .find(["displayName", "phoneNumbers", "photos"],options)
+      .find(["displayName", "phoneNumbers", "photos"], options)
       .then(contacts => {
         console.log("original contacts : ", contacts);
         contacts.forEach(item => {
@@ -58,7 +62,7 @@ export class InviteYourFriendsPage {
               ? item["_objectInstance"].phoneNumbers[0].value
               : null,
             img: Array.isArray(item["_objectInstance"].photos)
-              ? this.sanitizer.bypassSecurityTrustUrl(item["_objectInstance"].photos[0].value) 
+              ? this.sanitizer.bypassSecurityTrustUrl(item["_objectInstance"].photos[0].value)
               : "assets/imgs/1.jpg"
           });
         })
@@ -91,5 +95,13 @@ export class InviteYourFriendsPage {
         )
       }
     })
+  }
+
+  submit() {
+    this.navCtrl.setRoot('MyFriendsPage')
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss()
   }
 }

@@ -1,0 +1,67 @@
+<ion-header>
+
+  <ion-navbar color="purple">
+    <ion-title>Suggest gift</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-row>
+    <ion-col col-12>
+      <div class="all-img-container">
+        <div class="img-container">
+          <img src="assets/imgs/upload.svg" class="upload-img">
+          <div class="smile-img-wrapper">
+            <img src="assets/imgs/iphonex-front.png" class="smile-img">
+          </div>
+        </div>
+      </div>
+    </ion-col>
+
+
+  </ion-row>
+
+
+  <ion-row class="inputs-wrapper">
+    <ion-col col-12 class="custom-col">
+      <ion-item class="custom-item">
+        <ion-label color="light" stacked>Gift Name</ion-label>
+        <ion-input type="text" [(ngModel)]="data.gift_name" placeholder="Gift Name"></ion-input>
+      </ion-item>
+    </ion-col>
+
+    <ion-col col-12 class="custom-col">
+      <ion-item class="custom-item">
+        <ion-label color="light" stacked>Your Message</ion-label>
+        <ion-input type="text" [(ngModel)]="data.message" placeholder="Gift Name"></ion-input>
+      </ion-item>
+    </ion-col>
+
+
+  </ion-row>
+
+  <ion-row class="toggle-wrapper">
+    <ion-col col-3>
+      <!-- <img src="assets/imgs/anonymous.png" class="anon-img"> -->
+      <div class="anon-txt">Anon</div>
+    </ion-col>
+    <ion-toggle checked></ion-toggle>
+  </ion-row>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-row>
+    <ion-col col-12>
+      <button ion-button round color="purple" block class="send-btn">Send</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

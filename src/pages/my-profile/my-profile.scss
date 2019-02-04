@@ -1,0 +1,197 @@
+page-my-profile {
+    .segment-button.segment-activated{
+        background-color: transparent !important;
+        border-bottom: 2px solid white !important;
+        border-radius: 0 !important;
+    }
+    .segment-button{
+        border-color: transparent !important;
+    }
+    .segment-button{
+        max-width: none !important;
+        color: white !important;
+        height: 3.6rem !important;
+    }
+    
+    .segment-toolbar{
+        min-height: none !important;
+    }
+    .toolbar .segment{
+        bottom: -7px !important;
+    }
+    .avatar-img{
+        width: 6rem;
+        margin: auto;
+        display: block;
+        height: 6rem;
+        border-radius: 100%;
+        border: 1.5px solid white;
+        margin-top: 1rem;
+      }
+      ion-header.header.header{
+        background: #7a2fff;
+        position: relative;
+      }
+      .user-name{
+        text-align: center;
+        color: white;
+        margin-top: 9px;
+      }
+      .status {
+        text-align: center;
+        color: white;
+        margin-top: -1rem;
+      }
+      .ion-ios-heart-outline:before , 
+      .ion-ios-help-buoy:before,
+      .ion-md-heart-outline:before,
+      .ion-md-help-buoy:before,{
+          color: #7b2fff;
+          font-weight: bold;
+          vertical-align: middle;
+          font-size: 1.8rem;
+      }
+    
+      .ion-ios-help-buoy:before,
+      .ion-md-help-buoy:before{
+          color: #132f4c;
+      }
+
+      .normal-size{
+        font-size: 1.2rem;
+      }
+      .mutual{
+        margin-right: 1rem;
+      }
+      .hr{
+        border-top: 1px solid #c5c5c5;
+      }
+  
+      .remaining-days-btn{
+        height: 2.3em;
+        span.button-inner{
+            font-size: 1.3rem;
+        }
+      }
+      .birthday-row-wrapper{ 
+        //   Code here
+      }
+      .birthday-txt{
+        color: white;
+        font-weight: bold;
+      }
+      .gift-row-wrapper{
+        background: white;
+        border-radius: 3px;
+      }
+    
+      .gift-img {
+        width: 15rem;
+      }
+    
+      .custom-btn{
+        height: 2.5em;
+        width: 75%;
+        font-size: 1.3rem;
+      }
+      .btns-wrapper{
+        position: absolute;
+        bottom: -30px;
+      }
+      .swiper-container{
+        overflow: unset !important;
+      }
+      .wish-txt{
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+        margin-top: 1rem;
+      }
+      .wishlist-row-wrapper{
+          margin-top: 3rem;
+      }
+      .wish-img{
+        width: 3rem;
+        height: 5.1rem;
+        margin: auto;
+        display: block;
+      }
+      .plus-img{
+        width: 2.8rem;
+        margin: auto;
+        display: block;
+      }
+      .edit-wrapper{
+        width: 4rem;
+        height: 4rem;
+        background: #24df73;
+        padding: 1rem;
+        border-radius: 100%;
+        float: left;
+        display: inline-block;
+      }
+
+      .cancel-wrapper{
+        width: 4rem;
+        height: 4rem;
+        background: #de0a3c;
+        padding: 1rem;
+        border-radius: 100%;
+        display: inline-block;
+        float: left;
+        margin-left: 1rem;
+      }
+
+      .add-wrapper{
+        width: 3.5rem;
+        height: 3.5rem;
+        background: #24df73;
+        padding: 0.6rem;
+        border-radius: 100%;
+        display: inline-block;
+      }
+      .first-gift-btn{
+        height: 2.1em;
+        font-size: 1.4rem;
+        width: 37%;
+    
+      }
+
+      .img-container{
+        position: absolute;
+        width: 50%;
+        left: 0;
+        right: 0;
+        top: 4rem;
+        margin: auto;
+        .smile-img-wrapper{
+            width: 115px;
+            height: 115px;
+            margin: auto;
+            position: relative;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-bottom-color: #7b2fff;
+            border-right-color: #7b2fff;
+            box-shadow: 3px 5px 20px 0px #b2ffd4;
+            transform: rotate(-42deg);
+            margin-top: 4rem;
+        }
+        .add-img {
+            width: 43px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 33px;
+            transform: rotate(40deg);
+        }
+    }
+
+    .custom-col{
+        height: 25.6rem;
+    }
+    .add-gift-txt{
+        font-size: 1.6rem;
+    }
+}

@@ -1,0 +1,79 @@
+page-suggest-gift {
+    .scroll-content {
+        background: white !important;
+    }
+    .background-happy{
+        position: relative;
+    }
+    .img-container{
+        position: absolute;
+        width: 50%;
+        left: 0;
+        right: 0;
+        top: 4rem;
+        margin: auto;
+        .smile-img-wrapper{
+            width: 115px;
+            height: 115px;
+            margin: auto;
+            position: relative;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid #24df73;
+            border-bottom-color: #7b2fff;
+            border-right-color: #7b2fff;
+            box-shadow: 3px 5px 20px 0px #b2ffd4;
+            transform: rotate(-3deg);
+        }
+        .smile-img {
+            width: 43px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 12px;
+        }
+        .upload-img {
+            width: 35px;
+            position: absolute;
+            left: 2.1rem;
+            top: 1rem;
+            z-index: 100;
+            background: white;
+            padding: 5px;
+            box-shadow: 3px 5px 20px 0px #b2ffd4;
+            border-radius: 100%;
+        }
+    }
+    .upload-img{
+        width: 29px;
+        position: absolute;
+    }
+    .inputs-wrapper{
+        margin-top: 18rem;
+    }
+
+    .anon-img{
+        width: 2.7rem;
+        display: inline-block;
+    }
+    .anon-txt{
+        display: block;
+        text-align: center;
+    }
+    .toggle-ios{
+        height: 23.5px;
+        width: 45px;
+    }
+    .toggle-ios .toggle-inner{
+        height: 20px;
+        width: 20px;
+    }
+    .toggle-wrapper{
+        margin-top: 2rem;
+    }
+
+    .custom-col{
+        position: initial;
+    }
+}

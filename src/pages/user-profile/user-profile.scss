@@ -1,0 +1,107 @@
+page-user-profile {
+  .avatar-img{
+    width: 6rem;
+    margin: auto;
+    display: block;
+    height: 6rem;
+    border-radius: 100%;
+    border: 1.5px solid white;
+    margin-top: 1rem;
+  }
+  ion-header.header.header{
+    background: #7a2fff;
+    position: relative;
+  }
+  .user-name{
+    text-align: center;
+    color: white;
+    margin-top: 9px;
+    margin-bottom: 3rem;
+  }
+  .ion-ios-heart-outline:before , 
+  .ion-ios-help-buoy:before,
+  .ion-md-heart-outline:before,
+  .ion-md-help-buoy:before,{
+      color: #7b2fff;
+      font-weight: bold;
+      vertical-align: middle;
+      font-size: 1.8rem;
+  }
+
+  .ion-ios-help-buoy:before,
+  .ion-md-help-buoy:before{
+      color: #132f4c;
+  }
+
+  .profile-info{
+    width: 94%;
+    margin: auto;
+    background: white;
+    border-radius: 3px;
+    padding: 5px;
+    position: absolute;
+    bottom: -7.9rem;
+    left: 0;
+    right: 0;
+  }
+  .normal-size{
+    font-size: 1.2rem;
+  }
+  .mutual{
+    margin-right: 1rem;
+  }
+  .hr{
+    border-top: 1px solid #c5c5c5;
+  }
+  .user-phone{
+    margin-bottom: 0.3rem;
+  }
+  .remaining-days-btn{
+    height: 1.8em;
+    span.button-inner{
+        font-size: 1.3rem;
+    }
+  }
+  .birthday-row-wrapper{
+      margin-top: 8rem;
+  }
+  .birthday-txt{
+    color: white;
+    font-weight: bold;
+  }
+  .gift-row-wrapper{
+    background: white;
+    border-radius: 3px;
+  }
+
+  .gift-img {
+    width: 15rem;
+  }
+
+  .custom-btn{
+    height: 2.5em;
+    width: 75%;
+    font-size: 1.3rem;
+  }
+  .btns-wrapper{
+    position: absolute;
+    bottom: -30px;
+  }
+  .swiper-container{
+    overflow: unset !important;
+  }
+  .wish-txt{
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+  }
+  .wishlist-row-wrapper{
+      margin-top: 3rem;
+  }
+  .wish-img{
+    width: 3rem;
+    height: 5.1rem;
+    margin: auto;
+    display: block;
+  }
+}  

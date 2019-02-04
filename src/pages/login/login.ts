@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
-import { InAppBrowser } from "@ionic-native/in-app-browser";
 import { ApiProvider } from "../../providers/api/api";
 import { GeneralProvider } from "../../providers/general/general";
+// import { Keyboard } from "@ionic-native/keyboard";
 
 @IonicPage()
 @Component({
@@ -15,20 +15,24 @@ export class LoginPage {
     countryCode: "+966"
   };
   countrCodes: any[] = [{ code: "+2" }, { code: "+966" }];
-  Contacts: any[] = [{}];
   constructor(
     public navCtrl: NavController,
     private platform: Platform,
+    // public keyboard: Keyboard,
     private general: GeneralProvider,
     private api: ApiProvider,
-    private browser: InAppBrowser,
     public navParams: NavParams
   ) {
+  
+  }
+
+  ionViewDidEnter(){
 
   }
 
 
   Login() {
+
     this.isWaiting = true
     let params = {
       phone: `${this.data.countryCode}${this.data.phone}`
@@ -45,6 +49,9 @@ export class LoginPage {
         this.isWaiting = false
       }
     )
+
   }
+
+
 
 }

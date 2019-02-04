@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
-import { Keyboard } from "@ionic-native/keyboard";
+// import { Keyboard } from "@ionic-native/keyboard";
 
 @Component({
   templateUrl: "app.html"
@@ -10,11 +10,11 @@ import { Keyboard } from "@ionic-native/keyboard";
 export class MyApp {
   isLogin: boolean = JSON.parse(localStorage.getItem('isLogin'))
   isProfileComplete: boolean = JSON.parse(localStorage.getItem('isProfileComplete'))
-  rootPage: string = 'LoginPage'
+  rootPage: string = 'MyFriendsPage'
   // rootPage: string = 'InviteYourFriendsPage'
 
   constructor(
-    private keyboard: Keyboard,
+    // private keyboard: Keyboard,
     private platform: Platform,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen
@@ -26,8 +26,8 @@ export class MyApp {
   intialize() {
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
-        this.statusBar.backgroundColorByHexString("#ffffff");
-        this.keyboard.hideFormAccessoryBar(false);
+        this.statusBar.backgroundColorByHexString("#142f4c");
+        // this.keyboard.hideFormAccessoryBar(false);
         this.splashScreen.hide();
       }
     })

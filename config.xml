@@ -81,11 +81,18 @@
     <plugin name="cordova-plugin-device" spec="2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
-    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
     <plugin name="cordova-plugin-contacts" spec="3.0.1" />
     <plugin name="cordova-plugin-ios-contacts-permissions" spec="1.0.0">
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="need contacts access to search friends" />
     </plugin>
+    <plugin name="cordova-plugin-camera" spec="4.0.3" />
+    <plugin name="cordova-plugin-ios-camera-permissions" spec="1.2.0">
+        <variable name="CAMERA_USAGE_DESCRIPTION" value="This app needs camera access" />
+        <variable name="MICROPHONE_USAGE_DESCRIPTION" value="This app needs microphone access" />
+        <variable name="PHOTOLIBRARY_ADD_USAGE_DESCRIPTION" value="This app needs write-access to photo library" />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="This app needs read/write-access photo library access" />
+    </plugin>
+    <allow-navigation href="http://192.168.1.178:8101" sessionid="a0da7379" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="7.1.4" />
 </widget>
