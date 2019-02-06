@@ -7,9 +7,10 @@ page-upload-gift-img {
         border: 2px solid white;
         border-radius: 100%;
         padding: 2px;
-        .fab-ios-light{
+        .fab-ios-light , .fab-md-light{
             background-color: #24df73;
         }
+        
     }
 
     
@@ -35,7 +36,7 @@ page-upload-gift-img {
             border-radius: 0;
             padding: 0;
         }
-        .fab-ios-light{
+        .fab-ios-light, .fab-md-light{
             background-color: transparent
         }
     }

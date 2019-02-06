@@ -25,9 +25,8 @@ export class RegisterPage {
     this.api.register(this.data).subscribe(data => {
       console.log("my data : ", data);
       if (data.data.success) {
-        this.general.presentToast(data.data.message)
         localStorage.setItem('isProfileComplete', JSON.stringify(true))
-        this.navCtrl.push('InviteYourFriendsPage')
+        this.navCtrl.setRoot('InviteYourFriendsPage')
       }
       this.isWaiting = false
     }, err => {

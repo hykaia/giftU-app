@@ -5,6 +5,9 @@ page-invite-your-friends {
   .custom-grid-wrapper , ion-header{
     background: #142f4c !important;
   }
+  .custom-grid-wrapper{
+    padding-top: 3rem !important;
+  }
   .invite-friends-txt{
     color: white;
     font-size: 2rem;
@@ -67,4 +70,12 @@ page-invite-your-friends {
   .list .item-block .item-inner{
     border-bottom: 0.55px solid #e8e8e8;
   }
+}
+
+.md{
+  page-invite-your-friends{
+    .searchbar .searchbar-search-icon{
+      top: 11px;
+    }
+  } 
 }

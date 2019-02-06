@@ -11,8 +11,10 @@
 
 
 <ion-content padding>
-
   <hr class="hr">
+</ion-content>
+
+<ion-footer>
   <ion-fab center bottom small class="take-picture">
     <button (click)="takePicture()" ion-fab color="light">
     </button>
@@ -24,4 +26,4 @@
       <img *ngIf="img" [src]="img">
     </button>
   </ion-fab>
-</ion-content>
+</ion-footer>

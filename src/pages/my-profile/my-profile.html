@@ -8,6 +8,9 @@
         <div class="status">Welcome Guys {{codes.love}}</div>
       </ion-col>
     </ion-row>
+    <!-- <ion-buttons end>
+      <ion-icon name="cog"></ion-icon>
+    </ion-buttons> -->
   </ion-navbar>
 
   <ion-toolbar color="purple" class="segment-toolbar">
@@ -32,105 +35,210 @@
 
 <ion-content padding>
 
-  <ion-row class="birthday-row-wrapper">
-    <ion-col col-8 no-padding>
-      <ion-row>
-        <ion-col col-3>
-          <img src="assets/imgs/birthday.png" class="birthday-img">
+  <div [ngSwitch]="segments">
+
+    <!-- Wishlist Segment -->
+    <ion-grid *ngSwitchCase="'my_wishlist'">
+      <ion-row class="birthday-row-wrapper">
+        <ion-col col-8 no-padding>
+          <ion-row>
+            <ion-col col-3>
+              <img src="assets/imgs/birthday.png" class="birthday-img">
+            </ion-col>
+            <ion-col col-9 align-self-center>
+              <div class="birthday-txt">My birthday</div>
+              <div class="status-txt" ion-text color="gray">Say happy birthday {{codes.birthday}}</div>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col col-9 align-self-center>
-          <div class="birthday-txt">My birthday</div>
-          <div class="status-txt" ion-text color="gray">Say happy birthday {{codes.birthday}}</div>
+        <ion-col col-3 no-padding align-self-center>
+          <button ion-button color="purple" class="remaining-days-btn" round block>3 day left</button>
+        </ion-col>
+        <ion-col col-1 align-self-center>
+          <div class="add-wrapper">
+            <img src="assets/imgs/add.svg">
+          </div>
         </ion-col>
       </ion-row>
-    </ion-col>
-    <ion-col col-3 no-padding align-self-center>
-      <button ion-button color="purple" class="remaining-days-btn" round block>3 day left</button>
-    </ion-col>
-    <ion-col col-1 align-self-center>
-      <div class="add-wrapper">
-        <img src="assets/imgs/add.svg">
-      </div>
-    </ion-col>
-  </ion-row>
 
-  <!-- Gifts Slider -->
-  <ion-row>
-    <ion-col col-12>
-      <ion-slides spaceBetween="10" slidesPerView="1.1">
-        <!-- First Slide -->
-        <ion-slide>
-          <ion-row class="gift-row-wrapper">
-            <ion-col col-12 class="custom-col">
-              <p ion-text color="primary" class="add-gift-txt">Add your wishes and gifts you wish</p>
-              <!-- add gift image -->
-              <div class="all-img-container" (click)="AddGift()">
-                <div class="img-container">
-                  <div class="smile-img-wrapper">
-                    <img src="assets/imgs/rounded-add-button.svg" class="add-img">
+      <!-- Gifts Slider -->
+      <ion-row>
+        <ion-col col-12>
+          <ion-slides spaceBetween="10" slidesPerView="1.1">
+            <!-- First Slide -->
+            <ion-slide>
+              <ion-row class="gift-row-wrapper">
+                <ion-col col-12 class="custom-add-gift-col">
+                  <p ion-text color="primary" class="add-gift-txt">Add your wishes and gifts you wish</p>
+                  <!-- add gift image -->
+                  <div class="all-img-container" (click)="AddGift()">
+                    <div class="img-container">
+                      <div class="smile-img-wrapper">
+                        <img src="assets/imgs/rounded-add-button.svg" class="add-img">
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-            </ion-col>
-            <ion-col col-12 class="btns-wrapper">
-              <ion-row>
+                </ion-col>
+                <ion-col col-12 class="btns-wrapper">
+                  <ion-row>
+                    <ion-col col-12>
+                      <button ion-button color="secondary" class="first-gift-btn" round>Add First Gift</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-slide>
+            <!-- End -->
+            <ion-slide *ngFor="let wish of WishList">
+              <ion-row class="gift-row-wrapper">
                 <ion-col col-12>
-                  <button ion-button color="secondary" class="first-gift-btn" round>Add First Gift</button>
+                  <p ion-text color="primary">Black iPhone X</p>
+                  <img src="assets/imgs/iPhone-X.png" class="gift-img">
+                  <div ion-text color="gray" class="wish-txt">i want iPhone X black color {{codes.love}}</div>
+                </ion-col>
+                <ion-col col-12 class="btns-wrapper">
+                  <ion-row>
+                    <ion-col col-6>
+                      <button ion-button color="custom" class="custom-btn" round>50 Seen</button>
+                    </ion-col>
+                    <ion-col col-6>
+                      <div class="edit-wrapper">
+                        <img src="assets/imgs/pencil.svg" class="edit-pencil">
+                      </div>
+
+                      <div class="cancel-wrapper">
+                        <img src="assets/imgs/cancel.svg">
+                      </div>
+                    </ion-col>
+                  </ion-row>
                 </ion-col>
               </ion-row>
-            </ion-col>
-          </ion-row>
-        </ion-slide>
-        <!-- End -->
-        <ion-slide *ngFor="let gift of Gifts">
-          <ion-row class="gift-row-wrapper">
-            <ion-col col-12>
-              <p ion-text color="primary">Black iPhone X</p>
-              <img src="assets/imgs/iPhone-X.png" class="gift-img">
-              <div ion-text color="gray" class="wish-txt">i want iPhone X black color {{codes.love}}</div>
-            </ion-col>
-            <ion-col col-12 class="btns-wrapper">
-              <ion-row>
-                <ion-col col-6>
-                  <button ion-button color="custom" class="custom-btn" round>50 Seen</button>
-                </ion-col>
-                <ion-col col-6>
-                  <div class="edit-wrapper">
-                    <img src="assets/imgs/pencil.svg" class="edit-pencil">
-                  </div>
+            </ion-slide>
 
-                  <div class="cancel-wrapper">
-                    <img src="assets/imgs/cancel.svg">
-                  </div>
-                </ion-col>
-              </ion-row>
-            </ion-col>
-          </ion-row>
-        </ion-slide>
-
-      </ion-slides>
-    </ion-col>
-
-  </ion-row>
-
-
-  <ion-row class="wishlist-row-wrapper">
-    <ion-col col-11 no-padding>
-      <ion-row>
-        <ion-col col-2>
-          <img src="assets/imgs/wish.png" class="wish-img">
+          </ion-slides>
         </ion-col>
-        <ion-col col-10 align-self-center>
-          <div class="birthday-txt">My WishList</div>
-          <div class="status-txt" ion-text color="gray">Some of my dreams are in your hands</div>
+
+      </ion-row>
+
+      <ion-row class="wishlist-row-wrapper">
+        <ion-col col-11 no-padding>
+          <ion-row>
+            <ion-col col-2>
+              <img src="assets/imgs/wish.png" class="wish-img">
+            </ion-col>
+            <ion-col col-10 align-self-center>
+              <div class="birthday-txt">My WishList</div>
+              <div class="status-txt" ion-text color="gray">Some of my dreams are in your hands</div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-1 align-self-center>
+          <div class="add-wrapper">
+            <img src="assets/imgs/add.svg">
+          </div>
         </ion-col>
       </ion-row>
-    </ion-col>
-    <ion-col col-1 align-self-center>
-      <div class="add-wrapper">
-        <img src="assets/imgs/add.svg">
-      </div>
-    </ion-col>
-  </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngSwitchCase="'occasions'" no-padding>
+      <!-- Code here -->
+      <ion-row>
+        <ion-col col-12>
+          <p ion-text color="white" class="my-friends">Create new Occasions</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="occasion-row">
+        <ion-col col-12 no-paddong>
+          <ion-slides slidesPerView="4">
+            <ion-slide *ngFor="let occasion of Occasions">
+              <div class="occasion-img-wrapper">
+                <img [src]="occasion.img" class="occasion-img">
+              </div>
+              <div class="occasion-name">{{occasion.name}}</div>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="inputs-wrapper">
+        <ion-col col-12 class="custom-col">
+          <ion-item class="custom-item">
+            <ion-label color="light" stacked>Name</ion-label>
+            <ion-input type="text" [(ngModel)]="data.name" placeholder="Name"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col col-12 class="custom-col">
+          <ion-item class="custom-item">
+            <ion-label color="light" stacked>Slogan</ion-label>
+            <ion-input type="text" [(ngModel)]="data.slogan" placeholder="Slogan"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 class="custom-col">
+          <ion-item class="custom-item">
+            <ion-label>Date</ion-label>
+            <ion-datetime #date displayFormat="DDDD MMM D, YYYY" min="2019" max="2050" [(ngModel)]="data.birth"></ion-datetime>
+          </ion-item>
+        </ion-col>
+
+        <ion-col col-12 class="custom-col">
+          <ion-item class="custom-item">
+            <ion-label color="light" stacked>Type</ion-label>
+            <ion-input type="text" [(ngModel)]="data.type" placeholder="Type"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col col-12>
+          <button ion-button block round class="create-occasion-btn" color="purple">Create</button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+    <ion-grid *ngSwitchCase="'my_gifts'" no-padding>
+      <ion-row>
+        <ion-col col-12>
+          <p ion-text color="white" class="my-friends">My gift`s</p>
+        </ion-col>
+      </ion-row>
+      <ion-row class="notification-wrapper-row" *ngFor="let gift of Gifts">
+        <ion-col col-12>
+          <ion-row>
+            <ion-col col-3 align-self-center>
+              <img src="assets/imgs/1.jpg" class="friend-img">
+              <div class="gift-img-wrapper">
+                <img [src]="gift.img" class="giftt-img">
+              </div>
+            </ion-col>
+            <ion-col col-9 align-self-center>
+              <div class="noti-name-wrapper">
+                <div ion-text text-wrap color="primary" class="normal-size" class="name">Mohammed Mokhtar <span class="gift-txt">Give
+                    you iPhone</span> </div>
+                <div ion-text color="gray" class="normal-size" class="statuss">Lorem Ipsum is simply dummy </div>
+                <div ion-text color="secondary" class="noti-date" class="statuss">2 days</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+
+        <ion-col col-12>
+          <hr class="hr">
+        </ion-col>
+        <ion-col col-12>
+          <div class="scroll-wrapper">
+            <div class="emotion-box" *ngFor="let emotion of Emotions">{{emotion.code}} {{emotion.name}}</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+
+
+
+
 </ion-content>

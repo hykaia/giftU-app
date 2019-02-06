@@ -188,10 +188,126 @@ page-my-profile {
         }
     }
 
-    .custom-col{
+    .custom-add-gift-col{
         height: 25.6rem;
     }
     .add-gift-txt{
         font-size: 1.6rem;
     }
+
+    // Css for my gifts
+    .notification-wrapper-row{
+      background: white;
+      border-radius: 5px;
+      margin-bottom: 10px;    
+      .friend-img{
+        width: 4.4rem;
+        display: inline-block;
+        margin: auto;
+        border-radius: 100%;
+        box-shadow: 0px 1px 8px 0px #080808;
+      }
+      .noti-name-wrapper{
+        line-height: 1.4;
+      }
+      .normal-size{
+        font-size:1.4rem;
+        margin-left: 3px;
+      }
+      .scroll-wrapper{
+          overflow: auto;
+          margin-left: 5px;
+          white-space: nowrap;
+          .emotion-box{
+              display: inline-block;
+              color: #142f4b;
+              text-align: center;
+              text-decoration: none;
+              background: #ddddf0;
+              padding: 7px;
+              margin: 7px;
+              border-radius: 3px;
+          }
+      }
+      .hr{
+          height: 1.15px;
+      }
+    }
+    .my-friends{
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .gift-img-wrapper{
+      display: inline-block;
+      width: 47px;
+      height: 47px;
+      border-radius: 100%;
+      position: absolute;
+      left: 2.9rem;
+      background: white;
+      overflow: hidden;
+      .giftt-img{
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: -21px;
+        left: 0;
+        margin: auto;
+        max-width: 80%;
+        max-height: 90%
+      }
+    }
+
+    .occasion-img-wrapper{
+      background: white;
+      border-radius: 100%;
+      width: 70px;
+      height: 70px;
+      margin: auto;
+      .occasion-img{
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 19px;
+        left: 0;
+        margin: auto;
+        max-width: 57%;
+        max-height: 90%;
+      }
+    }
+    
+    .avatar-name{
+      font-size: 13px;
+    }
+    .occasion-name{
+      font-size: 1.2rem;
+      color: #8da6c1;
+      position: relative;
+      top: 1rem;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    .custom-item{
+      color: white;
+      padding-left: 0 !important;
+      background-color: transparent;
+      font-size: 1.4rem;
+      margin-bottom: 0.7rem;
+  }
+
+  .inputs-wrapper{
+    margin-top: 3rem;
+  }
+  .create-occasion-btn{
+    font-size: 1.3rem;
+    margin-top: 2rem;
+  }
+
+  .item.item-label-stacked .text-input, .item-ios.item-label-floating .text-input{
+    margin-top: 0;
+  }
+
+  
 }

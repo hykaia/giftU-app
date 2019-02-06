@@ -3,6 +3,7 @@ page-login {
         position: relative
     }
     .scroll-content{
+        overflow-y: hidden !important;
         background: url(../assets/imgs/background.png) no-repeat center center fixed !important;
         -webkit-background-size: cover !important;
         -moz-background-size: cover;

@@ -18,9 +18,9 @@
     </ion-buttons>
   </ion-navbar>
 
-  <ion-toolbar color="purple" class="nw-segment segment-toolbar">
+  <ion-toolbar color="purple" class="segment-toolbar">
 
-    <ion-segment class="segmentStep" [(ngModel)]="segments">
+    <ion-segment [(ngModel)]="segments">
       <ion-segment-button value="my_friends" mode="md">
         My friends
       </ion-segment-button>
@@ -38,36 +38,39 @@
 
 
 <ion-content padding>
-  <ion-row>
-    <ion-col>
-      <p ion-text color="white" class="my-friends">My Friends</p>
-    </ion-col>
-    <ion-col align-self-center>
-      <p float-right ion-text color="secondary" (click)="inviteBestFriends()">invite your best friends</p>
-    </ion-col>
-  </ion-row>
+
   <!-- <button ion-button color="secondary" (click)="sendContactListToServer()">Load</button> -->
 
   <div [ngSwitch]="segments">
     <!-- My Friends -->
     <ion-grid *ngSwitchCase="'my_friends'" no-padding>
+
+      <ion-row class="section-title">
+        <ion-col>
+          <p ion-text color="white" class="my-friends">My Friends</p>
+        </ion-col>
+        <ion-col align-self-center>
+          <p float-right ion-text color="secondary" (click)="inviteBestFriends()">invite your best friends</p>
+        </ion-col>
+      </ion-row>
+
       <loading *ngIf="isLoading"></loading>
       <ion-row class="friend-wrapper-row" *ngFor="let friend of Friends" [hidden]="isLoading" (click)="openUserProfile(friend)">
+
         <ion-col col-7 align-self-center>
           <ion-row>
-            <ion-col col-3>
+            <ion-col col-4>
               <img src="assets/imgs/1.jpg" class="friend-img">
             </ion-col>
-            <ion-col col-9 align-self-center>
+            <ion-col col-8 align-self-center>
               <div class="name-status-wrapper">
                 <div ion-text text-wrap color="primary" class="normal-size" class="name">{{friend.name}}</div>
                 <div ion-text color="gray" class="normal-size" class="status">Happy and Satisfied</div>
               </div>
             </ion-col>
           </ion-row>
-
-
         </ion-col>
+
         <ion-col col-5 align-self-center>
           <div class="heart-wrapper">
             <ion-icon name="heart-outline"></ion-icon>
@@ -83,15 +86,23 @@
 
     <!-- occasions -->
     <ion-grid *ngSwitchCase="'occasions'" no-padding>
+      <ion-row class="section-title">
+        <ion-col>
+          <p ion-text color="white" class="my-friends">Occasions</p>
+        </ion-col>
+        <ion-col align-self-center>
+          <p float-right ion-text color="secondary" (click)="inviteBestFriends()">Create new occasion</p>
+        </ion-col>
+      </ion-row>
       <loading *ngIf="isLoading"></loading>
       <ion-row class="friend-wrapper-row" *ngFor="let friend of Occasions" [hidden]="isLoading">
 
         <ion-col col-7 align-self-center>
           <ion-row>
-            <ion-col col-3>
+            <ion-col col-4>
               <img src="assets/imgs/1.jpg" class="friend-img">
             </ion-col>
-            <ion-col col-9 align-self-center>
+            <ion-col col-8 align-self-center>
               <div class="name-status-wrapper">
                 <div ion-text text-wrap color="primary" class="normal-size" class="name">{{friend.name}}</div>
                 <div ion-text color="gray" class="normal-size" class="status">Happy and Satisfied</div>
@@ -120,27 +131,34 @@
 
     <!-- Notifications -->
     <ion-grid *ngSwitchCase="'notifications'" no-padding>
+      <ion-row class="section-title">
+        <ion-col>
+          <p ion-text color="white" class="my-friends">Notifications</p>
+        </ion-col>
+        <ion-col align-self-center>
+          <p float-right ion-text color="secondary" (click)="inviteBestFriends()">Invite your best friends</p>
+        </ion-col>
+      </ion-row>
       <loading *ngIf="isLoading"></loading>
       <ion-row class="notification-wrapper-row" *ngFor="let friend of Notifications" [hidden]="isLoading">
         <ion-col col-12>
           <ion-row>
-            <ion-col col-2 align-self-center>
+            <ion-col col-3 align-self-center>
               <img src="assets/imgs/1.jpg" class="friend-img">
             </ion-col>
-            <ion-col col-10 align-self-center>
+            <ion-col col-9 align-self-center>
               <div class="noti-name-wrapper">
                 <div ion-text text-wrap color="primary" class="normal-size" class="name">{{friend.name}}</div>
                 <div ion-text color="gray" class="normal-size" class="status">{{friend.notification}}</div>
                 <div ion-text color="secondary" class="noti-date" class="status">{{friend.date}}</div>
               </div>
             </ion-col>
+            <ion-col col-12 class="hr-col">
+              <hr class="hr">
+            </ion-col>
           </ion-row>
         </ion-col>
 
-
-        <ion-col col-12>
-          <hr class="hr">
-        </ion-col>
         <ion-col col-12>
           <div class="scroll-wrapper">
             <div class="emotion-box" *ngFor="let emotion of Emotions">{{emotion.code}} {{emotion.name}}</div>

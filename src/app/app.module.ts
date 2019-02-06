@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-// import { Keyboard } from '@ionic-native/keyboard';
 import { MyApp } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
 import { Contacts } from '@ionic-native/contacts';
@@ -14,6 +13,7 @@ import { SettingProvider } from '../providers/setting/setting';
 import { GeneralProvider } from '../providers/general/general';
 import { Camera } from '@ionic-native/camera';
 import { CameraPreview } from '@ionic-native/camera-preview';
+import { Keyboard } from '@ionic-native/keyboard';
 @NgModule({
   declarations: [
     MyApp,
@@ -24,6 +24,8 @@ import { CameraPreview } from '@ionic-native/camera-preview';
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
+      scrollAssist: false,
+      autoFocusAssist: false
     })
   ],
   bootstrap: [IonicApp],
@@ -34,7 +36,6 @@ import { CameraPreview } from '@ionic-native/camera-preview';
     StatusBar,
     SplashScreen,
     Contacts,
-    // Keyboard,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
       provide: HTTP_INTERCEPTORS,
@@ -45,6 +46,7 @@ import { CameraPreview } from '@ionic-native/camera-preview';
     SettingProvider,
     CameraPreview,
     Camera,
+    Keyboard,
     GeneralProvider,
   ]
 })
