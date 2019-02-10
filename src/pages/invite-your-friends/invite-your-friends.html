@@ -1,14 +1,10 @@
 <ion-header no-border>
-  <!-- <ion-navbar transparent *ngIf="!isModal"></ion-navbar>
-  <ion-navbar *ngIf="isModal" color="primary">
-    <ion-buttons start>
-      <button ion-button icon-only (click)="dismiss()">
-        <ion-icon name="close"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar> -->
   <ion-grid no-padding class="custom-grid-wrapper">
+
     <ion-row class="custom-row-wrapper">
+      <ion-col col-12 *ngIf="isModal">
+        <ion-icon name="close" (click)="dismiss()"></ion-icon>
+      </ion-col>
       <ion-col col-8 align-self-center>
         <div class="invite-friends-txt">Invite your friends</div>
       </ion-col>
@@ -28,11 +24,11 @@
 </ion-header>
 
 
-<ion-content fullscreen>
+<ion-content fullscreen >
   <loading *ngIf="isLoading"></loading>
   <!-- <button ion-button color="primary" (click)="getContacts()">Load Contact</button> -->
 
-  <ion-list *ngIf="!isLoading">
+  <ion-list *ngIf="!isLoading" id="inviteContainer">
     <ion-item *ngFor="let contact of filterContacts" (click)="openContact(contact)">
       <div ion-text text-wrap color="primary">{{contact.name}}</div>
       <div ion-text color="light">{{contact.phone}}</div>

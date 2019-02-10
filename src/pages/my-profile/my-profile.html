@@ -35,7 +35,7 @@
 
 <ion-content padding>
 
-  <div [ngSwitch]="segments">
+  <div [ngSwitch]="segments" id="friendContainer">
 
     <!-- Wishlist Segment -->
     <ion-grid *ngSwitchCase="'my_wishlist'">
@@ -64,7 +64,7 @@
       <!-- Gifts Slider -->
       <ion-row>
         <ion-col col-12>
-          <ion-slides spaceBetween="10" slidesPerView="1.1">
+          <ion-slides spaceBetween="10" slidesPerView="1">
             <!-- First Slide -->
             <ion-slide>
               <ion-row class="gift-row-wrapper">
@@ -99,14 +99,10 @@
                 </ion-col>
                 <ion-col col-12 class="btns-wrapper">
                   <ion-row>
-                    <ion-col col-6>
-                      <button ion-button color="custom" class="custom-btn" round>50 Seen</button>
-                    </ion-col>
-                    <ion-col col-6>
+                    <ion-col col-12>
                       <div class="edit-wrapper">
                         <img src="assets/imgs/pencil.svg" class="edit-pencil">
                       </div>
-
                       <div class="cancel-wrapper">
                         <img src="assets/imgs/cancel.svg">
                       </div>

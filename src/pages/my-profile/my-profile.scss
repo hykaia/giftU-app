@@ -126,7 +126,6 @@ page-my-profile {
         background: #24df73;
         padding: 1rem;
         border-radius: 100%;
-        float: left;
         display: inline-block;
       }
 
@@ -137,7 +136,6 @@ page-my-profile {
         padding: 1rem;
         border-radius: 100%;
         display: inline-block;
-        float: left;
         margin-left: 1rem;
       }
 
@@ -309,5 +307,17 @@ page-my-profile {
     margin-top: 0;
   }
 
+
+  .ball {
+    animation: flash 1s infinite alternate;
+    -webkit-animation: flash 1s infinite alternate;
+  }
+
+
+  @keyframes flash {
+      0% { opacity: 1; } 
+      50% { opacity: .1; } 
+      100% { opacity: 1; }
+  }
   
 }

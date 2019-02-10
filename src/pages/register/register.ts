@@ -21,17 +21,18 @@ export class RegisterPage {
 
 
   register() {
-    this.isWaiting = true
-    this.api.register(this.data).subscribe(data => {
-      console.log("my data : ", data);
-      if (data.data.success) {
-        localStorage.setItem('isProfileComplete', JSON.stringify(true))
-        this.navCtrl.setRoot('InviteYourFriendsPage')
-      }
-      this.isWaiting = false
-    }, err => {
-      this.general.showErrors(err)
-      this.isWaiting = false
-    })
+    this.navCtrl.setRoot('InviteYourFriendsPage')
+    // this.isWaiting = true
+    // this.api.register(this.data).subscribe(data => {
+    //   console.log("my data : ", data);
+    //   if (data.data.success) {
+    //     localStorage.setItem('isProfileComplete', JSON.stringify(true))
+    //     this.navCtrl.setRoot('InviteYourFriendsPage')
+    //   }
+    //   this.isWaiting = false
+    // }, err => {
+    //   this.general.showErrors(err)
+    //   this.isWaiting = false
+    // })
   }
 }

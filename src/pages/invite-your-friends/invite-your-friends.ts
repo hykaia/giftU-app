@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild, Renderer2 } from "@angular/core";
 import { IonicPage, NavController, NavParams, Platform, ViewController } from "ionic-angular";
 import {
   Contacts,
@@ -20,25 +20,35 @@ import { ContactList } from "./mocks";
 export class InviteYourFriendsPage {
   data: any = {};
   isLoading: boolean = true;
-  isModal : boolean = this.navParams.get('isModal')
+  isModal: boolean = this.navParams.get('isModal')
   filterContacts: any[] = ContactList;
   originalContacts: any[] = ContactList
   constructor(
     public navCtrl: NavController,
     private contacts: Contacts,
     private api: ApiProvider,
+    private render: Renderer2,
     private sanitizer: DomSanitizer,
     private viewCtrl: ViewController,
     private platform: Platform,
     public navParams: NavParams
   ) {
-    console.log("filterContacts : ",this.filterContacts);
+    console.log("filterContacts : ", this.filterContacts);
+
     this.isLoading = false
     this.platform.ready().then(() => {
       if (this.platform.is("cordova")) {
         // this.getContacts();
       }
     });
+  }
+
+
+
+  ngAfterViewInit(): void {
+    this.fadeInContainer();
+    console.log("hello");
+    
   }
 
   openContact(contact) {
@@ -101,7 +111,19 @@ export class InviteYourFriendsPage {
     this.navCtrl.setRoot('MyFriendsPage')
   }
 
-  dismiss(){
+  dismiss() {
     this.viewCtrl.dismiss()
   }
+
+
+  fadeInContainer() {
+    let blockElement = document.getElementById(`inviteContainer`);
+    console.log('blockElement :',blockElement);
+    
+    this.render.addClass(blockElement, 'ball');
+    setTimeout(() => {
+      this.render.removeClass(blockElement, 'ball');
+    }, 500)
+  }
+
 }

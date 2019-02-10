@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, Renderer2 } from "@angular/core";
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CameraPreview } from '@ionic-native/camera-preview';
 import { Emotions, Gifts, Occasions } from './mocks';
+import { GeneralProvider } from '../../providers/general/general';
 @IonicPage()
 @Component({
   selector: 'page-my-profile',
@@ -25,6 +26,8 @@ export class MyProfilePage {
   }
   constructor(public navCtrl: NavController,
     private cameraPreview: CameraPreview,
+    private general: GeneralProvider,
+    private render: Renderer2,
     public navParams: NavParams) {
   }
   ionViewWillEnter() {
@@ -35,8 +38,21 @@ export class MyProfilePage {
     console.log('ionViewDidLoad MyProfilePage');
   }
 
+  ngAfterViewInit(): void {
+    this.fadeInContainer();
+  }
+
   AddGift() {
     this.navCtrl.push('UploadGiftImgPage')
+  }
+
+
+  fadeInContainer() {
+    let blockElement = document.getElementById(`friendContainer`);
+    this.render.addClass(blockElement, 'ball');
+    setTimeout(() => {
+      this.render.removeClass(blockElement, 'ball');
+    }, 500)
   }
 
 }

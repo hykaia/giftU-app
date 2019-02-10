@@ -14,6 +14,8 @@ import { GeneralProvider } from '../providers/general/general';
 import { Camera } from '@ionic-native/camera';
 import { CameraPreview } from '@ionic-native/camera-preview';
 import { Keyboard } from '@ionic-native/keyboard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -21,11 +23,13 @@ import { Keyboard } from '@ionic-native/keyboard';
   imports: [
     BrowserModule,
     IonicStorageModule.forRoot(),
+    BrowserAnimationsModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
-      scrollAssist: false,
-      autoFocusAssist: false
+      scrollAssist: true,
+      autoFocusAssist: true,
+      mode : 'ios',
     })
   ],
   bootstrap: [IonicApp],

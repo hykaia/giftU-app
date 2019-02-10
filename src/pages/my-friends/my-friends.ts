@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild, Renderer2 } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -6,8 +6,7 @@ import {
   Platform,
   ModalController
 } from "ionic-angular";
-import { Friends, Occasions, Notifications } from "./mocks";
-
+import { Friends, Occasions, Notifications, Emotions } from "./mocks";
 import { ApiProvider } from "../../providers/api/api";
 import { DomSanitizer } from "@angular/platform-browser";
 import {
@@ -18,6 +17,7 @@ import {
   ContactFindOptions,
   ContactFieldType
 } from "@ionic-native/contacts";
+import { GeneralProvider } from "../../providers/general/general";
 
 @IonicPage()
 @Component({
@@ -25,22 +25,20 @@ import {
   templateUrl: "my-friends.html"
 })
 export class MyFriendsPage {
+  @ViewChild("container") containerElem;
+
   segments: any = "my_friends";
   Friends: any[] = Friends;
-  Occasions: any[] = Occasions
-  Emotions: any[] = [
-    { name: "i love you", code: String.fromCodePoint(0x1F60D) },
-    { name: "i like you", code: String.fromCodePoint(0x1F618) },
-    { name: "thanks", code: String.fromCodePoint(0x1F642) },
-    { name: "Best friends", code: String.fromCodePoint(0x1F60E) },
-    { name: "Best Wishes", code: String.fromCodePoint(0x1F354) },
-  ]
-  Notifications: any[] = Notifications
+  Occasions: any[] = Occasions;
+  Emotions: any[] = Emotions;
+  Notifications: any[] = Notifications;
   isLoading: boolean = true;
   constructor(
     public navCtrl: NavController,
     private platform: Platform,
+    private render: Renderer2,
     private contacts: Contacts,
+    private general: GeneralProvider,
     private modalCtrl: ModalController,
     private sanitizer: DomSanitizer,
     private api: ApiProvider,
@@ -50,10 +48,14 @@ export class MyFriendsPage {
   }
 
   ionViewDidEnter() {
-    this.isLoading = false
+    this.isLoading = false;
     if (this.platform.is("cordova")) {
       // this.getFriends();
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.fadeInContainer();
   }
 
   getFriends(): void {
@@ -102,20 +104,42 @@ export class MyFriendsPage {
 
   inviteBestFriends() {
     // this.navCtrl.push('InviteBestFriendsPage')
-    let modal = this.modalCtrl.create("InviteYourFriendsPage", { isModal: true });
+    let modal = this.modalCtrl.create("InviteYourFriendsPage", {
+      isModal: true
+    });
     modal.present();
   }
 
-
   Search() {
-    let modal = this.modalCtrl.create('SearchFriendsPage', { Friends: this.Friends })
-    modal.present()
+    let modal = this.modalCtrl.create("SearchFriendsPage", {
+      Friends: this.Friends
+    });
+    modal.present();
   }
 
   openUserProfile(friend) {
-    this.navCtrl.push('UserProfilePage', { profile: friend })
+    this.navCtrl.push("UserProfilePage", { profile: friend });
   }
   openMyProfile() {
-    this.navCtrl.push('MyProfilePage')
+    this.navCtrl.push("MyProfilePage");
+  }
+
+  animateBlock(index, friend) {
+    let blockElement = document.getElementById(`friend_${index}`);
+    this.render.addClass(blockElement, "fadeIn");
+    setTimeout(() => {
+      this.render.removeClass(blockElement, "fadeIn");
+    }, 100);
+    this.openUserProfile(friend);
+  }
+
+  fadeInContainer() {
+    let blockElement = document.getElementById(`container`);
+    console.log(blockElement);
+    
+    this.render.addClass(blockElement, "ball");
+    setTimeout(() => {
+      this.render.removeClass(blockElement, "ball");
+    }, 500);
   }
 }

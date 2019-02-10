@@ -193,3 +193,13 @@ export const Notifications: any[] = [
   },
 
 ];
+
+
+
+export const Emotions: any[] = [
+  { name: "i love you", code: String.fromCodePoint(0x1F60D) },
+  { name: "i like you", code: String.fromCodePoint(0x1F618) },
+  { name: "thanks", code: String.fromCodePoint(0x1F642) },
+  { name: "Best friends", code: String.fromCodePoint(0x1F60E) },
+  { name: "Best Wishes", code: String.fromCodePoint(0x1F354) },
+]

@@ -11,7 +11,8 @@ export class GeneralProvider {
     private toastCtrl: ToastController,
     private api: ApiProvider,
     private alertCtrl: AlertController
-  ) {}
+  ) {
+  }
 
   presentToast(text) {
     let toast = this.toastCtrl.create({
@@ -99,4 +100,7 @@ export class GeneralProvider {
       this.presentToast(err.error.error)
     }
   }
+
+  
+
 }

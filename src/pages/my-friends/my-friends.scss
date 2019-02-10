@@ -161,4 +161,42 @@ page-my-friends {
     .hr-col{
         margin-top: -12px;
     }
+
+
+
+    .fadeIn {
+        opacity: 0;
+        animation: fadeIn 1.8s forwards;
+    }
+      
+    @keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    30% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+
+
+    .ball {
+        animation: flash 1s infinite alternate;
+        -webkit-animation: flash 1s infinite alternate;
+    }
+    
+    
+    @keyframes flash {
+        0% { opacity: 1; } 
+        50% { opacity: .1; } 
+        100% { opacity: 1; }
+    }
+
+
+  
+
 }

@@ -21,6 +21,7 @@ export class MyApp {
   ) {
     // this.checkDefaultRoute()
     this.intialize()
+    this.getLowestNumber()
   }
 
   intialize() {
@@ -46,5 +47,12 @@ export class MyApp {
       // this.rootPage = 'InviteYourFriendsPage' //for test only
       this.rootPage = 'LoginPage'
     }
+  }
+
+
+  getLowestNumber(){
+      console.log("asd");
+      let arr:any = [65,245,9,234,567,1,3]
+      
   }
 }

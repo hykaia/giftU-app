@@ -41,7 +41,7 @@
 
   <!-- <button ion-button color="secondary" (click)="sendContactListToServer()">Load</button> -->
 
-  <div [ngSwitch]="segments">
+  <div [ngSwitch]="segments" id="container">
     <!-- My Friends -->
     <ion-grid *ngSwitchCase="'my_friends'" no-padding>
 
@@ -55,7 +55,8 @@
       </ion-row>
 
       <loading *ngIf="isLoading"></loading>
-      <ion-row class="friend-wrapper-row" *ngFor="let friend of Friends" [hidden]="isLoading" (click)="openUserProfile(friend)">
+      <!-- openUserProfile(friend) , -->
+      <ion-row  class="friend-wrapper-row" id="friend_{{index}}"  (click)="animateBlock(index,friend)"  *ngFor="let friend of Friends;let index = index" [hidden]="isLoading">
 
         <ion-col col-7 align-self-center>
           <ion-row>

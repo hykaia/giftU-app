@@ -4,7 +4,6 @@ page-create-gift {
     }
 
     .inputs-wrapper{
-        margin-top: 18rem;
     }
 
     .scroll-content {
@@ -12,5 +11,8 @@ page-create-gift {
     }
     .custom-col{
         position: initial;
+    }
+    .custom-item{
+        padding-left : 0 !important;
     }
 }
