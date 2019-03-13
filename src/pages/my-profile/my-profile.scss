@@ -1,323 +1,350 @@
 page-my-profile {
-    .segment-button.segment-activated{
-        background-color: transparent !important;
-        border-bottom: 2px solid white !important;
-        border-radius: 0 !important;
-    }
-    .segment-button{
-        border-color: transparent !important;
-    }
-    .segment-button{
-        max-width: none !important;
-        color: white !important;
-        height: 3.6rem !important;
-    }
-    
-    .segment-toolbar{
-        min-height: none !important;
-    }
-    .toolbar .segment{
-        bottom: -7px !important;
-    }
-    .avatar-img{
-        width: 6rem;
-        margin: auto;
-        display: block;
-        height: 6rem;
-        border-radius: 100%;
-        border: 1.5px solid white;
-        margin-top: 1rem;
-      }
-      ion-header.header.header{
-        background: #7a2fff;
-        position: relative;
-      }
-      .user-name{
-        text-align: center;
-        color: white;
-        margin-top: 9px;
-      }
-      .status {
-        text-align: center;
-        color: white;
-        margin-top: -1rem;
-      }
-      .ion-ios-heart-outline:before , 
-      .ion-ios-help-buoy:before,
-      .ion-md-heart-outline:before,
-      .ion-md-help-buoy:before,{
-          color: #7b2fff;
-          font-weight: bold;
-          vertical-align: middle;
-          font-size: 1.8rem;
-      }
-    
-      .ion-ios-help-buoy:before,
-      .ion-md-help-buoy:before{
-          color: #132f4c;
-      }
+  .segment-button.segment-activated {
+    background-color: transparent !important;
+    border-bottom: 2px solid white !important;
+    border-radius: 0 !important;
+  }
+  .segment-button {
+    border-color: transparent !important;
+  }
+  .segment-button {
+    max-width: none !important;
+    color: white !important;
+    height: 3.6rem !important;
+  }
 
-      .normal-size{
-        font-size: 1.2rem;
-      }
-      .mutual{
-        margin-right: 1rem;
-      }
-      .hr{
-        border-top: 1px solid #c5c5c5;
-      }
-  
-      .remaining-days-btn{
-        height: 2.3em;
-        span.button-inner{
-            font-size: 1.3rem;
-        }
-      }
-      .birthday-row-wrapper{ 
-        //   Code here
-      }
-      .birthday-txt{
-        color: white;
-        font-weight: bold;
-      }
-      .gift-row-wrapper{
-        background: white;
-        border-radius: 3px;
-      }
-    
-      .gift-img {
-        width: 15rem;
-      }
-    
-      .custom-btn{
-        height: 2.5em;
-        width: 75%;
-        font-size: 1.3rem;
-      }
-      .btns-wrapper{
-        position: absolute;
-        bottom: -30px;
-      }
-      .swiper-container{
-        overflow: unset !important;
-      }
-      .wish-txt{
-        font-size: 1.5rem;
-        margin-bottom: 3rem;
-        margin-top: 1rem;
-      }
-      .wishlist-row-wrapper{
-          margin-top: 3rem;
-      }
-      .wish-img{
-        width: 3rem;
-        height: 5.1rem;
-        margin: auto;
-        display: block;
-      }
-      .plus-img{
-        width: 2.8rem;
-        margin: auto;
-        display: block;
-      }
-      .edit-wrapper{
-        width: 4rem;
-        height: 4rem;
-        background: #24df73;
-        padding: 1rem;
-        border-radius: 100%;
-        display: inline-block;
-      }
+  .segment-toolbar {
+    min-height: none !important;
+  }
+  .toolbar .segment {
+    bottom: -7px !important;
+  }
 
-      .cancel-wrapper{
-        width: 4rem;
-        height: 4rem;
-        background: #de0a3c;
-        padding: 1rem;
-        border-radius: 100%;
-        display: inline-block;
-        margin-left: 1rem;
-      }
+  .avatar-img {
+    width: 6rem;
+    margin: auto;
+    display: block;
+    height: 6rem;
+    border-radius: 100%;
+    border: 1.5px solid white;
+    margin-top: 1rem;
+  }
+  ion-header.header.header {
+    background: #7a2fff;
+    position: relative;
+  }
+  .user-name {
+    text-align: center;
+    color: white;
+    margin-top: 9px;
+  }
+  .status {
+    text-align: center;
+    color: white;
+    margin-top: -1rem;
+  }
+  .ion-ios-heart-outline:before,
+  .ion-ios-help-buoy:before,
+  .ion-md-heart-outline:before,
+  .ion-md-help-buoy:before {
+    color: #7b2fff;
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 1.8rem;
+  }
 
-      .add-wrapper{
-        width: 3.5rem;
-        height: 3.5rem;
-        background: #24df73;
-        padding: 0.6rem;
-        border-radius: 100%;
-        display: inline-block;
-      }
-      .first-gift-btn{
-        height: 2.1em;
-        font-size: 1.4rem;
-        width: 37%;
-    
-      }
+  .ion-ios-help-buoy:before,
+  .ion-md-help-buoy:before {
+    color: #132f4c;
+  }
 
-      .img-container{
-        position: absolute;
-        width: 50%;
-        left: 0;
-        right: 0;
-        top: 4rem;
-        margin: auto;
-        .smile-img-wrapper{
-            width: 115px;
-            height: 115px;
-            margin: auto;
-            position: relative;
-            background: white;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-bottom-color: #7b2fff;
-            border-right-color: #7b2fff;
-            box-shadow: 3px 5px 20px 0px #b2ffd4;
-            transform: rotate(-42deg);
-            margin-top: 4rem;
-        }
-        .add-img {
-            width: 43px;
-            position: absolute;
-            left: 0;
-            right: 0;
-            margin: auto;
-            top: 33px;
-            transform: rotate(40deg);
-        }
-    }
+  .normal-size {
+    font-size: 1.2rem;
+  }
+  .mutual {
+    margin-right: 1rem;
+  }
+  .hr {
+    border-top: 1px solid #c5c5c5;
+  }
 
-    .custom-add-gift-col{
-        height: 25.6rem;
-    }
-    .add-gift-txt{
-        font-size: 1.6rem;
-    }
-
-    // Css for my gifts
-    .notification-wrapper-row{
-      background: white;
-      border-radius: 5px;
-      margin-bottom: 10px;    
-      .friend-img{
-        width: 4.4rem;
-        display: inline-block;
-        margin: auto;
-        border-radius: 100%;
-        box-shadow: 0px 1px 8px 0px #080808;
-      }
-      .noti-name-wrapper{
-        line-height: 1.4;
-      }
-      .normal-size{
-        font-size:1.4rem;
-        margin-left: 3px;
-      }
-      .scroll-wrapper{
-          overflow: auto;
-          margin-left: 5px;
-          white-space: nowrap;
-          .emotion-box{
-              display: inline-block;
-              color: #142f4b;
-              text-align: center;
-              text-decoration: none;
-              background: #ddddf0;
-              padding: 7px;
-              margin: 7px;
-              border-radius: 3px;
-          }
-      }
-      .hr{
-          height: 1.15px;
-      }
-    }
-    .my-friends{
+  .remaining-days-btn {
+    height: 2.3em;
+    span.button-inner {
       font-size: 1.3rem;
-      font-weight: bold;
     }
+  }
+  .birthday-row-wrapper {
+    //   Code here
+  }
+  .birthday-txt {
+    color: white;
+    font-weight: bold;
+  }
+  .gift-row-wrapper {
+    background: white;
+    border-radius: 3px;
+  }
 
-    .gift-img-wrapper{
-      display: inline-block;
-      width: 47px;
-      height: 47px;
-      border-radius: 100%;
-      position: absolute;
-      left: 2.9rem;
-      background: white;
-      overflow: hidden;
-      .giftt-img{
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: -21px;
-        left: 0;
-        margin: auto;
-        max-width: 80%;
-        max-height: 90%
-      }
-    }
+  .gift-img {
+    width: 15rem;
+  }
 
-    .occasion-img-wrapper{
-      background: white;
-      border-radius: 100%;
-      width: 70px;
-      height: 70px;
+  .custom-btn {
+    height: 2.5em;
+    width: 75%;
+    font-size: 1.3rem;
+  }
+  .btns-wrapper {
+    position: absolute;
+    bottom: -30px;
+  }
+  .swiper-container {
+    overflow: unset !important;
+  }
+  .wish-txt {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+  }
+  .wishlist-row-wrapper {
+    margin-top: 3rem;
+  }
+  .wish-img {
+    width: 3rem;
+    height: 5.1rem;
+    margin: auto;
+    display: block;
+  }
+  .plus-img {
+    width: 2.8rem;
+    margin: auto;
+    display: block;
+  }
+  .edit-wrapper {
+    width: 4rem;
+    height: 4rem;
+    background: #24df73;
+    padding: 1rem;
+    border-radius: 100%;
+    display: inline-block;
+  }
+
+  .cancel-wrapper {
+    width: 4rem;
+    height: 4rem;
+    background: #de0a3c;
+    padding: 1rem;
+    border-radius: 100%;
+    display: inline-block;
+    margin-left: 1rem;
+  }
+
+  .add-wrapper {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-left: 0.6rem;
+    background: #24df73;
+    padding: 0.6rem;
+    border-radius: 100%;
+    display: inline-block;
+  }
+  .row-wishlist {
+    margin-left: -1rem;
+  }
+  .more-add {
+    margin-left: 0.5rem !important;
+  }
+  .first-gift-btn {
+    height: 2.1em;
+    font-size: 1.4rem;
+    width: 37%;
+  }
+
+  .img-container {
+    position: absolute;
+    width: 50%;
+    left: 0;
+    right: 0;
+    top: 4rem;
+    margin: auto;
+    .smile-img-wrapper {
+      width: 115px;
+      height: 115px;
       margin: auto;
-      .occasion-img{
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 19px;
-        left: 0;
-        margin: auto;
-        max-width: 57%;
-        max-height: 90%;
-      }
-    }
-    
-    .avatar-name{
-      font-size: 13px;
-    }
-    .occasion-name{
-      font-size: 1.2rem;
-      color: #8da6c1;
       position: relative;
-      top: 1rem;
+      background: white;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-bottom-color: #7b2fff;
+      border-right-color: #7b2fff;
+      box-shadow: 3px 5px 20px 0px #b2ffd4;
+      transform: rotate(-42deg);
+      margin-top: 4rem;
+    }
+    .add-img {
+      width: 43px;
+      position: absolute;
       left: 0;
       right: 0;
       margin: auto;
+      top: 33px;
+      transform: rotate(40deg);
     }
-    .custom-item{
-      color: white;
-      padding-left: 0 !important;
-      background-color: transparent;
-      font-size: 1.4rem;
-      margin-bottom: 0.7rem;
   }
 
-  .inputs-wrapper{
+  .custom-add-gift-col {
+    height: 25.6rem;
+  }
+  .add-gift-txt {
+    font-size: 1.6rem;
+  }
+
+  // Css for my gifts
+  .notification-wrapper-row {
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    .friend-img {
+      width: 4.4rem;
+      display: inline-block;
+      margin: auto;
+      border-radius: 100%;
+      box-shadow: 0px 1px 8px 0px #080808;
+    }
+    .noti-name-wrapper {
+      line-height: 1.4;
+    }
+    .normal-size {
+      font-size: 1.4rem;
+      margin-left: 3px;
+    }
+    .scroll-wrapper {
+      overflow: auto;
+      margin-left: 5px;
+      white-space: nowrap;
+      .emotion-box {
+        display: inline-block;
+        color: #142f4b;
+        text-align: center;
+        text-decoration: none;
+        background: #ddddf0;
+        padding: 7px;
+        margin: 7px;
+        border-radius: 3px;
+      }
+    }
+    .hr {
+      height: 1.15px;
+    }
+  }
+  .my-friends {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .gift-img-wrapper {
+    display: inline-block;
+    width: 47px;
+    height: 47px;
+    border-radius: 100%;
+    position: absolute;
+    left: 2.9rem;
+    background: white;
+    overflow: hidden;
+    .giftt-img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: -21px;
+      left: 0;
+      margin: auto;
+      max-width: 80%;
+      max-height: 90%;
+    }
+  }
+  .edit-img {
+    width: 1.4rem;
+    margin-left: 0.6rem;
+    position: relative;
+    top: 2px;
+  }
+
+  .occasion-img-wrapper {
+    background: white;
+    border-radius: 100%;
+    width: 70px;
+    height: 70px;
+    margin: auto;
+    .occasion-img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 19px;
+      left: 0;
+      margin: auto;
+      max-width: 57%;
+      max-height: 90%;
+    }
+  }
+
+  .avatar-name {
+    font-size: 13px;
+  }
+  .occasion-name {
+    font-size: 1.2rem;
+    color: #8da6c1;
+    position: relative;
+    top: 1rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  .custom-item {
+    color: white;
+    padding-left: 0 !important;
+    background-color: transparent;
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+  }
+  .active {
+    border: 2px solid #7a2fff;
+  }
+  .activeName {
+    color: #7a2fff;
+  }
+
+  .inputs-wrapper {
     margin-top: 3rem;
   }
-  .create-occasion-btn{
+  .create-occasion-btn {
     font-size: 1.3rem;
     margin-top: 2rem;
   }
 
-  .item.item-label-stacked .text-input, .item-ios.item-label-floating .text-input{
-    margin-top: 0;
+  .occasion-grid {
+    margin-bottom: 3rem;
   }
 
+  .item.item-label-stacked .text-input,
+  .item-ios.item-label-floating .text-input {
+    margin-top: 0;
+  }
 
   .ball {
     animation: flash 1s infinite alternate;
     -webkit-animation: flash 1s infinite alternate;
   }
 
-
   @keyframes flash {
-      0% { opacity: 1; } 
-      50% { opacity: .1; } 
-      100% { opacity: 1; }
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 1;
+    }
   }
-  
 }

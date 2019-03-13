@@ -184,19 +184,6 @@ page-my-friends {
     }
 
 
-    .ball {
-        animation: flash 1s infinite alternate;
-        -webkit-animation: flash 1s infinite alternate;
-    }
-    
-    
-    @keyframes flash {
-        0% { opacity: 1; } 
-        50% { opacity: .1; } 
-        100% { opacity: 1; }
-    }
 
-
-  
 
 }

@@ -1,29 +1,33 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>add new gift</ion-title>
+    <ion-title *ngIf="!gift">Add new gift</ion-title>
+    <ion-title *ngIf="gift">Edit gift</ion-title>
     <ion-buttons end>
-      <button ion-button round color="white" (click)="Next()">next</button>
+      <button ion-button round color="white" (click)="Next()">
+        <span *ngIf="!isWaiting">next</span>
+        <ion-spinner
+          name="ios-small"
+          *ngIf="isWaiting"
+          color="light"
+        ></ion-spinner>
+      </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <hr class="hr">
+  <hr class="hr" />
 </ion-content>
 
 <ion-footer>
   <ion-fab center bottom small class="take-picture">
-    <button (click)="takePicture()" ion-fab color="light">
-    </button>
+    <button (click)="takePicture()" ion-fab color="light"></button>
   </ion-fab>
 
   <ion-fab left bottom small class="open-gallery">
     <button (click)="openGallery()" ion-fab color="light">
-      <img *ngIf="!img" src="assets/imgs/gallery.svg">
-      <img *ngIf="img" [src]="img">
+      <img *ngIf="!img" src="assets/imgs/gallery.svg" />
+      <img *ngIf="img" [src]="img" />
     </button>
   </ion-fab>
 </ion-footer>

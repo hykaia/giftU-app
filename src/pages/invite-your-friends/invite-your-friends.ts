@@ -1,5 +1,11 @@
 import { Component, ViewChild, Renderer2 } from "@angular/core";
-import { IonicPage, NavController, NavParams, Platform, ViewController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Platform,
+  ViewController
+} from "ionic-angular";
 import {
   Contacts,
   Contact,
@@ -20,9 +26,9 @@ import { ContactList } from "./mocks";
 export class InviteYourFriendsPage {
   data: any = {};
   isLoading: boolean = true;
-  isModal: boolean = this.navParams.get('isModal')
-  filterContacts: any[] = ContactList;
-  originalContacts: any[] = ContactList
+  isModal: boolean = this.navParams.get("isModal");
+  filterContacts: any;
+  originalContacts: any;
   constructor(
     public navCtrl: NavController,
     private contacts: Contacts,
@@ -33,38 +39,52 @@ export class InviteYourFriendsPage {
     private platform: Platform,
     public navParams: NavParams
   ) {
-    console.log("filterContacts : ", this.filterContacts);
-
-    this.isLoading = false
-    this.platform.ready().then(() => {
-      if (this.platform.is("cordova")) {
-        // this.getContacts();
-      }
-    });
+    // this.platform.ready().then(() => {
+    //   if (this.platform.is("cordova")) {
+    //     this.getContacts();
+    //   }
+    // });
   }
 
+  ionViewDidEnter() {
+    // this.getUserContacts();
+    this.getContacts();
+  }
 
+  // getUserContacts() {
+  //   var contacts: any = [{ phone: "010455445", name: "ahmed", img: "asd.png" }];
+  //   var fianl = {
+  //     contacts: JSON.stringify(contacts)
+  //   };
+  //   console.log("contactss : ", fianl);
+
+  //   this.api.getAllUserContacts(fianl).subscribe(data => {
+  //     console.log("a7a data :", data);
+
+  //     if (data.code == "200" || data.code == "201") {
+  //       // data.data.forEach((item, index) => {
+  //       //   this.filterContacts[index].exists = item.exists;
+  //       // });
+  //       // console.log("after filterContacts : ", this.filterContacts);
+  //     }
+  //   });
+  // }
 
   ngAfterViewInit(): void {
-    this.fadeInContainer();
-    console.log("hello");
-    
+    // this.fadeInContainer();
   }
-
-  openContact(contact) {
-    // code here
-  }
+  openContact() {}
 
   getContacts(): void {
-    let contactList: any[] = []
+    let contactList: any[] = [];
     let options: any = {
       multiple: true,
       hasPhoneNumber: true
-    }
+    };
     this.contacts
       .find(["displayName", "phoneNumbers", "photos"], options)
       .then(contacts => {
-        console.log("original contacts : ", contacts);
+        // console.log("original contacts : ", contacts);
         contacts.forEach(item => {
           contactList.push({
             name: item["_objectInstance"].name.formatted,
@@ -72,25 +92,30 @@ export class InviteYourFriendsPage {
               ? item["_objectInstance"].phoneNumbers[0].value
               : null,
             img: Array.isArray(item["_objectInstance"].photos)
-              ? this.sanitizer.bypassSecurityTrustUrl(item["_objectInstance"].photos[0].value)
+              ? this.sanitizer.bypassSecurityTrustUrl(
+                  item["_objectInstance"].photos[0].value
+                )
               : "assets/imgs/1.jpg"
           });
-        })
-        this.sendContactListToServer(contactList)
+        });
+
+        this.sendContactListToServer(contactList);
       });
   }
 
   sendContactListToServer(contactList) {
-    let params: any = {
-      data: JSON.stringify({ data: contactList })
-    }
-    this.api.sendUserContacts(params).subscribe(
+    var params = {
+      contacts: JSON.stringify(contactList)
+    };
+    this.api.getAllUserContacts(params).subscribe(
       data => {
+        console.log("contacts api data : ", data);
         this.originalContacts = data.data;
-        this.filterContacts = this.originalContacts
+        this.filterContacts = this.originalContacts;
         this.isLoading = false;
       },
       err => {
+        console.log("contacts error is : ", err);
         this.isLoading = false;
       }
     );
@@ -100,30 +125,27 @@ export class InviteYourFriendsPage {
     this.filterContacts = this.originalContacts.filter(item => {
       if (item.name != null && item.phone != null) {
         return (
-          item.name.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1 ||
+          item.name.toLowerCase().indexOf(this.data.search.toLowerCase()) >
+            -1 ||
           item.phone.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1
-        )
+        );
       }
-    })
+    });
   }
 
   submit() {
-    this.navCtrl.setRoot('MyFriendsPage')
+    this.navCtrl.setRoot("MyFriendsPage");
   }
 
   dismiss() {
-    this.viewCtrl.dismiss()
+    this.viewCtrl.dismiss();
   }
-
 
   fadeInContainer() {
     let blockElement = document.getElementById(`inviteContainer`);
-    console.log('blockElement :',blockElement);
-    
-    this.render.addClass(blockElement, 'ball');
+    this.render.addClass(blockElement, "ball");
     setTimeout(() => {
-      this.render.removeClass(blockElement, 'ball');
-    }, 500)
+      this.render.removeClass(blockElement, "ball");
+    }, 500);
   }
-
 }

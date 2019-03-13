@@ -1,0 +1,68 @@
+<ion-row>
+  <ion-col col-12>
+    <ion-slides spaceBetween="10" slidesPerView="1">
+      <!-- First Slide -->
+      <ion-slide *ngIf="occasion.gifts.length == 0">
+        <ion-row class="gift-row-wrapper">
+          <ion-col col-12 class="custom-add-gift-col">
+            <p ion-text color="primary" class="add-gift-txt">
+              Add your wishes and gifts you wish
+            </p>
+            <!-- add gift image -->
+            <div class="all-img-container" (click)="AddGift(occasion.id)">
+              <div class="img-container">
+                <div class="smile-img-wrapper">
+                  <img
+                    src="assets/imgs/rounded-add-button.svg"
+                    class="add-img"
+                  />
+                </div>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col col-12 class="btns-wrapper">
+            <ion-row>
+              <ion-col col-12>
+                <button
+                  ion-button
+                  color="secondary"
+                  class="first-gift-btn"
+                  round
+                >
+                  Add First Gift
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+      <!-- End -->
+      <ion-slide *ngFor="let gift of occasion.gifts">
+        <ion-row class="gift-row-wrapper">
+          <ion-col col-12>
+            <p ion-text color="primary">{{ gift.title }}</p>
+            <img src="assets/imgs/iPhone-X.png" class="gift-img" />
+            <div ion-text color="gray" class="wish-txt">
+              {{ gift.description }} {{ codes.love }}
+            </div>
+          </ion-col>
+          <ion-col col-12 class="btns-wrapper">
+            <ion-row>
+              <ion-col col-12>
+                <div class="edit-wrapper" (click)="editGift(gift)">
+                  <img src="assets/imgs/pencil.svg" class="edit-pencil" />
+                </div>
+                <div
+                  class="cancel-wrapper"
+                  (click)="deleteGift(occasion, gift)"
+                >
+                  <img src="assets/imgs/cancel.svg" />
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+    </ion-slides>
+  </ion-col>
+</ion-row>

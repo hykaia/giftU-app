@@ -1,0 +1,24 @@
+<ion-list *ngIf="!isLoading" id="inviteContainer">
+  <ion-item
+    *ngFor="let contact of filterContacts"
+    (click)="openContact(contact)"
+  >
+    <div ion-text text-wrap color="primary">{{ contact.name }}</div>
+    <div ion-text color="light">{{ contact.phone }}</div>
+
+    <ion-avatar item-left>
+      <img [src]="contact.img" />
+    </ion-avatar>
+    <!-- 
+      <button
+        block
+        class="invite-uninvite-btn"
+        ion-button
+        item-right
+        color="secondary"
+        *ngIf="!contact.exists"
+      >
+        Invite
+      </button> -->
+  </ion-item>
+</ion-list>

@@ -70,7 +70,8 @@ export const Friends: any[] = [
     img: "assets/imgs/1.jpg",
     wishlists: 15,
     gifts: 1
-  }, {
+  },
+  {
     name: "Loai",
     phone: "01061756839",
     status: "Crazy",
@@ -87,10 +88,6 @@ export const Friends: any[] = [
     gifts: 1
   }
 ];
-
-
-
-
 
 export const Occasions: any[] = [
   {
@@ -148,11 +145,8 @@ export const Occasions: any[] = [
     img: "assets/imgs/1.jpg",
     occasionImg: "assets/imgs/wedding.png",
     dayRemaining: 2
-  },
-
+  }
 ];
-
-
 
 export const Notifications: any[] = [
   {
@@ -190,16 +184,19 @@ export const Notifications: any[] = [
     notification: "hello world ! hello world ! hello world",
     date: "3 days",
     img: "assets/imgs/1.jpg"
-  },
-
+  }
 ];
 
-
-
 export const Emotions: any[] = [
-  { name: "i love you", code: String.fromCodePoint(0x1F60D) },
-  { name: "i like you", code: String.fromCodePoint(0x1F618) },
-  { name: "thanks", code: String.fromCodePoint(0x1F642) },
-  { name: "Best friends", code: String.fromCodePoint(0x1F60E) },
-  { name: "Best Wishes", code: String.fromCodePoint(0x1F354) },
-]
+  { name: "i love you", code: String.fromCodePoint(0x1f60d) },
+  { name: "i like you", code: String.fromCodePoint(0x1f618) },
+  { name: "thanks", code: String.fromCodePoint(0x1f642) },
+  { name: "Best friends", code: String.fromCodePoint(0x1f60e) },
+  { name: "Best Wishes", code: String.fromCodePoint(0x1f354) }
+];
+
+export const Slides: any[] = [
+  { id: "my_friends", value: "My friends" },
+  { id: "occasions", value: "Occasions" },
+  { id: "notifications", value: "Notifications" }
+];

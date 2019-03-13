@@ -6,10 +6,10 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 
 @IonicPage()
 @Component({
-  selector: "page-verfication",
-  templateUrl: "verfication.html"
+  selector: "page-verification",
+  templateUrl: "verification.html"
 })
-export class VerficationPage implements OnInit {
+export class VerificationPage implements OnInit {
   isWaiting: boolean = false;
   // @ViewChild("passwordInput") passwordInput;
   isDisabled: boolean = false;
@@ -38,7 +38,15 @@ export class VerficationPage implements OnInit {
   // }
 
   verify() {
-    this.navCtrl.setRoot("RegisterPage"); // for test purpose
+    let verificationData = {
+      phone: this.loginData.phone,
+      countryCode: this.loginData.countryCode
+    };
+    console.log("a7a verificationData : ", verificationData);
+
+    this.navCtrl.setRoot("RegisterPage", {
+      verificationData: verificationData
+    }); // for test purpose
     // this.isWaiting = true;
     // let params = {
     //   phone: `${this.loginData.countryCode}${this.loginData.phone}`,

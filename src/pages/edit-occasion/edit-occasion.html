@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Edit Occasion</ion-title>
+    <ion-buttons start>
+      <button ion-button ion-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button ion-only (click)="presentConfirm()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid no-padding>
+    <ion-row class="occasion-row">
+      <ion-col col-12 no-paddong>
+        <ion-slides slidesPerView="4">
+          <ion-slide *ngFor="let occasion of occasionTypes">
+            <div class="occasion-img-wrapper">
+              <img [src]="occasion.img" class="occasion-img" />
+            </div>
+            <div class="occasion-name">{{ occasion.name }}</div>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="inputs-wrapper">
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
+          <ion-label color="light" stacked>Name</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="data.name"
+            placeholder="Name"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
+          <ion-label color="light" stacked>Slogan</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="data.description"
+            placeholder="Slogan"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
+          <ion-label>Date</ion-label>
+          <ion-datetime
+            #date
+            displayFormat="DDDD MMM D, YYYY"
+            min="1960"
+            max="2050"
+            [(ngModel)]="data.occasion_date"
+          ></ion-datetime>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
+          <ion-label color="light" stacked>Privacy</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="data.type"
+            placeholder="Type"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12>
+        <button
+          (click)="editOccasion()"
+          ion-button
+          block
+          round
+          class="create-occasion-btn"
+          color="purple"
+        >
+          Edit
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

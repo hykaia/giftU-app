@@ -1,44 +1,52 @@
 page-upload-gift-img {
-    html, body, ion-app, ion-content, ion-page, .nav-decor {
-        background-color: transparent !important;
-    } 
+  html,
+  body,
+  ion-app,
+  ion-content,
+  ion-page,
+  .nav-decor {
+    background-color: transparent !important;
+  }
 
-    .take-picture{
-        border: 2px solid white;
-        border-radius: 100%;
-        padding: 2px;
-        .fab-ios-light , .fab-md-light{
-            background-color: #24df73;
-        }
-        
+  .take-picture {
+    border: 2px solid white;
+    border-radius: 100%;
+    padding: 2px;
+    .fab-ios-light,
+    .fab-md-light {
+      background-color: #24df73;
     }
+  }
 
-    
-    .toolbar-title{
-        font-weight: 500;
-    }
-    .hr{
-        position: absolute;
-        border: 1.5px solid #3d5e84;
-        width: 10%;
-        bottom: 9rem;
-        margin: auto;
-        left: 8px;
-        right: 0;
-        border-radius: 12px;
-        background: #3d5e84;
-    
-    }
+  .toolbar-title {
+    font-weight: 500;
+  }
+  .hr {
+    position: absolute;
+    border: 1.5px solid #3d5e84;
+    width: 10%;
+    bottom: 9rem;
+    margin: auto;
+    left: 8px;
+    right: 0;
+    border-radius: 12px;
+    background: #3d5e84;
+  }
+  .gift-img {
+    width: 80%;
+    margin: auto;
+    display: block;
+  }
 
-    .open-gallery{
-        padding: 2px;
-        .fab{
-            border-radius: 0;
-            padding: 0;
-        }
-        .fab-ios-light, .fab-md-light{
-            background-color: transparent
-        }
+  .open-gallery {
+    padding: 2px;
+    .fab {
+      border-radius: 0;
+      padding: 0;
     }
+    .fab-ios-light,
+    .fab-md-light {
+      background-color: transparent;
+    }
+  }
 }
-

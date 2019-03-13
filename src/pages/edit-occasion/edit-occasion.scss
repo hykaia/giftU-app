@@ -1,0 +1,19 @@
+page-edit-occasion {
+  .create-occasion-btn {
+    font-size: 1.3rem;
+    margin-top: 2rem;
+  }
+  .custom-item {
+    color: white;
+    padding-left: 0 !important;
+    background-color: transparent;
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+  }
+  .ion-ios-close:before {
+    font-size: 4rem;
+  }
+  .ion-ios-trash:before {
+    font-size: 3rem;
+  }
+}

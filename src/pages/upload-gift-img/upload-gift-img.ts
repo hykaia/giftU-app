@@ -14,21 +14,21 @@ import {
 })
 export class UploadGiftImgPage {
   img: any;
+  isWaiting: boolean = false;
+  gift: any = this.navParams.get("gift");
+  occasionId: any = this.navParams.get("occasionId");
   constructor(
     public navCtrl: NavController,
     private camera: Camera,
     private cameraPreview: CameraPreview,
     private platform: Platform,
     public navParams: NavParams
-  ) {}
-
-  ionViewDidLoad() {
-    // Code here
+  ) {
+    console.log("receiving gift is :", this.gift);
   }
 
   ionViewWillEnter() {
     this.startCamera();
-    console.log("iam back");
   }
 
   startCamera() {
@@ -64,7 +64,8 @@ export class UploadGiftImgPage {
     };
     this.cameraPreview.takePicture(cameraOptions).then(
       imageData => {
-        this.img = "data:image/jpeg;base64," + imageData;
+        this.img = "data:image/jpg;base64," + imageData;
+        console.log("gallery image : ", this.img);
       },
       err => {
         console.log(err);
@@ -73,6 +74,7 @@ export class UploadGiftImgPage {
   }
 
   openGallery() {
+    this.isWaiting = true;
     const options: CameraOptions = {
       quality: 80,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -83,15 +85,21 @@ export class UploadGiftImgPage {
 
     this.camera.getPicture(options).then(
       imageData => {
-        this.img = "data:image/jpeg;base64," + imageData;
+        this.img = "data:image/jpg;base64," + imageData;
+        this.isWaiting = false;
+        console.log("gallery image : ", this.img);
       },
       err => {
         console.log("image err : ", err);
+        this.isWaiting = false;
       }
     );
   }
 
   Next() {
-    this.navCtrl.push("CreateGiftPage", { img: this.img });
+    let data: any = { occasionId: this.occasionId, img: this.img };
+    // console.log("image data before send to next step is :", data);
+
+    this.navCtrl.push("CreateGiftPage", { data: data, gift: this.gift });
   }
 }

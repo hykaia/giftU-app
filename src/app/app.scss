@@ -1,113 +1,133 @@
-
 @font-face {
-    font-family: 'Asap';
-    src: url('../assets/font/Asap-Regular.ttf');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Asap";
+  src: url("../assets/font/Asap-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
-    font-family: 'Asap';
+  font-family: "Asap";
 }
 
-.scroll-content{
-    background: #142f4c !important;
+.scroll-content {
+  background: #142f4c !important;
 }
 
 .toolbar-background {
-    border-style: none !important;
+  border-style: none !important;
 }
 
 // custom ionic icons
 ion-icon {
-    &[class*="custom-"] {
-      mask-size: contain;
-      mask-position: 50% 50%;
-      mask-repeat: no-repeat;
-      background: currentColor;
-      width: 1em;
-      height: 1em;
-    }
-  
-    &[class*="custom-check-mark"] {
-        mask-image: url(../assets/imgs/check-mark.svg);
-    }
+  &[class*="custom-"] {
+    mask-size: contain;
+    mask-position: 50% 50%;
+    mask-repeat: no-repeat;
+    background: currentColor;
+    width: 1em;
+    height: 1em;
+  }
+
+  &[class*="custom-check-mark"] {
+    mask-image: url(../assets/imgs/check-mark.svg);
+  }
 }
 
-
-.picker-ios .picker-wrapper::before{
-    content: '';
-    width: 100px;
-    height: 5px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
-    position: absolute;
-    left: 50%;
-    z-index: 100000;
-    top: 1rem;
-    -webkit-transform: translateX(-50%) !important;
+.picker-ios .picker-wrapper::before {
+  content: "";
+  width: 100px;
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  z-index: 100000;
+  top: 1rem;
+  -webkit-transform: translateX(-50%) !important;
 }
 
-button.picker-opt.picker-opt-selected{
-    background: #fff !important;
+button.picker-opt.picker-opt-selected {
+  background: #fff !important;
 }
 
 .picker-ios .picker-toolbar,
-.picker-ios .picker-wrapper ,
-{
-    background: #06243a;
-    border: transparent !important
+.picker-ios .picker-wrapper {
+  background: #06243a;
+  border: transparent !important;
 }
 
 .picker-md .picker-toolbar,
-.picker-md .picker-wrapper ,
-{
-    background: #06243a;
-    border: transparent !important
+.picker-md .picker-wrapper {
+  background: #06243a;
+  border: transparent !important;
 }
 
-
 .picker-ios .picker-below-highlight,
-.picker-ios .picker-above-highlight{
-    background: transparent !important;
-    border-top: 0;
-    border-bottom: 0;
+.picker-ios .picker-above-highlight {
+  background: transparent !important;
+  border-top: 0;
+  border-bottom: 0;
 }
 
 .picker-md .picker-below-highlight,
-.picker-md .picker-above-highlight{
-    background: transparent !important;
-    border-top: 0;
-    border-bottom: 0;
+.picker-md .picker-above-highlight {
+  background: transparent !important;
+  border-top: 0;
+  border-bottom: 0;
 }
 
-button.picker-opt.picker-opt-selected{
-    background: transparent !important;
+button.picker-opt.picker-opt-selected {
+  background: transparent !important;
 }
 
 .picker-ios .picker-opt,
-.picker-ios .picker-button, {
-    color: white !important
+.picker-ios .picker-button {
+  color: white !important;
 }
 
 .picker-md .picker-opt,
-.picker-md .picker-button, {
-    color: white !important
+.picker-md .picker-button {
+  color: white !important;
 }
 
 button.picker-opt.picker-opt-selected,
-.picker-ios .picker-button.activated{
-    color: #505050 !important;
+.picker-ios .picker-button.activated {
+  color: #505050 !important;
 }
 
 button.picker-opt.picker-opt-selected,
-.picker-md .picker-button.activated{
-    color: #505050 !important;
+.picker-md .picker-button.activated {
+  color: #505050 !important;
 }
 
-
-.header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before{
-    background: none;
+.header-md::after,
+.tabs-md[tabsPlacement="top"] > .tabbar::after,
+.footer-md::before,
+.tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+  background: none;
 }
 
+.segment .segment-button:hover:not(.segment-activated) {
+  background-color: #7b2fff !important;
+}
 
+.ball {
+  animation: flash 1s infinite alternate;
+  -webkit-animation: flash 1s infinite alternate;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.custom-col {
+  position: initial;
+}

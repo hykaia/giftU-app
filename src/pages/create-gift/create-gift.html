@@ -1,31 +1,45 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>Add new gift</ion-title>
+    <ion-title *ngIf="!gift">Add new gift</ion-title>
+    <ion-title *ngIf="gift">Edit gift</ion-title>
     <ion-buttons end>
-      <button ion-button round color="white" (click)="share()">Share</button>
+      <button ion-button round color="white" *ngIf="!gift" (click)="share()">
+        <span *ngIf="!isWaiting">Share</span>
+        <ion-spinner
+          name="ios-small"
+          *ngIf="isWaiting"
+          color="light"
+        ></ion-spinner>
+      </button>
+      <button ion-button round color="white" *ngIf="gift" (click)="edit()">
+        Edit
+      </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <ion-row class="inputs-wrapper">
     <ion-col col-12 class="custom-col">
       <ion-item class="custom-item">
         <ion-label color="light" stacked>Gift Name</ion-label>
-        <ion-input type="text" [(ngModel)]="data.gift_name" placeholder="Gift Name"></ion-input>
+        <ion-input
+          type="text"
+          [(ngModel)]="data.title"
+          placeholder="Gift Name"
+        ></ion-input>
       </ion-item>
     </ion-col>
 
     <ion-col col-12 class="custom-col">
       <ion-item class="custom-item">
         <ion-label color="light" stacked>Post</ion-label>
-        <ion-input type="text" [(ngModel)]="data.post" placeholder="Gift Name"></ion-input>
+        <ion-input
+          type="text"
+          [(ngModel)]="data.description"
+          placeholder="Gift Description"
+        ></ion-input>
       </ion-item>
     </ion-col>
-
-
   </ion-row>
 </ion-content>

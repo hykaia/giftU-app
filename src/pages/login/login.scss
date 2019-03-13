@@ -1,94 +1,86 @@
 page-login {
-    ion-content{
-        position: relative
-    }
-    .scroll-content{
-        overflow-y: hidden !important;
-        background: url(../assets/imgs/background.png) no-repeat center center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-    .logo-img{
-        width: 50px;
-    }
-    .login-grid{
-        padding: 15px;
-        padding-top: 0;
-    }
+  .scroll-content {
+    overflow-y: hidden !important;
+  }
+  .logo-img {
+    width: 50px;
+  }
+  .login-grid {
+    padding: 15px;
+    padding-top: 0;
+  }
 
-    .hello{
-        color: white;
-        font-weight: bold;
-    }
-    .gift-txt{
-        color: #7b2fff;
-        font-size: 2rem;
-    }
-    .welcome-txt{
-        font-size: 1.7rem;
-        color: white;
-    }
-    .confirm-country-code {
-        color: #8da6c1;
-        font-size: 1.4rem;
-        line-height: 1.5;
-    }
-    .login-item{
-        color: white;
-        padding-left : 0 !important;
-        background-color: transparent;
-    }
-    .login-item.item-block .item-inner{
-        border-bottom: 0.55px solid #00e464;
-    }
-    .login-btn{
-        height: 2.3em;
-    }
-    ion-icon[class*="custom-check-mark"]{
-        position: relative;
-        top: 0.4rem;
-        left: 1.6rem;
-        color: #24df73;
-    }
-    .gift-img{
-        width: 93%;
-        margin: auto;
-        display: block;
-    }
-    .welcome-wrapper{
-        margin-top: 0;
-    }
-    .select-icon-inner{
-        color: white !important;
-    }
+  .hello {
+    color: white;
+    font-weight: bold;
+  }
+  .gift-txt {
+    color: #7b2fff;
+    font-size: 2rem;
+  }
+  .welcome-txt {
+    font-size: 1.7rem;
+    color: white;
+  }
+  .confirm-country-code {
+    color: #8da6c1;
+    font-size: 1.4rem;
+    line-height: 1.5;
+  }
+  .login-item {
+    color: white;
+    padding-left: 0 !important;
+    background-color: transparent;
+  }
+  .login-item.item-block .item-inner {
+    border-bottom: 0.55px solid #00e464;
+  }
+  .login-btn {
+    height: 2.3em;
+  }
+  ion-icon[class*="custom-check-mark"] {
+    position: relative;
+    top: 0.4rem;
+    left: 1.6rem;
+    color: #24df73;
+  }
+  .gift-img {
+    width: 93%;
+    margin: auto;
+    display: block;
+  }
+  .welcome-wrapper {
+    margin-top: 0;
+  }
+  .select-icon-inner {
+    color: white !important;
+  }
 
-    .sticky-image-wrapper{
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-    }
+  .sticky-image-wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
 
-    .sticky-image-wrapper img{
-        display: table;
-        position: relative;
-        margin: auto;
-   }
+  .guysImgWithOutKeyBoard {
+    position: absolute;
+    bottom: 0;
+  }
 
-   .custom-col{
-      position: initial; 
-   }
+  .guysImgWithKeyBoard {
+    position: absolute;
+    bottom: -100;
+  }
+
+  .custom-col {
+    position: initial;
+  }
 }
 
-.md{
-    page-login {
-        // .guys-img{
-        //  width: 100%;
-        //  height: 19rem
-        // }
-        .login-grid{
-             padding-top: 0;
-        }
-    }   
+.md {
+  page-login {
+    .login-grid {
+      padding-top: 0;
+    }
+  }
 }

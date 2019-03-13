@@ -1,37 +1,42 @@
-
-
-
 <ion-content padding>
   <ion-grid class="verification-grid">
     <ion-row>
       <ion-col col-12>
         <h4 class="verify-phone-number">Welcome again,</h4>
-        <div class="sms-message-txt">Enter some information that helps your friends recognize you
-          and achieve your dreams</div>
+        <div class="sms-message-txt">
+          Enter some information that helps your friends recognize you and
+          achieve your dreams
+        </div>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col col-12>
         <div class="all-img-container">
-          <img src="assets/imgs/background-happy.png" class="background-happy">
+          <img
+            src="assets/imgs/background-happy.png"
+            class="background-happy"
+          />
           <div class="img-container">
-            <img src="assets/imgs/upload.svg" class="upload-img">
+            <img src="assets/imgs/upload.svg" class="upload-img" />
             <div class="smile-img-wrapper">
-              <img src="assets/imgs/smill-face.png" class="smile-img">
+              <img src="assets/imgs/smill-face.png" class="smile-img" />
             </div>
           </div>
         </div>
       </ion-col>
     </ion-row>
 
-
     <ion-row class="info-row">
       <!-- Your name -->
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
           <ion-label color="light" stacked>Your Name</ion-label>
-          <ion-input type="text" [(ngModel)]="data.name" placeholder="Your Name"></ion-input>
+          <ion-input
+            type="text"
+            [(ngModel)]="data.first_name"
+            placeholder="Your Name"
+          ></ion-input>
         </ion-item>
       </ion-col>
 
@@ -39,7 +44,13 @@
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
           <ion-label>Date of birth</ion-label>
-          <ion-datetime #date displayFormat="DDDD MMM D, YYYY" min="2019" max="2050" [(ngModel)]="data.birth"></ion-datetime>
+          <ion-datetime
+            #date
+            displayFormat="DDDD MMM D, YYYY"
+            min="2019"
+            max="2050"
+            [(ngModel)]="data.date_of_birth"
+          ></ion-datetime>
         </ion-item>
       </ion-col>
 
@@ -47,7 +58,7 @@
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
           <ion-label color="light" stacked>Gender</ion-label>
-          <ion-select [(ngModel)]="data.Gender">
+          <ion-select [(ngModel)]="data.gender">
             <ion-option value="male">Male</ion-option>
             <ion-option value="female">Female</ion-option>
           </ion-select>
@@ -58,22 +69,33 @@
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
           <ion-label color="light" stacked>Status</ion-label>
-          <ion-input type="text" [(ngModel)]="data.status" placeholder="Status"></ion-input>
+          <ion-input
+            type="text"
+            [(ngModel)]="data.status"
+            placeholder="Status"
+          ></ion-input>
         </ion-item>
       </ion-col>
-
     </ion-row>
-
-
   </ion-grid>
 
   <ion-row>
     <ion-col col-12>
-      <button class="submit-btn" ion-button round block color="purple" (click)="register()">
+      <button
+        class="submit-btn"
+        ion-button
+        round
+        block
+        color="purple"
+        (click)="register()"
+      >
         <span *ngIf="!isWaiting">Submit</span>
-        <ion-spinner name="ios-small" *ngIf="isWaiting" color="light"></ion-spinner>
+        <ion-spinner
+          name="ios-small"
+          *ngIf="isWaiting"
+          color="light"
+        ></ion-spinner>
       </button>
     </ion-col>
   </ion-row>
-
 </ion-content>

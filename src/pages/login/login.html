@@ -6,12 +6,11 @@
 
 </ion-header> -->
 
-
-<ion-content  ion-fixed>
+<ion-content ion-fixed>
   <ion-grid class="login-grid">
     <ion-row>
       <ion-col col-12>
-        <img src="assets/imgs/logo.png" class="logo-img">
+        <img src="assets/imgs/logo.png" class="logo-img" />
       </ion-col>
     </ion-row>
     <ion-row>
@@ -26,7 +25,9 @@
 
     <ion-row>
       <ion-col col-12>
-        <div class="confirm-country-code">Please Confrim the country code and enter your phone number</div>
+        <div class="confirm-country-code">
+          Please Confrim the country code and enter your phone number
+        </div>
       </ion-col>
     </ion-row>
 
@@ -35,29 +36,49 @@
         <ion-item class="login-item">
           <ion-label color="light" stacked>Code</ion-label>
           <ion-select [(ngModel)]="data.countryCode">
-            <ion-option [value]="code.code" *ngFor="let code of countrCodes">{{code.code}}</ion-option>
+            <ion-option [value]="code.code" *ngFor="let code of countrCodes">{{
+              code.code
+            }}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
 
-      <ion-col col-9 class="custom-col">
+      <ion-col col-9>
         <ion-item class="login-item">
           <ion-label color="light" stacked>Phone number</ion-label>
-          <ion-input type="tel" placeholder="Phone number" [(ngModel)]="data.phone"></ion-input>
+          <ion-input
+            type="tel"
+            placeholder="Phone number"
+            [(ngModel)]="data.phone"
+          ></ion-input>
           <!-- <ion-icon name="custom-check-mark" item-right></ion-icon> -->
         </ion-item>
       </ion-col>
 
       <ion-col offset-6 col-6>
-        <button float-right ion-button round color="purple" class="login-btn" (click)="Login()">
+        <button
+          float-right
+          ion-button
+          round
+          color="purple"
+          class="login-btn"
+          (click)="Login()"
+        >
           <span *ngIf="!isWaiting">Login</span>
-          <ion-spinner name="ios-small" *ngIf="isWaiting" color="light"></ion-spinner>
+          <ion-spinner
+            name="ios-small"
+            *ngIf="isWaiting"
+            color="light"
+          ></ion-spinner>
         </button>
       </ion-col>
-
     </ion-row>
   </ion-grid>
-  <!-- <div class="sticky-image-wrapper">
-    <img src="assets/imgs/happy.png" class="guys-img">
-  </div> -->
+  <div class="sticky-image-wrapper">
+    <img
+      src="assets/imgs/happy.png"
+      [class.guysImgWithKeyBoard]="isKeyBoardShow"
+      [class.guysImgWithOutKeyBoard]="!isKeyBoardShow"
+    />
+  </div>
 </ion-content>
