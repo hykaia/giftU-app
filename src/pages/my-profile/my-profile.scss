@@ -155,47 +155,7 @@ page-my-profile {
   .more-add {
     margin-left: 0.5rem !important;
   }
-  .first-gift-btn {
-    height: 2.1em;
-    font-size: 1.4rem;
-    width: 37%;
-  }
 
-  .img-container {
-    position: absolute;
-    width: 50%;
-    left: 0;
-    right: 0;
-    top: 4rem;
-    margin: auto;
-    .smile-img-wrapper {
-      width: 115px;
-      height: 115px;
-      margin: auto;
-      position: relative;
-      background: white;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-bottom-color: #7b2fff;
-      border-right-color: #7b2fff;
-      box-shadow: 3px 5px 20px 0px #b2ffd4;
-      transform: rotate(-42deg);
-      margin-top: 4rem;
-    }
-    .add-img {
-      width: 43px;
-      position: absolute;
-      left: 0;
-      right: 0;
-      margin: auto;
-      top: 33px;
-      transform: rotate(40deg);
-    }
-  }
-
-  .custom-add-gift-col {
-    height: 25.6rem;
-  }
   .add-gift-txt {
     font-size: 1.6rem;
   }
@@ -270,56 +230,12 @@ page-my-profile {
     top: 2px;
   }
 
-  .occasion-img-wrapper {
-    background: white;
-    border-radius: 100%;
-    width: 70px;
-    height: 70px;
-    margin: auto;
-    .occasion-img {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 19px;
-      left: 0;
-      margin: auto;
-      max-width: 57%;
-      max-height: 90%;
-    }
-  }
-
   .avatar-name {
     font-size: 13px;
-  }
-  .occasion-name {
-    font-size: 1.2rem;
-    color: #8da6c1;
-    position: relative;
-    top: 1rem;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
-  .custom-item {
-    color: white;
-    padding-left: 0 !important;
-    background-color: transparent;
-    font-size: 1.4rem;
-    margin-bottom: 0.7rem;
-  }
-  .active {
-    border: 2px solid #7a2fff;
-  }
-  .activeName {
-    color: #7a2fff;
   }
 
   .inputs-wrapper {
     margin-top: 3rem;
-  }
-  .create-occasion-btn {
-    font-size: 1.3rem;
-    margin-top: 2rem;
   }
 
   .occasion-grid {

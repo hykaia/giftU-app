@@ -51,4 +51,19 @@ export class SettingProvider {
     let final = moment.duration(start.diff(end)).asDays();
     return final;
   }
+
+  imgBasedOnOccasionType(type) {
+    switch (type) {
+      case "wedding":
+        return "assets/imgs/wedding.png";
+      case "birthday":
+        return "assets/imgs/birthday.png";
+      case "job":
+        return "assets/imgs/promotion.png";
+      case "new_baby":
+        return "assets/imgs/wedding.png";
+      case "graduation":
+        return "assets/imgs/wedding.png";
+    }
+  }
 }

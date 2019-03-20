@@ -41,7 +41,14 @@
         <ion-row class="gift-row-wrapper">
           <ion-col col-12>
             <p ion-text color="primary">{{ gift.title }}</p>
-            <img src="assets/imgs/iPhone-X.png" class="gift-img" />
+            <div
+              class="img-wrapper"
+              [style.background-image]="
+                gift.image
+                  ? 'url(' + gift.image + ')'
+                  : 'url(' + defaultImg + ')'
+              "
+            ></div>
             <div ion-text color="gray" class="wish-txt">
               {{ gift.description }} {{ codes.love }}
             </div>

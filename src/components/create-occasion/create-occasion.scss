@@ -1,0 +1,51 @@
+create-occasion {
+  .occasion-img-wrapper {
+    background: white;
+    border-radius: 100%;
+    width: 70px;
+    height: 70px;
+    margin: auto;
+    .occasion-img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 19px;
+      left: 0;
+      margin: auto;
+      max-width: 57%;
+      max-height: 90%;
+    }
+  }
+
+  .occasion-name {
+    font-size: 1.2rem;
+    color: #8da6c1;
+    position: relative;
+    top: 1rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .active {
+    background: #24df73;
+  }
+  .activeName {
+    color: #24df73;
+  }
+  .inputs-wrapper {
+    margin-top: 3rem;
+  }
+  .custom-item {
+    color: white;
+    padding-left: 0 !important;
+    background-color: transparent;
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .create-occasion-btn {
+    font-size: 1.3rem;
+    margin-top: 2rem;
+  }
+}

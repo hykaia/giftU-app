@@ -31,11 +31,8 @@ export class ApiProvider {
     );
   }
 
-  getProfileData(): Observable<any> {
-    let userData = JSON.parse(localStorage.getItem("userData"));
-    return this.http.get(
-      `${this.settingService.URL}user/profile/${userData.id}`
-    );
+  getProfileData(userId): Observable<any> {
+    return this.http.get(`${this.settingService.URL}user/profile/${userId}`);
   }
 
   updateProfile(params): Observable<any> {
@@ -81,10 +78,17 @@ export class ApiProvider {
     );
   }
 
-  getUserOccasions(): Observable<any> {
-    let userData = JSON.parse(localStorage.getItem("userData"));
-    return this.http.get(`${this.settingService.URL}occasion/${userData.id}`);
+  suggestGift(params): Observable<any> {
+    return this.http.post(
+      `${this.settingService.URL}gift/${params.userWhoReceiveGift}`,
+      params
+    );
   }
+
+  getUserOccasions(userId): Observable<any> {
+    return this.http.get(`${this.settingService.URL}occasion/${userId}`);
+  }
+
   myFriendsOccasions(): Observable<any> {
     let userData = JSON.parse(localStorage.getItem("userData"));
     return this.http.get(
@@ -92,10 +96,18 @@ export class ApiProvider {
     );
   }
 
-  getWishListGifts(occasionId): Observable<any> {
+  getWishListGifts(occasionId, userId): Observable<any> {
+    return this.http.get(
+      `${this.settingService.URL}gift/${occasionId}/${userId}`
+    );
+  }
+
+  getUserFriends(): Observable<any> {
     let userData = JSON.parse(localStorage.getItem("userData"));
     return this.http.get(
-      `${this.settingService.URL}gift/${occasionId}/${userData.id}`
+      `${this.settingService.URL}user/profile/${userData.id}?friends=${
+        userData.id
+      }`
     );
   }
 
@@ -112,5 +124,14 @@ export class ApiProvider {
 
   deleteOccasion(id): Observable<any> {
     return this.http.delete(`${this.settingService.URL}occasion/${id}`);
+  }
+
+  giveGift(giftId): Observable<any> {
+    let userData = JSON.parse(localStorage.getItem("userData"));
+    let params = {};
+    return this.http.put(
+      `${this.settingService.URL}gift/${giftId}/${userData.id}`,
+      JSON.stringify(params)
+    );
   }
 }

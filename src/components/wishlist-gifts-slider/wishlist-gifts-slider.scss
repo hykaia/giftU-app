@@ -1,3 +1,57 @@
 wishlist-gifts-slider {
+  .img-container {
+    position: absolute;
+    width: 50%;
+    left: 0;
+    right: 0;
+    top: 4rem;
+    margin: auto;
+    .smile-img-wrapper {
+      width: 115px;
+      height: 115px;
+      margin: auto;
+      position: relative;
+      background: white;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-bottom-color: #7b2fff;
+      border-right-color: #7b2fff;
+      box-shadow: 3px 5px 20px 0px #b2ffd4;
+      transform: rotate(-42deg);
+      margin-top: 4rem;
+    }
+    .custom-add-gift-col {
+      height: 25.6rem;
+    }
+    .gift-row-wrapper {
+      background: white;
+      border-radius: 3px;
+    }
+    .add-img {
+      width: 43px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      top: 33px;
+      transform: rotate(40deg);
+    }
+  }
+  .custom-add-gift-col {
+    height: 25.6rem;
+  }
+  .first-gift-btn {
+    height: 2.1em;
+    font-size: 1.4rem;
+    width: 37%;
+  }
 
+  .img-wrapper {
+    width: 160px;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: auto;
+    background-position: center;
+  }
 }

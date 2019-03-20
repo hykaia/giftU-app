@@ -23,9 +23,10 @@ import { SettingProvider } from "../../providers/setting/setting";
 })
 export class MyProfilePage {
   @ViewChild(Navbar) navBar: Navbar;
-  selectedSegment: any = "my_wishlist";
+  selectedSegment: any = this.navParams.get("segmentName")
+    ? this.navParams.get("segmentName")
+    : "my_wishlist";
   Gifts: any = new Array(0);
-  segmentName: any = this.navParams.get("segmentName");
   userData: any = JSON.parse(localStorage.getItem("userData"));
   Slides = Slides;
   currentIndex = 0;
@@ -55,19 +56,26 @@ export class MyProfilePage {
     this.checkKeyBoardEvents();
     this.getUserOccasions();
     this.getWishListGifts();
+    this.checkEvents();
   }
 
   ionViewWillEnter() {
     this.cameraPreview.stopCamera();
   }
 
-  checkCommingSegment() {
-    if (this.segmentName) {
-    }
-  }
-
   checkEvents() {
     // code here
+    this.event.subscribe("giftDeleted", () => {
+      this.getUserOccasions();
+    });
+
+    this.event.subscribe("giftDeletedFromWishList", () => {
+      this.getWishListGifts();
+    });
+    // occasion added event
+    this.event.subscribe("occasionAdded", () => {
+      this.getUserOccasions();
+    });
   }
 
   checkKeyBoardEvents() {
@@ -146,18 +154,8 @@ export class MyProfilePage {
     }
   }
 
-  addOccasion() {
-    console.log("add occasion data : ", this.data);
-    this.api.addOccasion(this.data).subscribe(data => {
-      if (data.code == "201" || data.code == "200") {
-        this.setting.presentToast(data.message);
-        this.getUserOccasions();
-      }
-    });
-  }
-
   getUserOccasions() {
-    this.api.getUserOccasions().subscribe(data => {
+    this.api.getUserOccasions(this.userData.id).subscribe(data => {
       console.log("user occasions are : ", data);
       this.Occasions = data.data;
     });
@@ -168,13 +166,11 @@ export class MyProfilePage {
       occasion: occasion
     });
     modal.onDidDismiss(data => {
-      console.log("a7a comming data : ", data);
       if (data) {
-        let index = this.Occasions.indexOf(data);
+        let index = this.Occasions.indexOf(occasion);
         if (data.operationType == "update") {
           this.Occasions[index] = data;
         } else if (data.operationType == "delete") {
-          console.log("delete index : ", index);
           this.Occasions.splice(index, 1);
         }
       }
@@ -197,19 +193,8 @@ export class MyProfilePage {
     }
   }
 
-  deleteGift(occasion, gift) {
-    this.api.deleteGift(gift.id).subscribe(data => {
-      if (data.code == "201") {
-        this.setting.presentToast(data.message);
-        let occasionIndex = this.Occasions.indexOf(occasion);
-        let giftIndex = this.Occasions[occasionIndex].gifts.indexOf(gift);
-        this.Occasions[occasionIndex].gifts.splice(giftIndex, 1);
-      }
-    });
-  }
-
   getWishListGifts() {
-    this.api.getWishListGifts(0).subscribe(data => {
+    this.api.getWishListGifts(0, this.userData.id).subscribe(data => {
       console.log("wishlist data are : ", data);
       this.wishListGifts = data.data;
     });

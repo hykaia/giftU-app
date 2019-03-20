@@ -13,23 +13,15 @@ import { ApiProvider } from "../../providers/api/api";
   templateUrl: "update-profile.html"
 })
 export class UpdateProfilePage {
-  data: any = {};
-  userData: any = localStorage.getItem("userData");
+  data: any = JSON.parse(localStorage.getItem("userData"));
+  userData: any = JSON.parse(localStorage.getItem("userData"));
   isWaiting: boolean = false;
   constructor(
     public navCtrl: NavController,
     private api: ApiProvider,
     private viewCtrl: ViewController,
     public navParams: NavParams
-  ) {
-    this.getProfileData();
-  }
-
-  getProfileData() {
-    this.api.getProfileData().subscribe(data => {
-      this.data = data.data;
-    });
-  }
+  ) {}
 
   dismiss() {
     this.viewCtrl.dismiss();
@@ -40,7 +32,7 @@ export class UpdateProfilePage {
     this.isWaiting = true;
     this.api.updateProfile(this.data).subscribe(
       data => {
-        if (data.code == "201" || data.code == "200") {
+        if (data.code == "201") {
           localStorage.setItem("userData", JSON.stringify(data.data));
           this.dismiss();
         }

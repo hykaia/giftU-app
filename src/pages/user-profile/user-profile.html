@@ -1,31 +1,36 @@
 <ion-header>
-
   <ion-navbar color="purple">
     <ion-row>
       <ion-col col-12>
-        <img src="assets/imgs/1.jpg" class="avatar-img">
-        <p class="user-name">{{userData.name}}</p>
+        <img src="assets/imgs/1.jpg" class="avatar-img" />
+        <p class="user-name">{{ userData.name }}</p>
       </ion-col>
     </ion-row>
   </ion-navbar>
 
   <ion-row class="profile-info">
     <ion-col col-6>
-      <div ion-text color="primary" class="user-phone">{{userData.phone}}</div>
-      <div ion-text color="gray">Welcome guys</div>
+      <div ion-text color="primary" class="user-phone">
+        {{ userData.phone }}
+      </div>
+      <div ion-text color="gray">{{ userData.status }}</div>
     </ion-col>
     <ion-col col-3 align-self-center>
       <ion-icon name="heart-outline"></ion-icon>
-      <span ion-text color="primary" class="normal-size">10 wishlist</span>
+      <span ion-text color="primary" class="normal-size"
+        >{{ userData.giftsCount }} wishlist</span
+      >
     </ion-col>
 
     <ion-col col-3 align-self-center>
       <ion-icon name="ios-help-buoy"></ion-icon>
-      <span ion-text color="primary" class="normal-size">2 gifts</span>
+      <span ion-text color="primary" class="normal-size"
+        >{{ userData.givenGiftsCount }} gifts</span
+      >
     </ion-col>
 
     <ion-col col-12>
-      <hr class="hr">
+      <hr class="hr" />
     </ion-col>
 
     <ion-col col-10>
@@ -37,70 +42,111 @@
       <div ion-text color="secondary">invite</div>
     </ion-col>
   </ion-row>
-
 </ion-header>
 
-
 <ion-content padding>
+  <loading *ngIf="waitingOccasions"></loading>
+  <ion-grid *ngFor="let occasion of occasions" [hidden]="waitingOccasions">
+    <ion-row class="birthday-row-wrapper">
+      <ion-col col-9 no-padding>
+        <ion-row>
+          <ion-col col-3>
+            <img src="assets/imgs/birthday.png" class="birthday-img" />
+          </ion-col>
+          <ion-col col-9 align-self-center>
+            <div class="birthday-txt">{{ occasion.name }}</div>
+            <div class="status-txt" ion-text color="gray">
+              {{ occasion.description }} {{ codes.birthday }}
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col
+        col-3
+        no-padding
+        *ngIf="setting.getDateDifferenceInDays(occasion.occasion_date) >= 0"
+      >
+        <button
+          ion-button
+          color="purple"
+          class="remaining-days-btn"
+          round
+          block
+        >
+          {{ setting.getDateDifferenceInDays(occasion.occasion_date) }} day left
+        </button>
+      </ion-col>
+    </ion-row>
 
-  <ion-row class="birthday-row-wrapper">
-    <ion-col col-9 no-padding>
-      <ion-row>
-        <ion-col col-3>
-          <img src="assets/imgs/birthday.png" class="birthday-img">
-        </ion-col>
-        <ion-col col-9 align-self-center>
-          <div class="birthday-txt">My birthday</div>
-          <div class="status-txt" ion-text color="gray">Say happy birthday {{codes.birthday}}</div>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col col-3 no-padding>
-      <button ion-button color="purple" class="remaining-days-btn" round block>3 day left</button>
-    </ion-col>
-  </ion-row>
+    <ion-row *ngIf="occasion.gifts.length > 0">
+      <ion-col col-12>
+        <ion-slides spaceBetween="10" slidesPerView="1.1">
+          <ion-slide *ngFor="let gift of occasion.gifts">
+            <ion-row class="gift-row-wrapper">
+              <ion-col col-12>
+                <p ion-text color="primary">{{ gift.title }}</p>
+                <img src="assets/imgs/iPhone-X.png" class="gift-img" />
+                <div ion-text color="gray" class="wish-txt">
+                  {{ gift.description }} {{ codes.love }}
+                </div>
+              </ion-col>
+              <ion-col col-12 class="btns-wrapper">
+                <ion-row>
+                  <ion-col col-6>
+                    <button
+                      ion-button
+                      color="secondary"
+                      class="custom-btn"
+                      round
+                      (click)="giveGift(gift)"
+                    >
+                      give away
+                    </button>
+                  </ion-col>
+                  <ion-col col-6>
+                    <button
+                      ion-button
+                      color="purple"
+                      class="custom-btn"
+                      (click)="suggestGift(occasion, gift)"
+                      round
+                    >
+                      Suggestion
+                    </button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+    <no-occasion-found
+      *ngIf="occasion.gifts.length == 0"
+      data="No gifts found yet !"
+    ></no-occasion-found>
+  </ion-grid>
 
-  <ion-row>
-    <ion-col col-12>
-      <ion-slides spaceBetween="10" slidesPerView="1.1">
-
-        <ion-slide *ngFor="let gift of Gifts">
-          <ion-row class="gift-row-wrapper">
-            <ion-col col-12>
-              <p ion-text color="primary">Black iPhone X</p>
-              <img src="assets/imgs/iPhone-X.png" class="gift-img">
-              <div ion-text color="gray" class="wish-txt">i want iPhone X black color {{codes.love}}</div>
-            </ion-col>
-            <ion-col col-12 class="btns-wrapper">
-              <ion-row>
-                <ion-col col-6>
-                  <button ion-button color="secondary" class="custom-btn" round>give away</button>
-                </ion-col>
-                <ion-col col-6>
-                  <button ion-button color="purple" class="custom-btn" (click)="Suggestion()" round>Suggestion</button>
-                </ion-col>
-              </ion-row>
-            </ion-col>
-          </ion-row>
-        </ion-slide>
-
-      </ion-slides>
-    </ion-col>
-
-  </ion-row>
-
-
-  <ion-row class="wishlist-row-wrapper">
-    <ion-col col-12 no-padding>
-      <ion-row>
-        <ion-col col-2>
-          <img src="assets/imgs/wish.png" class="wish-img">
-        </ion-col>
-        <ion-col col-10 align-self-center>
-          <div class="birthday-txt">My WishList</div>
-          <div class="status-txt" ion-text color="gray">Some of my dreams are in your hands</div>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
+  <ion-grid>
+    <ion-row
+      class="wishlist-row-wrapper"
+      [class.moreMargin]="occasions.length == 0"
+    >
+      <ion-col col-12 no-padding>
+        <ion-row>
+          <ion-col col-2>
+            <img src="assets/imgs/wish.png" class="wish-img" />
+          </ion-col>
+          <ion-col col-10 align-self-center>
+            <div class="birthday-txt">My WishList</div>
+            <div class="status-txt" ion-text color="gray">
+              Some of my dreams are in your hands
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <!-- Gifts Slider -->
+    <no-occasion-found data="No wishlist found yet !"></no-occasion-found>
+  </ion-grid>
 </ion-content>

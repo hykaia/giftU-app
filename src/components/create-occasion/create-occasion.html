@@ -1,0 +1,83 @@
+<ion-row class="occasion-row">
+  <ion-col col-12 no-paddong>
+    <ion-slides slidesPerView="4">
+      <ion-slide
+        *ngFor="let occasion of occasionTypes"
+        (click)="selectOccasionType(occasion)"
+      >
+        <div class="occasion-img-wrapper" [class.active]="occasion.active">
+          <img [src]="occasion.img" class="occasion-img" />
+        </div>
+        <div class="occasion-name" [class.activeName]="occasion.active">
+          {{ occasion.name }}
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </ion-col>
+</ion-row>
+
+<ion-row class="inputs-wrapper" (swipe)="swipe($event)">
+  <ion-col col-12 class="custom-col">
+    <ion-item class="custom-item">
+      <ion-label color="light" stacked>Name</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="data.name"
+        placeholder="Name"
+      ></ion-input>
+    </ion-item>
+  </ion-col>
+
+  <ion-col col-12 class="custom-col">
+    <ion-item class="custom-item">
+      <ion-label color="light" stacked>Slogan</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="data.description"
+        placeholder="Slogan"
+      ></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col col-12 class="custom-col">
+    <ion-item class="custom-item">
+      <ion-label>Date</ion-label>
+      <ion-datetime
+        #date
+        displayFormat="DDDD MMM D, YYYY"
+        min="1960"
+        max="2050"
+        [(ngModel)]="data.occasion_date"
+      ></ion-datetime>
+    </ion-item>
+  </ion-col>
+
+  <!-- Privacy -->
+
+  <ion-col col-12 class="custom-col">
+    <ion-item class="custom-item">
+      <ion-label color="light" stacked>Privacy</ion-label>
+      <ion-select [(ngModel)]="data.privacy_type">
+        <ion-option value="private">Private</ion-option>
+        <ion-option value="public">Public</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
+
+  <ion-col col-12>
+    <button
+      (click)="addOccasion()"
+      ion-button
+      block
+      round
+      class="create-occasion-btn"
+      color="purple"
+    >
+      <span *ngIf="!isWaiting">Create</span>
+      <ion-spinner
+        name="ios-small"
+        *ngIf="isWaiting"
+        color="light"
+      ></ion-spinner>
+    </button>
+  </ion-col>
+</ion-row>

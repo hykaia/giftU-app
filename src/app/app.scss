@@ -131,3 +131,22 @@ button.picker-opt.picker-opt-selected,
 .custom-col {
   position: initial;
 }
+
+// to solve notch issue
+.ios.cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {
+  height: calc(44px + constant(safe-area-inset-top));
+}
+
+.ios.cordova:not(.fullscreen) .bar-header:not(.bar-subheader) > * {
+  margin-top: constant(safe-area-inset-top);
+}
+
+div.tab-nav.tabs {
+  height: calc(49px + constant(safe-area-inset-bottom));
+}
+
+ion-content.padding.scroll-content.ionic-scroll.has-header.has-tabs {
+  top: calc(64px + constant(safe-area-inset-top));
+}
+
+// end solve notch issue

@@ -4,12 +4,7 @@
     <ion-title *ngIf="gift">Edit gift</ion-title>
     <ion-buttons end>
       <button ion-button round color="white" (click)="Next()">
-        <span *ngIf="!isWaiting">next</span>
-        <ion-spinner
-          name="ios-small"
-          *ngIf="isWaiting"
-          color="light"
-        ></ion-spinner>
+        Next
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -26,8 +21,8 @@
 
   <ion-fab left bottom small class="open-gallery">
     <button (click)="openGallery()" ion-fab color="light">
-      <img *ngIf="!img" src="assets/imgs/gallery.svg" />
-      <img *ngIf="img" [src]="img" />
+      <img *ngIf="!base64Img" src="assets/imgs/gallery.svg" />
+      <img *ngIf="base64Img" src="{{ base64Img }}" />
     </button>
   </ion-fab>
 </ion-footer>

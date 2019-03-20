@@ -12,16 +12,26 @@
 
     <ion-row>
       <ion-col col-12>
-        <div class="all-img-container">
+        <!-- <div>{{ base64Img }}</div> -->
+        <div class="all-img-container" (click)="presentActionSheet()">
           <img
             src="assets/imgs/background-happy.png"
             class="background-happy"
           />
           <div class="img-container">
-            <img src="assets/imgs/upload.svg" class="upload-img" />
-            <div class="smile-img-wrapper">
-              <img src="assets/imgs/smill-face.png" class="smile-img" />
+            <div *ngIf="!base64Img">
+              <img src="assets/imgs/upload.svg" class="upload-img" />
+              <div class="smile-img-wrapper">
+                <img src="assets/imgs/smill-face.png" class="smile-img" />
+              </div>
             </div>
+
+            <div
+              *ngIf="base64Img"
+              class="img-wrapper"
+              [style.background-image]="'url(' + base64Img + ')'"
+              class="uploaded-img"
+            ></div>
           </div>
         </div>
       </ion-col>
@@ -34,7 +44,7 @@
           <ion-label color="light" stacked>Your Name</ion-label>
           <ion-input
             type="text"
-            [(ngModel)]="data.first_name"
+            [(ngModel)]="data.name"
             placeholder="Your Name"
           ></ion-input>
         </ion-item>
@@ -47,7 +57,7 @@
           <ion-datetime
             #date
             displayFormat="DDDD MMM D, YYYY"
-            min="2019"
+            min="1960"
             max="2050"
             [(ngModel)]="data.date_of_birth"
           ></ion-datetime>

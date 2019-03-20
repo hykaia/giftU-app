@@ -44,7 +44,7 @@ export class EditOccasionPage {
   delete() {
     this.api.deleteOccasion(this.data.id).subscribe(data => {
       console.log("delete data : ", data);
-      if (data.code == "200" || data.code == "201") {
+      if (data.code == "201") {
         data.data.operationType = "delete";
         this.viewCtrl.dismiss(data.data);
       }

@@ -1,106 +1,113 @@
 page-register {
-    .scroll-content{
-        padding: 8px !important;
-    }
-    .verify-phone-number {
-        color: white;
-        font-size: 1.7rem;
-        margin-bottom: 10px;
-        font-weight: bold;
-        padding-top: 2rem;
-    }
-    .sms-message-txt {
-        color: #8da6c1;
-        font-size: 1.4rem;
-        line-height: 1.5;
-    }
+  .scroll-content {
+    padding: 8px !important;
+  }
+  .verify-phone-number {
+    color: white;
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+    padding-top: 2rem;
+  }
+  .sms-message-txt {
+    color: #8da6c1;
+    font-size: 1.4rem;
+    line-height: 1.5;
+  }
 
-    .select{
-        padding-top: 0 !important;
-    }
+  .select {
+    padding-top: 0 !important;
+  }
 
+  .select-icon-inner {
+    color: white !important;
+  }
 
+  .custom-item {
+    color: white;
+    padding-left: 0 !important;
+    background-color: transparent;
+    font-size: 1.4rem;
+  }
+  .text-input {
+    margin-top: 0px !important;
+  }
+  .img-container {
+    position: absolute;
+    width: 50%;
+    left: 0;
+    right: 0;
+    top: 4rem;
+    margin: auto;
+    .smile-img-wrapper {
+      width: 130px;
+      height: 130px;
+      margin: auto;
+      position: relative;
+      background: white;
+      border-radius: 50%;
+      border: 3px solid #24df73;
+      border-bottom-color: #7b2fff;
+      border-right-color: #7b2fff;
+      box-shadow: 0px 0px 81px -12px #15ff7b;
+      transform: rotate(-3deg);
+    }
+    .smile-img {
+      width: 78px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      top: 23px;
+    }
+    .upload-img {
+      width: 35px;
+      position: absolute;
+      left: 2.1rem;
+      top: 1rem;
+      z-index: 100;
+      background: white;
+      padding: 5px;
+      box-shadow: 3px 5px 20px 0px #79ffb3;
+      border-radius: 100%;
+    }
+  }
+  .submit-btn {
+    width: 95%;
+    display: block;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    margin-left: 2px;
+  }
 
-    .select-icon-inner{
-        color: white !important;
-    }
+  .upload-img {
+    width: 29px;
+    position: absolute;
+  }
 
-    .custom-item{
-        color: white;
-        padding-left : 0 !important;
-        background-color: transparent;
-        font-size: 1.4rem;
-    }
-    .text-input{
-        margin-top: 0px !important;
-    }
-    .img-container{
-        position: absolute;
-        width: 50%;
-        left: 0;
-        right: 0;
-        top: 4rem;
-        margin: auto;
-        .smile-img-wrapper{
-            width: 130px;
-            height: 130px;
-            margin: auto;
-            position: relative;
-            background: white;
-            border-radius: 50%;
-            border: 3px solid #24df73;
-            border-bottom-color: #7b2fff;
-            border-right-color: #7b2fff;
-            box-shadow: 0px 0px 81px -12px #15ff7b;
-            transform: rotate(-3deg);
-        }
-        .smile-img {
-            width: 78px;
-            position: absolute;
-            left: 0;
-            right: 0;
-            margin: auto;
-            top: 23px;
-        }
-        .upload-img {
-            width: 35px;
-            position: absolute;
-            left: 2.1rem;
-            top: 1rem;
-            z-index: 100;
-            background: white;
-            padding: 5px;
-            box-shadow: 3px 5px 20px 0px #79ffb3;
-            border-radius: 100%;
-        }
-    }
-    .submit-btn{
-        width: 95%;
-        display: block;
-        margin: auto;
-        margin-top: 3rem;
-        margin-bottom: 1rem;
-        margin-left: 2px;
-    }
+  ion-footer {
+    background: #142f4c;
+  }
 
-    .upload-img{
-        width: 29px;
-        position: absolute;
-    }
+  .info-row {
+    // margin-top: 2rem;
+  }
+  .background-happy {
+    position: relative;
+  }
 
-    ion-footer{
-        background: #142f4c;
-    }
-    
-    .info-row{
-        // margin-top: 2rem;
-    }
-    .background-happy{
-        position: relative;
-    }
+  .custom-col {
+    position: initial;
+  }
 
-    .custom-col{
-        position: initial;
-    }
-
+  .uploaded-img {
+    width: 130px;
+    height: 130px;
+    border-radius: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: auto;
+    background-position: center center;
+  }
 }

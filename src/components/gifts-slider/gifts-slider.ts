@@ -1,6 +1,8 @@
 import { Component, Input } from "@angular/core";
 import { codes } from "./mocks";
-import { NavController } from "ionic-angular";
+import { NavController, Events, LoadingController } from "ionic-angular";
+import { ApiProvider } from "../../providers/api/api";
+import { SettingProvider } from "../../providers/setting/setting";
 
 @Component({
   selector: "gifts-slider",
@@ -9,7 +11,15 @@ import { NavController } from "ionic-angular";
 export class GiftsSliderComponent {
   @Input() occasion;
   codes: any = codes;
-  constructor(private navCtrl: NavController) {}
+  defaultImg = "assets/imgs/iPhone-X.png";
+  loading: any;
+  constructor(
+    private navCtrl: NavController,
+    private api: ApiProvider,
+    private loadingCtrl: LoadingController,
+    private setting: SettingProvider,
+    private event: Events
+  ) {}
 
   AddGift(id) {
     this.navCtrl.push("UploadGiftImgPage", { occasionId: id });
@@ -17,5 +27,27 @@ export class GiftsSliderComponent {
 
   editGift(gift) {
     this.navCtrl.push("UploadGiftImgPage", { gift: gift });
+  }
+
+  deleteGift(gift) {
+    this.presentLoadingDefault();
+    this.api.deleteGift(gift.id).subscribe(
+      data => {
+        if (data.code == "201") {
+          this.setting.presentToast(data.message);
+          this.event.publish("giftDeleted");
+        }
+        this.loading.dismiss();
+      },
+      err => {
+        this.loading.dismiss();
+      }
+    );
+  }
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    this.loading.present();
   }
 }

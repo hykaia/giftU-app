@@ -6,9 +6,9 @@ import {
   Platform,
   ModalController
 } from "ionic-angular";
+import * as moment from "moment";
 import { Friends, Occasions, Notifications, Emotions, Slides } from "./mocks";
 import { ApiProvider } from "../../providers/api/api";
-import { DomSanitizer } from "@angular/platform-browser";
 import * as _ from "lodash";
 import {
   Contacts,
@@ -19,6 +19,7 @@ import {
   ContactFieldType
 } from "@ionic-native/contacts";
 import { GeneralProvider } from "../../providers/general/general";
+import { SettingProvider } from "../../providers/setting/setting";
 
 @IonicPage()
 @Component({
@@ -29,9 +30,7 @@ export class MyFriendsPage {
   @ViewChild("container") containerElem;
 
   selectedSegment: any = "my_friends";
-  // Friends: any = Friends;
   Friends: any;
-  originalContacts: any;
   Occasions: any[] = [];
   Emotions: any = Emotions;
   Notifications: any = Notifications;
@@ -42,15 +41,15 @@ export class MyFriendsPage {
     public navCtrl: NavController,
     private platform: Platform,
     private render: Renderer2,
+    private setting: SettingProvider,
     private contacts: Contacts,
     private general: GeneralProvider,
     private modalCtrl: ModalController,
-    private sanitizer: DomSanitizer,
     private api: ApiProvider,
     public navParams: NavParams
   ) {
-    console.log("Notifications : ", this.Notifications);
     this.myFriendsOccasions();
+    this.getUserFriends();
   }
 
   ionViewDidEnter() {
@@ -107,9 +106,7 @@ export class MyFriendsPage {
               ? item["_objectInstance"].phoneNumbers[0].value
               : null,
             img: Array.isArray(item["_objectInstance"].photos)
-              ? this.sanitizer.bypassSecurityTrustUrl(
-                  item["_objectInstance"].photos[0].value
-                )
+              ? item["_objectInstance"].photos[0].value
               : "assets/imgs/1.jpg"
           });
         });
@@ -138,7 +135,6 @@ export class MyFriendsPage {
   }
 
   inviteBestFriends() {
-    // this.navCtrl.push('InviteBestFriendsPage')
     let modal = this.modalCtrl.create("InviteYourFriendsPage", {
       isModal: true
     });
@@ -147,7 +143,7 @@ export class MyFriendsPage {
 
   Search() {
     let modal = this.modalCtrl.create("SearchFriendsPage", {
-      Friends: this.originalContacts
+      Friends: this.Friends
     });
     modal.present();
   }
@@ -189,12 +185,39 @@ export class MyFriendsPage {
   myFriendsOccasions() {
     this.api.myFriendsOccasions().subscribe(
       data => {
-        console.log("user occasions are : ", data);
+        console.log("friends occasions are : ", data);
         this.Occasions = data.data;
       },
       err => {
         console.log("error Occasions :", err);
       }
     );
+  }
+
+  getUserFriends() {
+    this.api.getUserFriends().subscribe(data => {
+      this.Friends = data.data;
+      console.log("user friends are : ", this.Friends);
+    });
+  }
+
+  getDifferenceDays(occasion) {
+    let date = this.setting.getDateDifferenceInDays(occasion.occasion_date);
+    var todayDate = moment(new Date()).format("YYYY-MM-DD");
+    if (occasion.occasion_date > todayDate) {
+      return `
+        <div class="remaining-days-wrapper" [class.adjust-middle]="0">
+          <div class="remaining-days">${date}</div>
+          <div class="days-txt"> days </div>
+        </div>
+      `;
+    }
+    if (occasion.occasion_date == todayDate) {
+      return `
+        <div class="remaining-days-wrapper">
+          <div class="days-txt now"> Now </div>
+        </div>
+      `;
+    }
   }
 }

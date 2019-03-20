@@ -3,7 +3,6 @@ import { Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { Keyboard } from "@ionic-native/keyboard";
-import { formatUrlPart } from "ionic-angular/umd/navigation/url-serializer";
 
 @Component({
   templateUrl: "app.html"
@@ -23,24 +22,9 @@ export class MyApp {
     private splashScreen: SplashScreen
   ) {
     // this.checkDefaultRoute();
-    // if (this.platform.is("cordova")) {
-    let userData = {
-      id: 34,
-      name: "Mohammed Mokhtar",
-      status: "Happy!!",
-      created_at: "2019-03-13 12:12:32",
-      updated_at: "2019-03-13 12:12:32",
-      first_name: "Mohammed",
-      last_name: "Mokhtar",
-      phone: "01028734848",
-      profile_image: null,
-      gender: "male",
-      date_of_birth: "1993-8-14"
-    };
-    localStorage.setItem("userData", JSON.stringify(userData));
-    // }
-
+    this.setFakeUser();
     this.initialize();
+    this.arrangeArray();
   }
 
   initialize() {
@@ -73,4 +57,23 @@ export class MyApp {
       this.rootPage = "LoginPage";
     }
   }
+
+  setFakeUser() {
+    let userData = {
+      created_at: "2019-03-07 14:19:27",
+      date_of_birth: "2000-01-01",
+      first_name: "Hossam",
+      gender: "male",
+      id: 1,
+      last_name: "Hassan",
+      name: "Hossam hassan",
+      phone: "01099499283",
+      profile_image: null,
+      status: "happy",
+      updated_at: "2019-03-07 14:19:27"
+    };
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
+
+  arrangeArray() {}
 }

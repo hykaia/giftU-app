@@ -3,7 +3,7 @@
     <name>giftU</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://10.1.118.126:8100" />
+    <content original-src="index.html" src="http://10.1.118.164:8101" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -41,6 +41,9 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
+        <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
+            <string>You can take photos</string>
+        </config-file>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
@@ -94,8 +97,11 @@
     </plugin>
     <plugin name="cordova-plugin-ionic-keyboard" spec="2.1.2" />
     <allow-navigation href="http://10.1.118.54:8101" sessionid="53d1f926" />
-    <allow-navigation href="http://10.1.118.126:8100" sessionid="e1b4f15f" />
-    <engine name="ios" spec="4.5.5" />
-    <engine name="android" spec="7.1.4" />
+    <plugin name="cordova-plugin-file-transfer" spec="1.7.1" />
+    <plugin name="cordova-plugin-file" spec="6.0.1" />
+    <plugin name="cordova-base64-to-gallery" spec="4.1.3" />
+    <allow-navigation href="http://10.1.118.164:8101" sessionid="a795c4c1" />
+    <engine name="ios" spec="^4.5.4" />
     <engine name="browser" spec="5.0.4" />
+    <engine name="android" spec="7.1.4" />
 </widget>
