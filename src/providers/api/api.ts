@@ -11,16 +11,16 @@ export class ApiProvider {
   ) {}
 
   login(params): Observable<any> {
-    return this.http.post(
-      `${this.settingService.URL}login`,
-      JSON.stringify(params)
+    return this.http.get(
+      `${this.settingService.URL}user/whatsapp/login?phone=${
+        params.countryCode
+      }${params.phone.replace(/^0+/, "")}`
     );
   }
 
   verify(params): Observable<any> {
-    return this.http.post(
-      `${this.settingService.URL}verify`,
-      JSON.stringify(params)
+    return this.http.get(
+      `${this.settingService.URL}user/verify/${params.verifyCode}`
     );
   }
 
@@ -43,11 +43,11 @@ export class ApiProvider {
     );
   }
 
-  getAllUserContacts(contacts): Observable<any> {
+  getAllUserContacts(params): Observable<any> {
     let userData = JSON.parse(localStorage.getItem("userData"));
     return this.http.post(
-      `${this.settingService.URL}user/contacts/1`,
-      contacts
+      `${this.settingService.URL}user/contacts/${userData.id}?stopTwilio=1`,
+      params
     );
   }
 
@@ -89,25 +89,25 @@ export class ApiProvider {
     return this.http.get(`${this.settingService.URL}occasion/${userId}`);
   }
 
-  myFriendsOccasions(): Observable<any> {
+  myFriendsOccasions(page): Observable<any> {
     let userData = JSON.parse(localStorage.getItem("userData"));
     return this.http.get(
-      `${this.settingService.URL}occasion/friends/${userData.id}`
+      `${this.settingService.URL}occasion/friends/${userData.id}?page=${page}`
     );
   }
 
-  getWishListGifts(occasionId, userId): Observable<any> {
+  generalWishlist(occasionId, userId): Observable<any> {
     return this.http.get(
       `${this.settingService.URL}gift/${occasionId}/${userId}`
     );
   }
 
-  getUserFriends(): Observable<any> {
+  getUserFriends(page): Observable<any> {
     let userData = JSON.parse(localStorage.getItem("userData"));
     return this.http.get(
-      `${this.settingService.URL}user/profile/${userData.id}?friends=${
+      `${this.settingService.URL}user/profile/${
         userData.id
-      }`
+      }?friends=1&page=${page}`
     );
   }
 

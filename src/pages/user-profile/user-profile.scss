@@ -43,7 +43,7 @@ page-user-profile {
     border-radius: 3px;
     padding: 5px;
     position: absolute;
-    bottom: -7.9rem;
+    top: 80%;
     left: 0;
     right: 0;
   }
@@ -65,8 +65,11 @@ page-user-profile {
       font-size: 1.3rem;
     }
   }
-  .birthday-row-wrapper {
+  .birthday-grid-wrapper:first-child {
     margin-top: 8rem;
+  }
+  .birthday-grid-wrapper:not(:first-child) {
+    margin-top: 3rem;
   }
   .birthday-txt {
     color: white;
@@ -99,7 +102,7 @@ page-user-profile {
     margin-top: 1rem;
   }
   .wishlist-row-wrapper {
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
   .wish-img {
     width: 3rem;
@@ -108,6 +111,15 @@ page-user-profile {
     display: block;
   }
 
+  .user-profile-wrapper {
+    width: 6rem;
+    height: 6rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: auto;
+    background-position: center center;
+    border-radius: 100%;
+  }
   .no-wishlist-row {
     background: white;
     border-radius: 3px;
@@ -118,5 +130,17 @@ page-user-profile {
     .no-wishlist-div {
       margin: auto;
     }
+  }
+
+  ion-row.row-spinner.row {
+    margin-top: 15rem;
+    margin-bottom: -2rem;
+  }
+  .spinner-ios-ios line,
+  .spinner-ios-ios-small line {
+    stroke: #ffff;
+  }
+  .loading {
+    color: white;
   }
 }

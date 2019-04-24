@@ -23,10 +23,6 @@ export class SearchFriendsPage {
     console.log("FriendsFriendsFriends : ", this.Friends);
   }
 
-  ionViewDidLoad() {
-    //  code here
-  }
-
   Search() {
     this.filterFriends = this.Friends.filter(item => {
       if (item.name != null && item.phone != null) {

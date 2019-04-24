@@ -12,14 +12,19 @@
 <ion-content padding>
   <ion-row>
     <ion-col col-12>
-      <div class="all-img-container">
-        <div class="img-container">
-          <img src="assets/imgs/upload.svg" class="upload-img" />
-          <div class="smile-img-wrapper">
-            <img src="assets/imgs/iphonex-front.png" class="smile-img" />
-          </div>
-        </div>
-      </div>
+      <p class="take-photo" ion-text text-center>Take a photo</p>
+      <img
+        *ngIf="!base64Img"
+        src="assets/imgs/camera-img.png"
+        (click)="presentActionSheet()"
+        class="uploaded-img"
+      />
+      <img
+        *ngIf="base64Img"
+        [src]="base64Img"
+        (click)="presentActionSheet()"
+        class="uploaded-img"
+      />
     </ion-col>
   </ion-row>
 

@@ -16,6 +16,7 @@
           (click)="getContacts()"
         >
           Invite
+          <!-- Get friends -->
         </button>
       </ion-col>
 
@@ -44,10 +45,7 @@
   <!-- <button ion-button color="primary" (click)="getContacts()">Load Contact</button> -->
 
   <ion-list *ngIf="!isLoading" id="inviteContainer">
-    <ion-item
-      *ngFor="let contact of filterContacts"
-      (click)="openContact(contact)"
-    >
+    <ion-item *ngFor="let contact of filterContacts">
       <div ion-text text-wrap color="primary">{{ contact.name }}</div>
       <div ion-text color="light">{{ contact.phone }}</div>
 
@@ -62,6 +60,7 @@
         item-right
         color="secondary"
         *ngIf="!contact.exists"
+        (click)="inviteFriend(contact)"
       >
         Invite
       </button>

@@ -55,7 +55,15 @@ page-suggest-gift {
     position: absolute;
   }
   .inputs-wrapper {
-    margin-top: 18rem;
+    margin-top: 0rem;
+  }
+
+  .uploaded-img {
+    margin: auto;
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
   }
 
   .anon-img {

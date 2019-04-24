@@ -32,7 +32,7 @@ export class UserProfilePage {
     public navParams: NavParams
   ) {
     console.log("user data is : ", this.userData);
-    this.getWishListGifts();
+    this.getGeneralWishlist();
   }
   ionViewDidEnter() {
     this.setBackButtonAction();
@@ -54,30 +54,12 @@ export class UserProfilePage {
     });
   }
 
-  giveGift(gift) {
-    this.api.giveGift(gift.id).subscribe(data => {
-      console.log("give gift response is :", data);
+  getGeneralWishlist() {
+    this.api.generalWishlist(0, this.userData.id).subscribe(data => {
+      console.log("general wishlist data are : ", data);
       if (data.code == "201") {
-        this.setting.presentToast(data.message);
+        this.wishListGifts = data.data;
       }
-    });
-  }
-
-  suggestGift(occasion, gift) {
-    gift.userId = this.userData.id;
-    let modal = this.modalCtrl.create("SuggestGiftPage", { giftData: gift });
-    modal.onDidDismiss(data => {
-      if (data) {
-        let index = this.occasions.indexOf(occasion);
-        this.occasions[index].gifts.push(data);
-      }
-    });
-    modal.present();
-  }
-  getWishListGifts() {
-    this.api.getWishListGifts(0, this.userData.id).subscribe(data => {
-      console.log("wishlist data are : ", data);
-      this.wishListGifts = data.data;
     });
   }
 }

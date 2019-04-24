@@ -17,18 +17,22 @@
 
     <ion-row>
       <ion-col col-12>
-        <div class="all-img-container">
-          <img
-            src="assets/imgs/background-happy.png"
-            class="background-happy"
-          />
-          <div class="img-container">
-            <img src="assets/imgs/upload.svg" class="upload-img" />
-            <div class="smile-img-wrapper">
-              <img src="assets/imgs/smill-face.png" class="smile-img" />
-            </div>
-          </div>
-        </div>
+        <img
+          *ngIf="!base64Img"
+          [src]="
+            data.profile_image
+              ? data.profile_image
+              : 'assets/imgs/camera-img.png'
+          "
+          (click)="presentActionSheet()"
+          class="uploaded-img"
+        />
+        <img
+          *ngIf="base64Img"
+          [src]="base64Img"
+          (click)="presentActionSheet()"
+          class="uploaded-img"
+        />
       </ion-col>
     </ion-row>
 
@@ -78,6 +82,7 @@
             type="text"
             [(ngModel)]="data.status"
             placeholder="Status"
+            maxlength="25"
           ></ion-input>
         </ion-item>
       </ion-col>

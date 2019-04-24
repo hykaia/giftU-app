@@ -105,9 +105,11 @@ page-register {
     width: 130px;
     height: 130px;
     border-radius: 100%;
+    margin: auto;
+    display: block;
+    margin-top: 1rem;
     background-size: contain;
     background-repeat: no-repeat;
-    margin: auto;
     background-position: center center;
   }
 }

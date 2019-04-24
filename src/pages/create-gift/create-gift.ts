@@ -1,96 +1,195 @@
-import { Component } from "@angular/core";
+import { Component, NgZone } from "@angular/core";
 import {
   IonicPage,
   NavController,
   NavParams,
   Events,
-  LoadingController
+  LoadingController,
+  ActionSheetController
 } from "ionic-angular";
-import { CameraPreview } from "@ionic-native/camera-preview";
 import { ApiProvider } from "../../providers/api/api";
 import { SettingProvider } from "../../providers/setting/setting";
+import { File } from "@ionic-native/file";
 import {
   FileTransfer,
   FileUploadOptions,
   FileTransferObject
 } from "@ionic-native/file-transfer";
+import { Camera, CameraOptions } from "@ionic-native/camera";
+import { GeneralProvider } from "../../providers/general/general";
 @IonicPage()
 @Component({
   selector: "page-create-gift",
   templateUrl: "create-gift.html"
 })
 export class CreateGiftPage {
-  giftImageData: any = this.navParams.get("giftImageData");
+  occasionId: any = this.navParams.get("occasionId");
+  loader: any;
   userData: any = JSON.parse(localStorage.getItem("userData"));
-  gift: any = this.navParams.get("gift");
-  isWaiting: boolean = false;
+  gift: any = this.navParams.get("gift"); //update gift.
+  base64Img: any = null;
   data: any = {
     title: "iPhone xs max",
     description: "i want iPhone xs max - Black"
   };
   constructor(
     public navCtrl: NavController,
-    private cameraPreview: CameraPreview,
     private api: ApiProvider,
+    private ngzone: NgZone,
+    private file: File,
+    private camera: Camera,
+    private actionSheetCtrl: ActionSheetController,
     private setting: SettingProvider,
     private transfer: FileTransfer,
+    private general: GeneralProvider,
     private loadingCtrl: LoadingController,
     private event: Events,
     public navParams: NavParams
   ) {
-    console.log("giftImageData : ", this.giftImageData);
-
     if (this.gift) {
       this.data = this.gift;
+      console.log("this.gift : ", this.gift);
     }
   }
 
-  ionViewWillEnter() {
-    this.cameraPreview.stopCamera();
-  }
-
   edit() {
-    this.api.editGift(this.data).subscribe(data => {
-      console.log("response data : ", data);
-      if (data.code == "201") {
-        this.setting.presentToast(data.message);
-        this.popToMyProfile();
-      }
-    });
+    if (!this.data.imageUri) {
+      this.editGiftWithoutFileUpload();
+    } else {
+      this.sendToServer(`http://giftu.co/gift/update/${this.data.id}`);
+    }
   }
 
-  popToMyProfile() {
-    this.navCtrl.push("MyProfilePage").then(() => {
-      const startIndex = this.navCtrl.getActive().index - 2;
-      this.navCtrl.remove(startIndex, 2);
-    });
-  }
-
-  share1() {
-    this.isWaiting = true;
-    this.data.occasion_id = this.giftImageData.occasionId;
-    this.data.image = this.giftImageData.imageURI;
-    console.log("data before send : ", this.data);
-    this.api.addGift(this.data).subscribe(
+  editGiftWithoutFileUpload() {
+    this.presentLoading();
+    this.api.editGift(this.data).subscribe(
       data => {
-        this.isWaiting = false;
-        this.popToMyProfile();
+        this.event.publish("giftAdded");
+        this.navCtrl.pop();
+        this.loader.dismiss();
       },
       err => {
-        this.isWaiting = false;
-        console.log("add gift error is : ", err);
+        this.loader.dismiss();
       }
     );
   }
 
-  share() {
-    this.data.occasion_id = this.giftImageData.occasionId;
-    console.log("final data  : ", this.data);
+  presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: "Choose gallery",
+      buttons: [
+        {
+          text: "Camera",
+          role: "Camera",
+          handler: () => {
+            this.uploadImage(0);
+          }
+        },
+        {
+          text: "Gallery",
+          handler: () => {
+            this.uploadImage(1);
+          }
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          }
+        }
+      ]
+    });
 
+    actionSheet.present();
+  }
+
+  uploadImage(type) {
+    const options: CameraOptions = {
+      quality: 80,
+      saveToPhotoAlbum: false,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType:
+        type == 0
+          ? this.camera.PictureSourceType.CAMERA
+          : this.camera.PictureSourceType.PHOTOLIBRARY,
+      targetWidth: 400,
+      targetHeight: 400
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        console.log("imageData : ", imageData);
+        this.data.imageUri = imageData;
+        this.convertFileToImg(imageData);
+      },
+      err => {
+        // Handle error
+      }
+    );
+  }
+
+  convertFileToImg(imageData) {
+    this.file
+      .resolveLocalFilesystemUrl(imageData)
+      .then((entry: any) => {
+        entry.file(file1 => {
+          var reader = new FileReader();
+          reader.onload = (encodedFile: any) => {
+            var src = encodedFile.target.result;
+            console.log("hi mo");
+            this.ngzone.run(() => {
+              this.base64Img = src;
+            });
+          };
+          reader.readAsDataURL(file1);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  share() {
+    this.data.occasion_id = this.occasionId;
+    if (!this.data.imageUri) {
+      this.addGift(); // test purpose
+      // this.general.showCustomAlert("Warning", "You must upload gift image!");
+    } else {
+      this.sendToServer(`http://giftu.co/gift/${this.userData.id}`);
+    }
+  }
+
+  addGift() {
     let loader = this.loadingCtrl.create({
       content: "Uploading..."
     });
-    loader.present();
+    this.api.addGift(this.data).subscribe(
+      data => {
+        if (data.code == "201") {
+          this.event.publish("giftAdded");
+          this.navCtrl.pop();
+        } else {
+          this.setting.presentToast("an error occur");
+        }
+        loader.dismiss();
+      },
+      err => {
+        loader.dismiss();
+      }
+    );
+  }
+
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Uploading..."
+    });
+    this.loader.present();
+  }
+  sendToServer(url) {
+    this.presentLoading();
     const fileTransfer: FileTransferObject = this.transfer.create();
     let options: FileUploadOptions = {
       fileKey: "image",
@@ -101,26 +200,21 @@ export class CreateGiftPage {
       params: this.data
     };
 
-    fileTransfer
-      .upload(
-        this.giftImageData.imageURI,
-        `http://giftu.co/gift/${this.userData.id}`,
-        options
-      )
-      .then(
-        data => {
-          let response = JSON.parse(data.response);
-          if (response["code"] == "201") {
-            this.popToMyProfile();
-          } else {
-            this.setting.presentToast("an error occur");
-          }
-          loader.dismiss();
-        },
-        err => {
-          console.log(err);
-          loader.dismiss();
+    fileTransfer.upload(this.data.imageUri, url, options).then(
+      data => {
+        let response = JSON.parse(data.response);
+        if (response["code"] == "201") {
+          this.event.publish("giftAdded");
+          this.navCtrl.pop();
+        } else {
+          this.setting.presentToast("an error occur");
         }
-      );
+        this.loader.dismiss();
+      },
+      err => {
+        console.log(err);
+        this.loader.dismiss();
+      }
+    );
   }
 }

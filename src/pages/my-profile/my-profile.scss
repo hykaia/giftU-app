@@ -13,6 +13,16 @@ page-my-profile {
     height: 3.6rem !important;
   }
 
+  .user-profile-wrapper {
+    width: 6rem;
+    height: 6rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: auto;
+    background-position: center center;
+    border-radius: 100%;
+  }
+
   .segment-toolbar {
     min-height: none !important;
   }

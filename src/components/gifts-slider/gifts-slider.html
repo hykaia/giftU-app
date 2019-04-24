@@ -50,7 +50,7 @@
               "
             ></div>
             <div ion-text color="gray" class="wish-txt">
-              {{ gift.description }} {{ codes.love }}
+              {{ gift.description | truncate: 33:"..." }} {{ codes.love }}
             </div>
           </ion-col>
           <ion-col col-12 class="btns-wrapper">
@@ -59,7 +59,10 @@
                 <div class="edit-wrapper" (click)="editGift(gift)">
                   <img src="assets/imgs/pencil.svg" class="edit-pencil" />
                 </div>
-                <div class="cancel-wrapper" (click)="deleteGift(gift)">
+                <div
+                  class="cancel-wrapper"
+                  (click)="presentDeleteConfirm(gift)"
+                >
                   <img src="assets/imgs/cancel.svg" />
                 </div>
               </ion-col>

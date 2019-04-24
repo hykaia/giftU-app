@@ -4,12 +4,7 @@
     <ion-title *ngIf="gift">Edit gift</ion-title>
     <ion-buttons end>
       <button ion-button round color="white" *ngIf="!gift" (click)="share()">
-        <span *ngIf="!isWaiting">Share</span>
-        <ion-spinner
-          name="ios-small"
-          *ngIf="isWaiting"
-          color="light"
-        ></ion-spinner>
+        Share
       </button>
       <button ion-button round color="white" *ngIf="gift" (click)="edit()">
         Edit
@@ -20,6 +15,27 @@
 
 <ion-content padding>
   <ion-row class="inputs-wrapper">
+    <ion-col col-12>
+      <p class="take-photo" ion-text text-center>Take a photo</p>
+      <img
+        *ngIf="!gift && !base64Img"
+        src="assets/imgs/camera-img.png"
+        (click)="presentActionSheet()"
+        class="camera-img"
+      />
+      <img
+        *ngIf="gift && !base64Img"
+        [src]="gift.image"
+        (click)="presentActionSheet()"
+        class="uploaded-img"
+      />
+      <img
+        *ngIf="base64Img"
+        [src]="base64Img"
+        (click)="presentActionSheet()"
+        class="uploaded-img"
+      />
+    </ion-col>
     <ion-col col-12 class="custom-col">
       <ion-item class="custom-item">
         <ion-label color="light" stacked>Gift Name</ion-label>

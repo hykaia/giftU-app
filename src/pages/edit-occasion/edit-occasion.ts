@@ -4,7 +4,8 @@ import {
   NavController,
   NavParams,
   ViewController,
-  AlertController
+  AlertController,
+  LoadingController
 } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
 
@@ -15,40 +16,53 @@ import { ApiProvider } from "../../providers/api/api";
 })
 export class EditOccasionPage {
   data: any = this.navParams.get("occasion");
+  loading: any;
   constructor(
     public navCtrl: NavController,
     private viewCtrl: ViewController,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     private api: ApiProvider,
     public navParams: NavParams
   ) {
     console.log("occasion data : ", this.data);
   }
 
-  ionViewDidLoad() {}
-
   dismiss() {
     this.viewCtrl.dismiss();
   }
 
   editOccasion() {
+    this.presentLoading();
     this.api.editOccasion(this.data).subscribe(data => {
       console.log("response edit occasion : ", data);
-      if (data.code == "200" || data.code == "201") {
+      if (data.code == "201") {
         data.data.operationType = "update";
+        data.data.gifts = this.data.gifts;
+        this.loading.dismiss();
         this.viewCtrl.dismiss(data.data);
       }
-    });
+    }),
+      err => {
+        this.loading.dismiss();
+      };
   }
 
   delete() {
-    this.api.deleteOccasion(this.data.id).subscribe(data => {
-      console.log("delete data : ", data);
-      if (data.code == "201") {
-        data.data.operationType = "delete";
-        this.viewCtrl.dismiss(data.data);
+    this.presentLoading();
+    this.api.deleteOccasion(this.data.id).subscribe(
+      data => {
+        console.log("delete data : ", data);
+        if (data.code == "201") {
+          this.loading.dismiss();
+          data.data.operationType = "delete";
+          this.viewCtrl.dismiss(data.data);
+        }
+      },
+      err => {
+        this.loading.dismiss();
       }
-    });
+    );
   }
 
   presentConfirm() {
@@ -72,5 +86,13 @@ export class EditOccasionPage {
       ]
     });
     alert.present();
+  }
+
+  presentLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+
+    this.loading.present();
   }
 }

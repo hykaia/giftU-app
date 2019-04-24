@@ -1,13 +1,5 @@
-<!-- <ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title></ion-title>
-  </ion-navbar>
-
-</ion-header> -->
-
 <ion-content ion-fixed>
-  <ion-grid class="login-grid">
+  <ion-grid class="login-grid" *ngIf="data.countryCode">
     <ion-row>
       <ion-col col-12>
         <img src="assets/imgs/logo.png" class="logo-img" />

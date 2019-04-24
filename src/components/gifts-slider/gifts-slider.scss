@@ -47,3 +47,7 @@ gifts-slider {
     width: 37%;
   }
 }
+
+ion-slide.swiper-slide.swiper-slide-active {
+  width: 100% !important; //your width here
+}

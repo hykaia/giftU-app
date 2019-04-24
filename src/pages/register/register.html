@@ -12,8 +12,21 @@
 
     <ion-row>
       <ion-col col-12>
-        <!-- <div>{{ base64Img }}</div> -->
-        <div class="all-img-container" (click)="presentActionSheet()">
+        <img
+          *ngIf="!base64Img"
+          src="assets/imgs/camera-img.png"
+          (click)="presentActionSheet()"
+          class="uploaded-img"
+        />
+
+        <img
+          *ngIf="base64Img"
+          [src]="base64Img"
+          (click)="presentActionSheet()"
+          class="uploaded-img"
+        />
+
+        <!-- <div class="all-img-container" (click)="presentActionSheet()">
           <img
             src="assets/imgs/background-happy.png"
             class="background-happy"
@@ -33,7 +46,7 @@
               class="uploaded-img"
             ></div>
           </div>
-        </div>
+        </div> -->
       </ion-col>
     </ion-row>
 
@@ -83,6 +96,7 @@
             type="text"
             [(ngModel)]="data.status"
             placeholder="Status"
+            maxlength="25"
           ></ion-input>
         </ion-item>
       </ion-col>

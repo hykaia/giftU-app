@@ -15,7 +15,8 @@ export class VerificationPage implements OnInit {
   isDisabled: boolean = false;
   time: number = 15;
   subscription: any;
-  loginData: any = this.navParams.get("loginData");
+  data: any = {};
+  comingData: any = this.navParams.get("loginData");
   constructor(
     public navCtrl: NavController,
     private api: ApiProvider,
@@ -24,60 +25,58 @@ export class VerificationPage implements OnInit {
     private general: GeneralProvider,
     public navParams: NavParams
   ) {
-    console.log("loginData : ", this.loginData);
+    // console.log("comingData : ", this.comingData);
   }
 
   ngOnInit() {
     this.timeCount();
   }
 
-  // ngAfterViewChecked() {
-  //   setTimeout(() => {
-  //     this.passwordInput.nativeElement.focus();
-  //   }, 1000);
-  // }
-
   verify() {
-    let verificationData = {
-      phone: this.loginData.phone,
-      countryCode: this.loginData.countryCode
-    };
-    console.log("a7a verificationData : ", verificationData);
-
-    this.navCtrl.setRoot("RegisterPage", {
-      verificationData: verificationData
-    }); // for test purpose
-    // this.isWaiting = true;
-    // let params = {
-    //   phone: `${this.loginData.countryCode}${this.loginData.phone}`,
-    //   password: this.loginData.password
-    // };
-    // this.api.verify(params).subscribe(
-    //   data => {
-    //     console.log("verify result :", data);
-    //     if (data.success) {
-    //       this.general.presentToast(data.message);
-    //       localStorage.setItem("isLogin", JSON.stringify(true));
-    //       localStorage.setItem("access_token", data.access_token);
-    //       this.event.publish("loginSuccess");
-    //       if (data.exist_user) {
-    //         localStorage.setItem("isUserExist", JSON.stringify(true));
-    //         this.navCtrl.setRoot("MyFriendsPage");
-    //       } else {
-    //         this.navCtrl.setRoot("RegisterPage");
-    //       }
-    //     }
-    //     this.isWaiting = false;
-    //   },
-    //   err => {
-    //     this.general.showErrors(err);
-    //     this.isWaiting = false;
-    //   }
-    // );
+    this.data.password = this.general.convertNumber(this.data.password);
+    if (!this.data.password) {
+      this.general.showCustomAlert("Warning", "You must enter verify code");
+    } else {
+      /** user is the first time to use the app. */
+      if (this.comingData.loginData.data.isFirstTime) {
+        if (this.comingData.loginData.data.valid_phone == this.data.password) {
+          let verificationData = {
+            phone: this.comingData.phone,
+            countryCode: this.comingData.countryCode
+          };
+          this.navCtrl.setRoot("RegisterPage", {
+            verificationData: verificationData
+          });
+        }
+      } else {
+        if (this.comingData.loginData.data.valid_phone == this.data.password) {
+          this.isWaiting = true;
+          this.api.verify(this.comingData).subscribe(
+            data => {
+              console.log("response verify  data is :", data);
+              if (data.code == "201") {
+                localStorage.setItem("isLogin", JSON.stringify(true));
+                localStorage.setItem(
+                  "userData",
+                  JSON.stringify(this.comingData.loginData.data)
+                );
+                // this.navCtrl.setRoot("MyFriendsPage");
+                this.navCtrl.setRoot("InviteYourFriendsPage"); //test purpose
+              }
+              this.isWaiting = false;
+            },
+            err => {
+              console.log("verify error :", err);
+              this.isWaiting = false;
+            }
+          );
+        }
+      }
+    }
   }
 
   timeCount() {
-    this.time = 15;
+    this.time = 4;
     this.isDisabled = true;
     let timer = TimerObservable.create(1000, 1000);
     this.subscription = timer.subscribe(t => {
@@ -94,11 +93,18 @@ export class VerificationPage implements OnInit {
   resend() {
     this.timeCount();
     let params = {
-      phone: `${this.loginData.countryCode}${this.loginData.phone}`
+      countryCode: this.comingData.countryCode,
+      phone: this.comingData.phone
     };
     this.api.login(params).subscribe(
       data => {
-        this.general.presentToast(data.message);
+        this.comingData = {
+          loginData: {
+            data: data.data
+          },
+          phone: this.comingData.phone,
+          countryCode: this.comingData.countryCode
+        };
       },
       err => {
         this.general.showErrors(err);

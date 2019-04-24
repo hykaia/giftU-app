@@ -2,13 +2,24 @@
   <ion-navbar color="purple">
     <ion-row>
       <ion-col col-12>
-        <img src="assets/imgs/1.jpg" class="avatar-img" />
-        <p class="user-name">{{ userData.first_name }}</p>
-        <div class="status">{{ userData.status }} {{ codes.love }}</div>
+        <img
+          *ngIf="!userData.profile_image"
+          src="assets/imgs/1.jpg"
+          class="avatar-img"
+        />
+        <div
+          class="user-profile-wrapper"
+          *ngIf="userData.profile_image"
+          [style.background-image]="'url(' + userData.profile_image + ')'"
+        ></div>
+        <p class="user-name">{{ userData.name }}</p>
+        <div class="status">
+          {{ userData.status | truncate: 25 }} {{ codes.love }}
+        </div>
       </ion-col>
     </ion-row>
     <ion-buttons end>
-      <button ion-button icon-only (click)="opMyProfile()">
+      <button ion-button icon-only (click)="openMyProfile()">
         <ion-icon name="cog"></ion-icon>
       </button>
     </ion-buttons>
@@ -75,9 +86,7 @@
                   setting.getDateDifferenceInDays(occasion.occasion_date) > 0
                 "
               >
-                {{
-                  setting.getDateDifferenceInDays(occasion.occasion_date)
-                }}
+                {{ setting.getDateDifferenceInDays(occasion.occasion_date) }}
                 day left
               </span>
               <span
@@ -85,6 +94,13 @@
                   setting.getDateDifferenceInDays(occasion.occasion_date) == 0
                 "
                 >Now</span
+              >
+
+              <span
+                *ngIf="
+                  setting.getDateDifferenceInDays(occasion.occasion_date) < 0
+                "
+                >Expired</span
               >
             </button>
           </ion-col>
@@ -135,7 +151,6 @@
           <p ion-text color="white" class="my-friends">Create new Occasions</p>
         </ion-col>
       </ion-row>
-
       <create-occasion></create-occasion>
     </ion-grid>
 

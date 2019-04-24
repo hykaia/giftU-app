@@ -1,0 +1,49 @@
+<ion-row class="friend-wrapper-row">
+  <ion-col col-7 align-self-center>
+    <ion-row>
+      <ion-col col-4>
+        <img
+          *ngIf="!occasion?.image"
+          src="assets/imgs/user.svg"
+          class="friend-img"
+        />
+
+        <div
+          class="img-wrapper"
+          *ngIf="occasion?.image"
+          [style.background-image]="'url(' + occasion?.image + ')'"
+        ></div>
+      </ion-col>
+      <ion-col col-8 align-self-center>
+        <div class="name-status-wrapper">
+          <div
+            ion-text
+            text-wrap
+            color="primary"
+            class="normal-size"
+            class="name"
+          >
+            {{ occasion?.username }}
+          </div>
+          <div ion-text color="gray" class="normal-size" class="status">
+            {{ occasion?.status }}
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+
+  <ion-col col-5 align-self-center>
+    <ion-row>
+      <ion-col col-4 align-self-center>
+        <div [innerHTML]="getDifferenceDays(occasion)"></div>
+      </ion-col>
+      <ion-col col-8>
+        <img
+          src="{{ setting.imgBasedOnOccasionType(occasion?.type) }}"
+          class="occasion-img"
+        />
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row>

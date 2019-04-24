@@ -48,4 +48,8 @@ create-occasion {
     font-size: 1.3rem;
     margin-top: 2rem;
   }
+
+  ion-slide.swiper-slide.swiper-slide-active {
+    width: 83.25px !important; //your width here
+  }
 }

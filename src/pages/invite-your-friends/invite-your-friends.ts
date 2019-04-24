@@ -1,4 +1,5 @@
-import { Component, ViewChild, Renderer2 } from "@angular/core";
+import { Component, ViewChild, Renderer2, NgZone } from "@angular/core";
+
 import {
   IonicPage,
   NavController,
@@ -34,48 +35,21 @@ export class InviteYourFriendsPage {
     private contacts: Contacts,
     private api: ApiProvider,
     private render: Renderer2,
+    private zone: NgZone,
     private sanitizer: DomSanitizer,
     private viewCtrl: ViewController,
     private platform: Platform,
     public navParams: NavParams
   ) {
-    // this.platform.ready().then(() => {
-    //   if (this.platform.is("cordova")) {
-    //     this.getContacts();
-    //   }
-    // });
+    if (this.platform.is("cordova")) {
+      this.getContacts();
+    }
   }
-
-  ionViewDidEnter() {
-    // this.getUserContacts();
-    this.getContacts();
-  }
-
-  // getUserContacts() {
-  //   var contacts: any = [{ phone: "010455445", name: "ahmed", img: "asd.png" }];
-  //   var fianl = {
-  //     contacts: JSON.stringify(contacts)
-  //   };
-  //   console.log("contactss : ", fianl);
-
-  //   this.api.getAllUserContacts(fianl).subscribe(data => {
-  //     console.log("a7a data :", data);
-
-  //     if (data.code == "200" || data.code == "201") {
-  //       // data.data.forEach((item, index) => {
-  //       //   this.filterContacts[index].exists = item.exists;
-  //       // });
-  //       // console.log("after filterContacts : ", this.filterContacts);
-  //     }
-  //   });
-  // }
-
-  ngAfterViewInit(): void {
-    // this.fadeInContainer();
-  }
-  openContact() {}
 
   getContacts(): void {
+    var code = localStorage.getItem("countryCode")
+      ? localStorage.getItem("countryCode")
+      : "2";
     let contactList: any[] = [];
     let options: any = {
       multiple: true,
@@ -84,21 +58,35 @@ export class InviteYourFriendsPage {
     this.contacts
       .find(["displayName", "phoneNumbers", "photos"], options)
       .then(contacts => {
-        // console.log("original contacts : ", contacts);
         contacts.forEach(item => {
-          contactList.push({
-            name: item["_objectInstance"].name.formatted,
-            phone: Array.isArray(item["_objectInstance"].phoneNumbers)
-              ? item["_objectInstance"].phoneNumbers[0].value
-              : null,
-            img: Array.isArray(item["_objectInstance"].photos)
-              ? this.sanitizer.bypassSecurityTrustUrl(
-                  item["_objectInstance"].photos[0].value
-                )
-              : "assets/imgs/1.jpg"
-          });
-        });
+          if (
+            Array.isArray(item.phoneNumbers) &&
+            item.phoneNumbers[0].value != null
+          ) {
+            var contact: any = {};
+            contact.name = item.name.formatted;
+            contact.img = "assets/imgs/user.svg";
+            contact.phone = item.phoneNumbers[0].value
+              .replace(/\s/g, "")
+              .replace(/-/g, "")
+              .replace(/\(/g, "")
+              .replace(/\)/g, "");
+            /** validate phone number */
+            if (
+              contact.phone.substring(0, 1) != "+" &&
+              contact.phone.substring(0, 2) != "00"
+            ) {
+              contact.phone = `${code}${contact.phone}`; //production purpose.
+            }
+            /** end phone validation */
 
+            contactList.push(contact);
+            /** test */
+            // this.filterContacts = contactList;
+            // this.isLoading = false;
+            /** */
+          }
+        });
         this.sendContactListToServer(contactList);
       });
   }
@@ -109,7 +97,9 @@ export class InviteYourFriendsPage {
     };
     this.api.getAllUserContacts(params).subscribe(
       data => {
-        console.log("contacts api data : ", data);
+        console.log("====================================");
+        console.log("user contacts response : ");
+        console.log("====================================");
         this.originalContacts = data.data;
         this.filterContacts = this.originalContacts;
         this.isLoading = false;
@@ -119,6 +109,10 @@ export class InviteYourFriendsPage {
         this.isLoading = false;
       }
     );
+  }
+
+  inviteFriend(contact) {
+    console.log("friend contact :", contact);
   }
 
   Search() {

@@ -4,22 +4,16 @@ import {
   NavController,
   NavParams,
   Platform,
-  ModalController
+  ModalController,
+  LoadingController
 } from "ionic-angular";
 import * as moment from "moment";
-import { Friends, Occasions, Notifications, Emotions, Slides } from "./mocks";
+import { Friends, Occasions, Notifications, Slides } from "./mocks";
 import { ApiProvider } from "../../providers/api/api";
 import * as _ from "lodash";
-import {
-  Contacts,
-  Contact,
-  ContactField,
-  ContactName,
-  ContactFindOptions,
-  ContactFieldType
-} from "@ionic-native/contacts";
+
+import { Contacts } from "@ionic-native/contacts";
 import { GeneralProvider } from "../../providers/general/general";
-import { SettingProvider } from "../../providers/setting/setting";
 
 @IonicPage()
 @Component({
@@ -28,35 +22,34 @@ import { SettingProvider } from "../../providers/setting/setting";
 })
 export class MyFriendsPage {
   @ViewChild("container") containerElem;
-
+  friendsPagesCount: any;
+  occasionsPagesCount: any;
+  loader: any;
+  countryCode: any;
+  userData: any = JSON.parse(localStorage.getItem("userData"));
   selectedSegment: any = "my_friends";
   Friends: any;
+  isFriendsEmpty: boolean = false;
+  currentPage: number = 1;
+  currentPageOccasion: number = 1;
   Occasions: any[] = [];
-  Emotions: any = Emotions;
   Notifications: any = Notifications;
   Slides: any[] = Slides;
   currentIndex = 0;
   isLoading: boolean = true;
+  isOccasionsLoading: boolean = true;
   constructor(
     public navCtrl: NavController,
-    private platform: Platform,
     private render: Renderer2,
-    private setting: SettingProvider,
     private contacts: Contacts,
     private general: GeneralProvider,
     private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController,
     private api: ApiProvider,
     public navParams: NavParams
   ) {
     this.myFriendsOccasions();
     this.getUserFriends();
-  }
-
-  ionViewDidEnter() {
-    this.isLoading = false;
-    if (this.platform.is("cordova")) {
-      this.getContacts();
-    }
   }
 
   ngAfterViewInit(): void {
@@ -90,7 +83,17 @@ export class MyFriendsPage {
     this.fadeInContainer();
   }
 
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Waiting..."
+    });
+    this.loader.present();
+  }
+
   getContacts(): void {
+    var code = localStorage.getItem("countryCode")
+      ? localStorage.getItem("countryCode")
+      : "2";
     let contactList: any[] = [];
     let options: any = {
       multiple: true,
@@ -100,17 +103,27 @@ export class MyFriendsPage {
       .find(["displayName", "phoneNumbers", "photos"], options)
       .then(contacts => {
         contacts.forEach(item => {
-          contactList.push({
-            name: item["_objectInstance"].name.formatted,
-            phone: Array.isArray(item["_objectInstance"].phoneNumbers)
-              ? item["_objectInstance"].phoneNumbers[0].value
-              : null,
-            img: Array.isArray(item["_objectInstance"].photos)
-              ? item["_objectInstance"].photos[0].value
-              : "assets/imgs/1.jpg"
-          });
+          if (
+            Array.isArray(item.phoneNumbers) &&
+            item.phoneNumbers[0].value != null
+          ) {
+            var contact: any = {};
+            contact.name = item.name.formatted;
+            contact.img = "assets/imgs/user.svg";
+            contact.phone = item.phoneNumbers[0].value
+              .replace(/\s/g, "")
+              .replace(/-/g, "")
+              .replace(/\(/g, "")
+              .replace(/\)/g, "");
+            if (
+              contact.phone.substring(0, 1) != "+" &&
+              contact.phone.substring(0, 2) != "00"
+            ) {
+              contact.phone = `${this.countryCode}${contact.phone}`; //production purpose.
+            }
+            contactList.push(contact);
+          }
         });
-
         this.sendContactListToServer(contactList);
       });
   }
@@ -121,15 +134,10 @@ export class MyFriendsPage {
     };
     this.api.getAllUserContacts(params).subscribe(
       data => {
-        this.Friends = data.data.filter(contact => {
-          return contact.exists;
-        });
-        console.log("friends is : ", this.Friends);
-        this.isLoading = false;
+        this.getUserFriends(true);
       },
       err => {
         console.log("contacts error is : ", err);
-        this.isLoading = false;
       }
     );
   }
@@ -183,41 +191,73 @@ export class MyFriendsPage {
 
   // friends occasions
   myFriendsOccasions() {
-    this.api.myFriendsOccasions().subscribe(
+    this.api.myFriendsOccasions(this.currentPageOccasion).subscribe(
       data => {
         console.log("friends occasions are : ", data);
-        this.Occasions = data.data;
+        this.Occasions = data.data.data;
+        let total = data.data.total;
+        let per_page = data.data.per_page;
+        this.occasionsPagesCount = Math.ceil(total / per_page);
+        this.isOccasionsLoading = false;
       },
       err => {
         console.log("error Occasions :", err);
+        this.isOccasionsLoading = false;
       }
     );
   }
 
-  getUserFriends() {
-    this.api.getUserFriends().subscribe(data => {
-      this.Friends = data.data;
-      console.log("user friends are : ", this.Friends);
-    });
+  getUserFriends(isUpdateFriends?) {
+    this.api.getUserFriends(this.currentPage).subscribe(
+      data => {
+        this.Friends = data.data.friends;
+        let total = data.data.friends_total_count;
+        let per_page = data.data.per_page;
+        this.friendsPagesCount = Math.ceil(total / per_page);
+        this.isLoading = false;
+        console.log("user friends are : ", this.Friends);
+        if (isUpdateFriends) {
+          this.loader.dismiss();
+        }
+      },
+      err => {
+        console.log("friends error : ", err);
+        this.isLoading = false;
+        if (isUpdateFriends) {
+          this.loader.dismiss();
+        }
+      }
+    );
   }
 
-  getDifferenceDays(occasion) {
-    let date = this.setting.getDateDifferenceInDays(occasion.occasion_date);
-    var todayDate = moment(new Date()).format("YYYY-MM-DD");
-    if (occasion.occasion_date > todayDate) {
-      return `
-        <div class="remaining-days-wrapper" [class.adjust-middle]="0">
-          <div class="remaining-days">${date}</div>
-          <div class="days-txt"> days </div>
-        </div>
-      `;
+  doInfinite(scroll) {
+    console.log("friends scroll");
+    this.currentPage += 1;
+    if (this.currentPage <= this.friendsPagesCount) {
+      this.api.getUserFriends(this.currentPage).subscribe(data => {
+        this.Friends = this.Friends.concat(data.data.friends);
+        scroll.complete();
+      });
+    } else {
+      scroll.complete();
     }
-    if (occasion.occasion_date == todayDate) {
-      return `
-        <div class="remaining-days-wrapper">
-          <div class="days-txt now"> Now </div>
-        </div>
-      `;
+  }
+
+  doInfiniteOccasions(scroll) {
+    console.log("occasions scroll");
+    this.currentPageOccasion += 1;
+    if (this.currentPageOccasion <= this.occasionsPagesCount) {
+      this.api.myFriendsOccasions(this.currentPageOccasion).subscribe(data => {
+        this.Occasions = this.Occasions.concat(data.data.data);
+        scroll.complete();
+      });
+    } else {
+      scroll.complete();
     }
+  }
+
+  updateFriends() {
+    this.presentLoading();
+    this.getContacts();
   }
 }

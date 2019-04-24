@@ -20,6 +20,7 @@ import {
 import { ApiProvider } from "../../providers/api/api";
 import { GeneralProvider } from "../../providers/general/general";
 import { Camera, CameraOptions } from "@ionic-native/camera";
+import { SettingProvider } from "../../providers/setting/setting";
 @IonicPage()
 @Component({
   selector: "page-register",
@@ -36,6 +37,7 @@ export class RegisterPage {
   constructor(
     public navCtrl: NavController,
     private api: ApiProvider,
+    private setting: SettingProvider,
     private loadingCtrl: LoadingController,
     private file: File,
     private transfer: FileTransfer,
@@ -128,18 +130,53 @@ export class RegisterPage {
   }
 
   register() {
-    // this.data.phone = this.verificationData.phone
-    this.data.phone = "010276345534";
-    // this.data.country_code = this.verificationData.countryCode;
-    this.data.device_id = "54236643652";
-    this.data.device_type = "iPhone 6";
-    this.data.device_token = "a98ucsa8ayv76ta5rc5we6fg78f9he8w7gvr6fe5r6e7g87e";
-    console.log("data is :", this.data);
+    this.data.phone = `${
+      this.verificationData.countryCode
+    }${this.verificationData.phone.replace(/^0+/, "")}`;
 
-    this.isWaiting = true;
+    if (this.data.name) {
+      let nameArray: any[] = this.data.name.split(" ");
+      if (nameArray.length > 1) {
+        this.data.phone = `${
+          this.verificationData.countryCode
+        }${this.verificationData.phone.replace(/^0+/, "")}`;
+        // this.data.country_code = this.verificationData.countryCode;
+        this.data.device_id = "54236643652";
+        this.data.device_type = "iPhone 6";
+        this.data.device_token = localStorage.getItem("device_token");
+        console.log("data is :", this.data);
+        this.isWaiting = true;
+        /** if image selected */
+        if (this.data.imageUri) {
+          this.sendDataToServerUsingFileTransfer();
+        } else {
+          this.sendDataToServerWithoutFileTransfer();
+        }
+      } else {
+        this.setting.presentToast(
+          "Name must contain at least first name and last name"
+        );
+      }
+    } else {
+      this.setting.presentToast("Add Name First");
+    }
+  }
+
+  sendDataToServerWithoutFileTransfer() {
+    this.api.register(this.data).subscribe(data => {
+      if (data.code == "201") {
+        localStorage.setItem("isProfileComplete", JSON.stringify(true));
+        localStorage.setItem("isLogin", JSON.stringify(true));
+        localStorage.setItem("userData", JSON.stringify(data.data));
+        this.navCtrl.setRoot("InviteYourFriendsPage");
+      }
+    });
+  }
+
+  sendDataToServerUsingFileTransfer() {
     const fileTransfer: FileTransferObject = this.transfer.create();
     let options: FileUploadOptions = {
-      fileKey: "image",
+      fileKey: "profile_image",
       fileName: `user_img`,
       chunkedMode: false,
       mimeType: "image/jpeg",
@@ -153,10 +190,13 @@ export class RegisterPage {
         data => {
           console.log("data coming is : ", data);
           let response = JSON.parse(data.response);
-          alert(response["data"]);
           if (response["code"] == "201") {
             localStorage.setItem("isProfileComplete", JSON.stringify(true));
             localStorage.setItem("userData", JSON.stringify(response["data"]));
+            console.log(
+              "user data response is :",
+              JSON.stringify(response["data"])
+            );
             this.navCtrl.setRoot("InviteYourFriendsPage");
           }
           this.isWaiting = false;

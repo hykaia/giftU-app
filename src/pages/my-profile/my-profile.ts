@@ -8,7 +8,6 @@ import {
   ModalController,
   Events
 } from "ionic-angular";
-import { CameraPreview } from "@ionic-native/camera-preview";
 import { Emotions, myGifts, occasionTypes, Slides } from "./mocks";
 import { GeneralProvider } from "../../providers/general/general";
 import * as _ from "lodash";
@@ -42,7 +41,6 @@ export class MyProfilePage {
   };
   constructor(
     public navCtrl: NavController,
-    private cameraPreview: CameraPreview,
     private general: GeneralProvider,
     private modalCtrl: ModalController,
     private platform: Platform,
@@ -54,13 +52,14 @@ export class MyProfilePage {
     public navParams: NavParams
   ) {
     this.checkKeyBoardEvents();
-    this.getUserOccasions();
-    this.getWishListGifts();
-    this.checkEvents();
   }
 
   ionViewWillEnter() {
-    this.cameraPreview.stopCamera();
+    console.log("toz");
+    this.userData = JSON.parse(localStorage.getItem("userData"));
+    this.getUserOccasions();
+    this.getWishListGifts();
+    this.checkEvents();
   }
 
   checkEvents() {
@@ -74,6 +73,7 @@ export class MyProfilePage {
     });
     // occasion added event
     this.event.subscribe("occasionAdded", () => {
+      this.selectedSegment = "my_wishlist";
       this.getUserOccasions();
     });
   }
@@ -100,7 +100,7 @@ export class MyProfilePage {
   }
 
   AddGift(id) {
-    this.navCtrl.push("UploadGiftImgPage", { occasionId: id });
+    this.navCtrl.push("CreateGiftPage", { occasionId: id });
   }
 
   fadeInContainer() {
@@ -138,7 +138,7 @@ export class MyProfilePage {
     }
   }
 
-  opMyProfile() {
+  openMyProfile() {
     this.navCtrl.push("UpdateProfilePage");
   }
 
@@ -166,12 +166,13 @@ export class MyProfilePage {
       occasion: occasion
     });
     modal.onDidDismiss(data => {
+      console.log("data lol:", data);
       if (data) {
         let index = this.Occasions.indexOf(occasion);
         if (data.operationType == "update") {
           this.Occasions[index] = data;
         } else if (data.operationType == "delete") {
-          this.Occasions.splice(index, 1);
+          this.Occasions.splice(occasion, 1);
         }
       }
     });
@@ -194,8 +195,7 @@ export class MyProfilePage {
   }
 
   getWishListGifts() {
-    this.api.getWishListGifts(0, this.userData.id).subscribe(data => {
-      console.log("wishlist data are : ", data);
+    this.api.generalWishlist(0, this.userData.id).subscribe(data => {
       this.wishListGifts = data.data;
     });
   }

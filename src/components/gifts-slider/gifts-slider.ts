@@ -1,6 +1,11 @@
 import { Component, Input } from "@angular/core";
 import { codes } from "./mocks";
-import { NavController, Events, LoadingController } from "ionic-angular";
+import {
+  NavController,
+  Events,
+  LoadingController,
+  AlertController
+} from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
 import { SettingProvider } from "../../providers/setting/setting";
 
@@ -16,17 +21,18 @@ export class GiftsSliderComponent {
   constructor(
     private navCtrl: NavController,
     private api: ApiProvider,
+    private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private setting: SettingProvider,
     private event: Events
   ) {}
 
   AddGift(id) {
-    this.navCtrl.push("UploadGiftImgPage", { occasionId: id });
+    this.navCtrl.push("CreateGiftPage", { occasionId: id });
   }
 
   editGift(gift) {
-    this.navCtrl.push("UploadGiftImgPage", { gift: gift });
+    this.navCtrl.push("CreateGiftPage", { gift: gift });
   }
 
   deleteGift(gift) {
@@ -44,6 +50,30 @@ export class GiftsSliderComponent {
       }
     );
   }
+
+  presentDeleteConfirm(gift) {
+    let alert = this.alertCtrl.create({
+      title: "Confirm remove",
+      message: "Do you want to delete this item?",
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          }
+        },
+        {
+          text: "Delete",
+          handler: () => {
+            this.deleteGift(gift);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   presentLoadingDefault() {
     this.loading = this.loadingCtrl.create({
       content: "Please wait..."

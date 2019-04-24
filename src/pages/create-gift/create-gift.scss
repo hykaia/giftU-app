@@ -1,18 +1,31 @@
 page-create-gift {
-    .toolbar-title{
-        font-weight: 500;
-    }
+  .toolbar-title {
+    font-weight: 500;
+  }
 
-    .inputs-wrapper{
-    }
+  .inputs-wrapper {
+  }
 
-    .scroll-content {
-        background: white !important;
-    }
-    .custom-col{
-        position: initial;
-    }
-    .custom-item{
-        padding-left : 0 !important;
-    }
+  .scroll-content {
+    background: white !important;
+  }
+  .custom-col {
+    position: initial;
+  }
+  .custom-item {
+    padding-left: 0 !important;
+  }
+  .uploaded-img {
+    margin: auto;
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+  }
+
+  .camera-img {
+    width: 12rem;
+    margin: auto;
+    display: block;
+  }
 }
