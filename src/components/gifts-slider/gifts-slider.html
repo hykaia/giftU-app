@@ -9,7 +9,7 @@
               Add your wishes and gifts you wish
             </p>
             <!-- add gift image -->
-            <div class="all-img-container" (click)="AddGift(occasion.id)">
+            <div class="all-img-container" (click)="AddGift(occasion._id)">
               <div class="img-container">
                 <div class="smile-img-wrapper">
                   <img
@@ -40,7 +40,7 @@
       <ion-slide *ngFor="let gift of occasion.gifts">
         <ion-row class="gift-row-wrapper">
           <ion-col col-12>
-            <p ion-text color="primary">{{ gift.title }}</p>
+            <p ion-text color="primary">{{ gift.name }}</p>
             <div
               class="img-wrapper"
               [style.background-image]="
@@ -50,7 +50,7 @@
               "
             ></div>
             <div ion-text color="gray" class="wish-txt">
-              {{ gift.description | truncate: 33:"..." }} {{ codes.love }}
+              {{ gift.post | truncate: 33:"..." }} {{ codes.love }}
             </div>
           </ion-col>
           <ion-col col-12 class="btns-wrapper">

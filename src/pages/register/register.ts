@@ -1,9 +1,5 @@
 import { Component, NgZone } from "@angular/core";
-import {
-  DomSanitizer,
-  SafeResourceUrl,
-  SafeUrl
-} from "@angular/platform-browser";
+import { FormBuilder, Validators } from "@angular/forms";
 import { File } from "@ionic-native/file";
 import {
   FileTransfer,
@@ -14,8 +10,7 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  ActionSheetController,
-  LoadingController
+  ActionSheetController
 } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
 import { GeneralProvider } from "../../providers/general/general";
@@ -30,25 +25,25 @@ export class RegisterPage {
   isWaiting: boolean = false;
   data: any = {
     gender: "male",
-    date_of_birth: "1993-08-14"
+    birth_date: "1993-08-14"
   };
+  registrationForm: any;
   base64Img: any = null;
-  verificationData: any = this.navParams.get("verificationData");
   constructor(
     public navCtrl: NavController,
     private api: ApiProvider,
-    private setting: SettingProvider,
-    private loadingCtrl: LoadingController,
+    public builder: FormBuilder,
     private file: File,
     private transfer: FileTransfer,
     private ngzone: NgZone,
     private actionSheetCtrl: ActionSheetController,
     private general: GeneralProvider,
-    public domSanitizer: DomSanitizer,
     private camera: Camera,
     public navParams: NavParams
   ) {
-    console.log("verificationData is : ", this.verificationData);
+    this.registrationForm = this.builder.group({
+      name: ["", Validators.compose([Validators.required])]
+    });
   }
 
   presentActionSheet() {
@@ -130,75 +125,58 @@ export class RegisterPage {
   }
 
   register() {
-    this.data.phone = `${
-      this.verificationData.countryCode
-    }${this.verificationData.phone.replace(/^0+/, "")}`;
-
-    if (this.data.name) {
-      let nameArray: any[] = this.data.name.split(" ");
-      if (nameArray.length > 1) {
-        this.data.phone = `${
-          this.verificationData.countryCode
-        }${this.verificationData.phone.replace(/^0+/, "")}`;
-        // this.data.country_code = this.verificationData.countryCode;
-        this.data.device_id = "54236643652";
-        this.data.device_type = "iPhone 6";
-        this.data.device_token = localStorage.getItem("device_token");
-        console.log("data is :", this.data);
-        this.isWaiting = true;
-        /** if image selected */
-        if (this.data.imageUri) {
-          this.sendDataToServerUsingFileTransfer();
-        } else {
-          this.sendDataToServerWithoutFileTransfer();
-        }
-      } else {
-        this.setting.presentToast(
-          "Name must contain at least first name and last name"
-        );
-      }
+    this.isWaiting = true;
+    let device_token = localStorage.getItem("device_token");
+    this.data.name = this.registrationForm.value.name;
+    this.data.one_signal_token = device_token ? device_token : "";
+    this.isWaiting = true;
+    /** if image selected */
+    if (this.data.imageUri) {
+      this.sendDataToServerUsingFileTransfer();
     } else {
-      this.setting.presentToast("Add Name First");
+      this.sendDataToServerWithoutFileTransfer();
     }
   }
 
   sendDataToServerWithoutFileTransfer() {
-    this.api.register(this.data).subscribe(data => {
-      if (data.code == "201") {
-        localStorage.setItem("isProfileComplete", JSON.stringify(true));
-        localStorage.setItem("isLogin", JSON.stringify(true));
-        localStorage.setItem("userData", JSON.stringify(data.data));
+    this.api.register(this.data).subscribe(
+      data => {
+        console.log("register data : ", data);
+        this.isWaiting = false;
         this.navCtrl.setRoot("InviteYourFriendsPage");
+      },
+      err => {
+        this.isWaiting = false;
+        this.general.showError(err.error);
+        console.log("register error is :", err);
       }
-    });
+    );
   }
 
   sendDataToServerUsingFileTransfer() {
+    let userId = localStorage.getItem("userId");
     const fileTransfer: FileTransferObject = this.transfer.create();
     let options: FileUploadOptions = {
       fileKey: "profile_image",
-      fileName: `user_img`,
+      fileName: `user_img.jpeg`,
       chunkedMode: false,
+      httpMethod: "PUT",
       mimeType: "image/jpeg",
-      headers: {},
-      params: this.data
+      headers: {
+        Authorization: `${localStorage.getItem("access_token")}`
+      },
+      params: { data: JSON.stringify(this.data) }
     };
 
     fileTransfer
-      .upload(this.data.imageUri, `http://giftu.co/user`, options)
+      .upload(
+        this.data.imageUri,
+        `https://api-giftu.hakaya.technology/users/${userId}`,
+        options
+      )
       .then(
         data => {
-          console.log("data coming is : ", data);
-          let response = JSON.parse(data.response);
-          if (response["code"] == "201") {
-            localStorage.setItem("isProfileComplete", JSON.stringify(true));
-            localStorage.setItem("userData", JSON.stringify(response["data"]));
-            console.log(
-              "user data response is :",
-              JSON.stringify(response["data"])
-            );
-            this.navCtrl.setRoot("InviteYourFriendsPage");
-          }
+          this.navCtrl.setRoot("InviteYourFriendsPage");
           this.isWaiting = false;
         },
         err => {

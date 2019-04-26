@@ -2,7 +2,9 @@ import { Component, NgZone, OnInit, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, Events } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
 import { GeneralProvider } from "../../providers/general/general";
+import { FormBuilder, Validators } from "@angular/forms";
 import { TimerObservable } from "rxjs/observable/TimerObservable";
+import * as _ from "lodash";
 
 @IonicPage()
 @Component({
@@ -14,18 +16,29 @@ export class VerificationPage implements OnInit {
   // @ViewChild("passwordInput") passwordInput;
   isDisabled: boolean = false;
   time: number = 15;
+  verificationForm: any;
   subscription: any;
   data: any = {};
-  comingData: any = this.navParams.get("loginData");
+  loginData: any = this.navParams.get("loginData");
   constructor(
     public navCtrl: NavController,
     private api: ApiProvider,
     private event: Events,
+    public builder: FormBuilder,
     private zone: NgZone,
     private general: GeneralProvider,
     public navParams: NavParams
   ) {
-    // console.log("comingData : ", this.comingData);
+    this.verificationForm = this.builder.group({
+      code: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.pattern("^[0-9]*$")
+        ])
+      ]
+    });
+    console.log("userId : ", this.loginData.userId);
   }
 
   ngOnInit() {
@@ -33,50 +46,54 @@ export class VerificationPage implements OnInit {
   }
 
   verify() {
-    this.data.password = this.general.convertNumber(this.data.password);
-    if (!this.data.password) {
+    if (!this.data.mobile_token) {
       this.general.showCustomAlert("Warning", "You must enter verify code");
     } else {
-      /** user is the first time to use the app. */
-      if (this.comingData.loginData.data.isFirstTime) {
-        if (this.comingData.loginData.data.valid_phone == this.data.password) {
-          let verificationData = {
-            phone: this.comingData.phone,
-            countryCode: this.comingData.countryCode
-          };
-          this.navCtrl.setRoot("RegisterPage", {
-            verificationData: verificationData
-          });
+      this.isWaiting = true;
+      this.data.user = this.loginData.userId;
+      this.data.mobile_token = Number(this.data.mobile_token);
+      this.api.verify(this.data).subscribe(
+        data => {
+          console.log("verify data :", data);
+          if (!_.has(data, "name")) {
+            this.navCtrl.setRoot("RegisterPage");
+          } else {
+            // this.navCtrl.setRoot("RegisterPage");
+            localStorage.setItem("userData", JSON.stringify(data));
+            localStorage.setItem("isLogin", JSON.stringify(true));
+            this.navCtrl.setRoot("InviteYourFriendsPage"); //test purpose
+          }
+          this.updateDeviceToken();
+          localStorage.setItem("access_token", data.token);
+          localStorage.setItem("userId", data._id);
+          this.isWaiting = false;
+        },
+        err => {
+          this.isWaiting = false;
+          this.general.showError(err.error);
+          console.log("verify error :", err.error.message);
         }
-      } else {
-        if (this.comingData.loginData.data.valid_phone == this.data.password) {
-          this.isWaiting = true;
-          this.api.verify(this.comingData).subscribe(
-            data => {
-              console.log("response verify  data is :", data);
-              if (data.code == "201") {
-                localStorage.setItem("isLogin", JSON.stringify(true));
-                localStorage.setItem(
-                  "userData",
-                  JSON.stringify(this.comingData.loginData.data)
-                );
-                // this.navCtrl.setRoot("MyFriendsPage");
-                this.navCtrl.setRoot("InviteYourFriendsPage"); //test purpose
-              }
-              this.isWaiting = false;
-            },
-            err => {
-              console.log("verify error :", err);
-              this.isWaiting = false;
-            }
-          );
-        }
-      }
+      );
     }
   }
 
+  updateDeviceToken() {
+    let device_token = localStorage.getItem("device_token");
+    let params = {
+      one_signal_token: device_token ? device_token : ""
+    };
+    this.api.register(params).subscribe(
+      data => {
+        console.log("device token updated");
+      },
+      err => {
+        console.log("register error is :", JSON.stringify(err));
+      }
+    );
+  }
+
   timeCount() {
-    this.time = 4;
+    this.time = 15;
     this.isDisabled = true;
     let timer = TimerObservable.create(1000, 1000);
     this.subscription = timer.subscribe(t => {
@@ -92,22 +109,10 @@ export class VerificationPage implements OnInit {
 
   resend() {
     this.timeCount();
-    let params = {
-      countryCode: this.comingData.countryCode,
-      phone: this.comingData.phone
-    };
-    this.api.login(params).subscribe(
-      data => {
-        this.comingData = {
-          loginData: {
-            data: data.data
-          },
-          phone: this.comingData.phone,
-          countryCode: this.comingData.countryCode
-        };
-      },
+    this.api.login(this.loginData).subscribe(
+      data => {},
       err => {
-        this.general.showErrors(err);
+        this.general.showError(err.error);
         this.isWaiting = false;
       }
     );

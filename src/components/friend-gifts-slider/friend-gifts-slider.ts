@@ -20,13 +20,17 @@ export class FriendGiftsSliderComponent {
   ) {}
 
   giveGift(gift) {
-    this.api.giveGift(gift.id).subscribe(data => {
-      if (data.code == "201") {
-        this.setting.presentToast(data.message);
+    console.log("my gift : ", gift);
+    this.api.giveGift(gift).subscribe(
+      data => {
+        this.setting.presentToast("You give gift successfully");
         let index = this.gifts.indexOf(gift);
         this.gifts.splice(index, 1);
+      },
+      err => {
+        console.log("give gift error : ", err);
       }
-    });
+    );
   }
 
   suggestGift(gift) {

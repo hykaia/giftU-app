@@ -10,69 +10,78 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-row>
-    <ion-col col-12>
-      <p class="take-photo" ion-text text-center>Take a photo</p>
-      <img
-        *ngIf="!base64Img"
-        src="assets/imgs/camera-img.png"
-        (click)="presentActionSheet()"
-        class="uploaded-img"
-      />
-      <img
-        *ngIf="base64Img"
-        [src]="base64Img"
-        (click)="presentActionSheet()"
-        class="uploaded-img"
-      />
-    </ion-col>
-  </ion-row>
+  <form [formGroup]="suggestGiftForm">
+    <ion-row>
+      <ion-col col-12>
+        <p class="take-photo" ion-text text-center>Take a photo</p>
+        <img
+          *ngIf="!base64Img"
+          src="assets/imgs/camera-img.png"
+          (click)="presentActionSheet()"
+          class="uploaded-img"
+        />
+        <img
+          *ngIf="base64Img"
+          [src]="base64Img"
+          (click)="presentActionSheet()"
+          class="uploaded-img"
+        />
+      </ion-col>
+    </ion-row>
 
-  <ion-row class="inputs-wrapper">
-    <ion-col col-12 class="custom-col">
-      <ion-item class="custom-item">
-        <ion-label color="light" stacked>Gift Name</ion-label>
-        <ion-input
-          type="text"
-          [(ngModel)]="data.title"
-          placeholder="Gift Name"
-        ></ion-input>
-      </ion-item>
-    </ion-col>
+    <ion-row class="inputs-wrapper">
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
+          <ion-label color="light" stacked>Gift Name</ion-label>
+          <ion-input
+            type="text"
+            formControlName="name"
+            [(ngModel)]="data.name"
+            placeholder="Gift Name"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
 
-    <ion-col col-12 class="custom-col">
-      <ion-item class="custom-item">
-        <ion-label color="light" stacked>Your Message</ion-label>
-        <ion-input
-          type="text"
-          [(ngModel)]="data.description"
-          placeholder="Gift Name"
-        ></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
+          <ion-label color="light" stacked>Your Message</ion-label>
+          <ion-input
+            type="text"
+            formControlName="post"
+            [(ngModel)]="data.post"
+            placeholder="Gift Description"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-  <ion-row class="toggle-wrapper">
-    <ion-col col-3>
-      <div class="anon-txt">Anon</div>
-    </ion-col>
-    <ion-toggle checked [(ngModel)]="data.is_anonymous"></ion-toggle>
-  </ion-row>
+    <ion-row class="toggle-wrapper">
+      <ion-col col-3>
+        <div class="anon-txt">Anon</div>
+      </ion-col>
+      <ion-toggle
+        checked
+        [(ngModel)]="data.anonymous"
+        [ngModelOptions]="{ standalone: true }"
+      ></ion-toggle>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12>
+        <button
+          ion-button
+          round
+          color="purple"
+          block
+          [disabled]="!suggestGiftForm.valid"
+          class="send-btn"
+          (click)="suggestGift()"
+        >
+          Send
+        </button>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>
 
-<ion-footer>
-  <ion-row>
-    <ion-col col-12>
-      <button
-        ion-button
-        round
-        color="purple"
-        block
-        class="send-btn"
-        (click)="suggestGift()"
-      >
-        Send
-      </button>
-    </ion-col>
-  </ion-row>
-</ion-footer>
+<ion-footer> </ion-footer>

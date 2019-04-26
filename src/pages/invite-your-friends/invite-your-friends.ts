@@ -30,6 +30,8 @@ export class InviteYourFriendsPage {
   isModal: boolean = this.navParams.get("isModal");
   filterContacts: any;
   originalContacts: any;
+  isWaiting: boolean = false;
+  isSubmitting: boolean = false;
   constructor(
     public navCtrl: NavController,
     private contacts: Contacts,
@@ -47,9 +49,6 @@ export class InviteYourFriendsPage {
   }
 
   getContacts(): void {
-    var code = localStorage.getItem("countryCode")
-      ? localStorage.getItem("countryCode")
-      : "2";
     let contactList: any[] = [];
     let options: any = {
       multiple: true,
@@ -70,21 +69,9 @@ export class InviteYourFriendsPage {
               .replace(/\s/g, "")
               .replace(/-/g, "")
               .replace(/\(/g, "")
-              .replace(/\)/g, "");
-            /** validate phone number */
-            if (
-              contact.phone.substring(0, 1) != "+" &&
-              contact.phone.substring(0, 2) != "00"
-            ) {
-              contact.phone = `${code}${contact.phone}`; //production purpose.
-            }
-            /** end phone validation */
-
+              .replace(/\)/g, "")
+              .replace(/^0+/, "");
             contactList.push(contact);
-            /** test */
-            // this.filterContacts = contactList;
-            // this.isLoading = false;
-            /** */
           }
         });
         this.sendContactListToServer(contactList);
@@ -92,15 +79,10 @@ export class InviteYourFriendsPage {
   }
 
   sendContactListToServer(contactList) {
-    var params = {
-      contacts: JSON.stringify(contactList)
-    };
-    this.api.getAllUserContacts(params).subscribe(
+    this.api.getAllUserContacts(contactList).subscribe(
       data => {
-        console.log("====================================");
-        console.log("user contacts response : ");
-        console.log("====================================");
-        this.originalContacts = data.data;
+        console.log("user contacts response : ", data);
+        this.originalContacts = data;
         this.filterContacts = this.originalContacts;
         this.isLoading = false;
       },
@@ -112,7 +94,35 @@ export class InviteYourFriendsPage {
   }
 
   inviteFriend(contact) {
-    console.log("friend contact :", contact);
+    console.log("contact is : ", JSON.stringify(contact));
+    let contacts: any[] = [contact];
+    this.api.inviteFriends(contacts).subscribe(
+      data => {
+        contact.active = true;
+      },
+      err => {
+        console.log("invite friend error :", JSON.stringify(err));
+      }
+    );
+  }
+
+  inviteFriends() {
+    this.isWaiting = true;
+    this.api.inviteFriends(this.originalContacts).subscribe(
+      data => {
+        console.log("all friends invited");
+        if (this.isModal) {
+          this.dismiss();
+        } else {
+          this.navCtrl.setRoot("MyFriendsPage");
+        }
+        this.isWaiting = false;
+      },
+      err => {
+        this.isWaiting = false;
+        console.log("invite friend error :", JSON.stringify(err));
+      }
+    );
   }
 
   Search() {
@@ -128,7 +138,10 @@ export class InviteYourFriendsPage {
   }
 
   submit() {
-    this.navCtrl.setRoot("MyFriendsPage");
+    this.isSubmitting = true;
+    this.navCtrl.setRoot("MyFriendsPage").then(() => {
+      this.isSubmitting = false;
+    });
   }
 
   dismiss() {

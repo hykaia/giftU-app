@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
 import { GeneralProvider } from "../../providers/general/general";
 import { Keyboard } from "@ionic-native/keyboard";
-import { Sim } from "@ionic-native/sim";
+import { FormBuilder, Validators } from "@angular/forms";
 import { Countries } from "../../countries_codes";
 
 @IonicPage()
@@ -13,25 +13,35 @@ import { Countries } from "../../countries_codes";
 })
 export class LoginPage {
   isWaiting: boolean = false;
+  loginForm: any;
   Countries: any[] = Countries;
   isKeyBoardShow: boolean = false;
   data: any = {
-    countryCode: "966"
+    countryCode: localStorage.getItem("countryCode")
+      ? localStorage.getItem("countryCode")
+      : "+20"
   };
-  countryCode = localStorage.getItem("countryCode")
-    ? localStorage.getItem("countryCode")
-    : "eg";
-  countrCodes: any[] = [{ code: "20" }, { code: "966" }];
+
+  countrCodes: any[] = [{ code: "+20" }, { code: "+966" }];
   constructor(
     public navCtrl: NavController,
     private platform: Platform,
     private keyboard: Keyboard,
+    public builder: FormBuilder,
     private general: GeneralProvider,
-    private simCard: Sim,
     private api: ApiProvider,
     public navParams: NavParams
   ) {
-    this.getSimCardInfo();
+    this.loginForm = this.builder.group({
+      phone: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(6),
+          Validators.pattern("^[0-9]*$")
+        ])
+      ]
+    });
     this.checkKeyBoardEvents();
   }
 
@@ -47,34 +57,28 @@ export class LoginPage {
     });
   }
 
-  getSimCardInfo() {
-    let countryCodeObj: any;
-    this.countryCode = this.countryCode.toUpperCase();
-    countryCodeObj = this.Countries.filter(item => {
-      return item.code == this.countryCode;
-    });
-    this.data.countryCode = countryCodeObj[0].dial_code
-      .toString()
-      .replace(/\+/g, "");
-  }
-
   Login() {
-    console.log("data : ", this.data);
+    let params = {
+      mobile: `${this.data.countryCode}${this.data.phone.replace(/^0+/, "")}`
+    };
     if (!this.data.phone) {
       this.general.showCustomAlert("Warning", "You must enter phone number");
     } else {
       this.isWaiting = true;
       this.data.phone = this.general.convertNumber(this.data.phone);
-      this.api.login(this.data).subscribe(
+      this.api.login(params).subscribe(
         data => {
-          if (data.code == "201") {
-            this.data.loginData = data;
-            this.navCtrl.push("VerificationPage", { loginData: this.data });
-          }
+          console.log("login  response is : ", data);
+          // alert(data.mobile_token);
+          let loginParams = {
+            userId: data.id,
+            phone: this.data.phone
+          };
+          this.navCtrl.push("VerificationPage", { loginData: loginParams });
           this.isWaiting = false;
-          console.log("login data : ", JSON.stringify(data));
         },
         err => {
+          this.general.showError(err.error);
           console.log("error is : ", JSON.stringify(err));
           this.isWaiting = false;
         }

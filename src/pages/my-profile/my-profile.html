@@ -53,10 +53,7 @@
           <ion-col col-8 no-padding>
             <ion-row>
               <ion-col col-3>
-                <img
-                  src="{{ imgBasedOnOccasionType(occasion.type) }}"
-                  class="birthday-img"
-                />
+                <img [src]="occasion.category.image" class="birthday-img" />
               </ion-col>
               <ion-col col-9 align-self-center>
                 <div class="birthday-txt">
@@ -68,7 +65,7 @@
                   />
                 </div>
                 <div class="status-txt" ion-text color="gray">
-                  {{ occasion.description }} {{ codes.birthday }}
+                  {{ occasion.slogan }} {{ codes.birthday }}
                 </div>
               </ion-col>
             </ion-row>
@@ -81,31 +78,21 @@
               round
               block
             >
-              <span
-                *ngIf="
-                  setting.getDateDifferenceInDays(occasion.occasion_date) > 0
-                "
-              >
-                {{ setting.getDateDifferenceInDays(occasion.occasion_date) }}
+              <span *ngIf="setting.getDateDifferenceInDays(occasion.date) > 0">
+                {{ setting.getDateDifferenceInDays(occasion.date) }}
                 day left
               </span>
-              <span
-                *ngIf="
-                  setting.getDateDifferenceInDays(occasion.occasion_date) == 0
-                "
+              <span *ngIf="setting.getDateDifferenceInDays(occasion.date) == 0"
                 >Now</span
               >
 
-              <span
-                *ngIf="
-                  setting.getDateDifferenceInDays(occasion.occasion_date) < 0
-                "
+              <span *ngIf="setting.getDateDifferenceInDays(occasion.date) < 0"
                 >Expired</span
               >
             </button>
           </ion-col>
           <ion-col col-1 align-self-center>
-            <div class="add-wrapper" (click)="AddGift(occasion.id)">
+            <div class="add-wrapper" (click)="AddGift(occasion._id)">
               <img src="assets/imgs/add.svg" />
             </div>
           </ion-col>
@@ -152,61 +139,6 @@
         </ion-col>
       </ion-row>
       <create-occasion></create-occasion>
-    </ion-grid>
-
-    <ion-grid *ngSwitchCase="'my_gifts'" no-padding (swipe)="swipe($event)">
-      <ion-row>
-        <ion-col col-12>
-          <p ion-text color="white" class="my-friends">My gift`s</p>
-        </ion-col>
-      </ion-row>
-      <ion-row class="notification-wrapper-row" *ngFor="let gift of myGifts">
-        <ion-col col-12>
-          <ion-row>
-            <ion-col col-3 align-self-center>
-              <img src="assets/imgs/1.jpg" class="friend-img" />
-              <div class="gift-img-wrapper">
-                <img [src]="gift.img" class="giftt-img" />
-              </div>
-            </ion-col>
-            <ion-col col-9 align-self-center>
-              <div class="noti-name-wrapper">
-                <div
-                  ion-text
-                  text-wrap
-                  color="primary"
-                  class="normal-size"
-                  class="name"
-                >
-                  Mohammed Mokhtar <span class="gift-txt">Give you iPhone</span>
-                </div>
-                <div ion-text color="gray" class="normal-size" class="statuss">
-                  Lorem Ipsum is simply dummy
-                </div>
-                <div
-                  ion-text
-                  color="secondary"
-                  class="noti-date"
-                  class="statuss"
-                >
-                  2 days
-                </div>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-
-        <ion-col col-12>
-          <hr class="hr" />
-        </ion-col>
-        <ion-col col-12>
-          <div class="scroll-wrapper">
-            <div class="emotion-box" *ngFor="let emotion of Emotions">
-              {{ emotion.code }} {{ emotion.name }}
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
     </ion-grid>
   </div>
 </ion-content>

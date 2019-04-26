@@ -47,9 +47,9 @@ export class UserProfilePage {
   }
 
   getUserOccasions() {
-    this.api.getUserOccasions(this.userData.id).subscribe(data => {
+    this.api.getUserOccasions(this.userData._id).subscribe(data => {
       console.log("user occasions is : ", data);
-      this.occasions = data.data;
+      this.occasions = data;
       this.waitingOccasions = false;
     });
   }
@@ -57,9 +57,7 @@ export class UserProfilePage {
   getGeneralWishlist() {
     this.api.generalWishlist(0, this.userData.id).subscribe(data => {
       console.log("general wishlist data are : ", data);
-      if (data.code == "201") {
-        this.wishListGifts = data.data;
-      }
+      this.wishListGifts = data.data;
     });
   }
 }

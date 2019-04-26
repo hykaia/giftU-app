@@ -1,76 +1,84 @@
 page-invite-your-friends {
-    .scroll-content{
-        background: #ffffff !important;
-    }
-  .custom-grid-wrapper , ion-header{
+  .scroll-content {
+    background: #ffffff !important;
+  }
+  .custom-grid-wrapper,
+  ion-header {
     background: #142f4c !important;
   }
-  .custom-grid-wrapper{
+  .custom-grid-wrapper {
     padding-top: 3rem !important;
   }
-  .invite-friends-txt{
+  .invite-friends-txt {
     color: white;
     font-size: 2rem;
   }
-  .custom-row-wrapper{
+  .custom-row-wrapper {
     margin-left: 1.3rem;
+    // margin-top: 2rem;
   }
-  .line-2{
+  .line-2 {
     margin-top: 0.6rem;
     font-size: 1.3rem;
     line-height: 1.5;
     padding-right: 1rem;
     margin-bottom: 1rem;
   }
-  .searchbar{
+  .searchbar {
     padding-left: 0;
     background: none;
     width: 95%;
     margin: auto;
     margin-bottom: 1.5rem;
-      .searchbar-input{
-        color: white;
-        height: 4rem;
-        background-color: #7b2fff;
-        border-radius: 16px;
-      }
-      .searchbar-search-icon{
-        top: 14px;
-      }
-      .searchbar-search-icon{
-        background-image : url('../assets/imgs/search.svg')
-      }
-      ::placeholder{
-        color:#ffffff !important;
-      }
+    .searchbar-input {
+      color: white;
+      height: 4rem;
+      background-color: #7b2fff;
+      border-radius: 16px;
+    }
+    .searchbar-search-icon {
+      top: 14px;
+    }
+    .searchbar-search-icon {
+      background-image: url("../assets/imgs/search.svg");
+    }
+    ::placeholder {
+      color: #ffffff !important;
+    }
   }
-  .invite-btn{
+  .invite-btn {
     height: 2em;
+    padding: 0 1.3rem !important;
+    margin: auto;
+    display: block;
+    .button-inner {
+      font-size: 1.3rem;
+    }
   }
 
-  .invite-uninvite-btn{
+  .invite-uninvite-btn {
     width: 22%;
     border-radius: 3rem;
   }
 
-  .submit-btn{
+  .submit-btn {
     width: 90%;
     margin: auto;
     // margin-bottom: 1rem;
   }
-  .item{
-    .invite-uninvite-btn{
+  .item {
+    .invite-uninvite-btn {
       height: 30px !important;
     }
   }
-  ion-footer{
+  ion-footer {
     background: white;
     padding: 1rem;
   }
-  .list .item-block .item-inner{
+  .list .item-block .item-inner {
     border-bottom: 0.55px solid #e8e8e8;
   }
-  .ion-ios-close:before{
+  .ion-ios-close:before {
     font-size: 4rem;
     color: white;
   }
@@ -79,18 +87,23 @@ page-invite-your-friends {
     -webkit-animation: flash 1s infinite alternate;
   }
 
-
   @keyframes flash {
-      0% { opacity: 1; } 
-      50% { opacity: .1; } 
-      100% { opacity: 1; }
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }
 
-.md{
-  page-invite-your-friends{
-    .searchbar .searchbar-search-icon{
+.md {
+  page-invite-your-friends {
+    .searchbar .searchbar-search-icon {
       top: 11px;
     }
-  } 
+  }
 }

@@ -33,6 +33,19 @@
     <ion-row class="inputs-wrapper">
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
+          <ion-label color="light" stacked>Category</ion-label>
+          <ion-select [(ngModel)]="data.category">
+            <ion-option
+              [value]="cat._id"
+              *ngFor="let cat of occasionCategories"
+              >{{ cat.name }}</ion-option
+            >
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
           <ion-label color="light" stacked>Name</ion-label>
           <ion-input
             type="text"
@@ -47,7 +60,7 @@
           <ion-label color="light" stacked>Slogan</ion-label>
           <ion-input
             type="text"
-            [(ngModel)]="data.description"
+            [(ngModel)]="data.slogan"
             placeholder="Slogan"
           ></ion-input>
         </ion-item>
@@ -60,19 +73,8 @@
             displayFormat="DDDD MMM D, YYYY"
             min="1960"
             max="2050"
-            [(ngModel)]="data.occasion_date"
+            [(ngModel)]="data.date"
           ></ion-datetime>
-        </ion-item>
-      </ion-col>
-
-      <ion-col col-12 class="custom-col">
-        <ion-item class="custom-item">
-          <ion-label color="light" stacked>Privacy</ion-label>
-          <ion-input
-            type="text"
-            [(ngModel)]="data.type"
-            placeholder="Type"
-          ></ion-input>
         </ion-item>
       </ion-col>
 

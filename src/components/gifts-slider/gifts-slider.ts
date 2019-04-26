@@ -36,13 +36,18 @@ export class GiftsSliderComponent {
   }
 
   deleteGift(gift) {
+    console.log("====================================");
+    console.log("delete data : ", gift);
+    console.log("====================================");
     this.presentLoadingDefault();
-    this.api.deleteGift(gift.id).subscribe(
+    let params = {
+      occasionId: gift.occasion,
+      giftId: gift._id
+    };
+    this.api.deleteGift(params).subscribe(
       data => {
-        if (data.code == "201") {
-          this.setting.presentToast(data.message);
-          this.event.publish("giftDeleted");
-        }
+        this.setting.presentToast(data.message);
+        this.event.publish("giftDeleted");
         this.loading.dismiss();
       },
       err => {

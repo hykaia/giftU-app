@@ -10,9 +10,9 @@ export class OccasionComponent {
   constructor(private setting: SettingProvider) {}
 
   getDifferenceDays(occasion) {
-    let date = this.setting.getDateDifferenceInDays(occasion.occasion_date);
+    let date = this.setting.getDateDifferenceInDays(occasion.date);
     var todayDate = moment(new Date()).format("YYYY-MM-DD");
-    if (occasion.occasion_date > todayDate) {
+    if (occasion.date > todayDate) {
       return `
         <div class="remaining-days-wrapper" [class.adjust-middle]="0">
           <div class="remaining-days">${date}</div>
@@ -20,7 +20,7 @@ export class OccasionComponent {
         </div>
       `;
     }
-    if (occasion.occasion_date == todayDate) {
+    if (occasion.date == todayDate) {
       return `
         <div class="remaining-days-wrapper">
           <div class="days-txt now"> Now </div>

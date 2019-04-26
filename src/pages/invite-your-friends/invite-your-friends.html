@@ -13,9 +13,14 @@
           round
           color="secondary"
           class="invite-btn"
-          (click)="getContacts()"
+          (click)="inviteFriends()"
         >
-          Invite
+          <span *ngIf="!isWaiting">Invite All</span>
+          <ion-spinner
+            name="ios-small"
+            *ngIf="isWaiting"
+            color="light"
+          ></ion-spinner>
           <!-- Get friends -->
         </button>
       </ion-col>
@@ -59,8 +64,8 @@
         ion-button
         item-right
         color="secondary"
-        *ngIf="!contact.exists"
         (click)="inviteFriend(contact)"
+        [disabled]="contact.active"
       >
         Invite
       </button>
@@ -77,6 +82,11 @@
     class="submit-btn"
     (click)="submit()"
   >
-    Submit
+    <span *ngIf="!isSubmitting">Submit</span>
+    <ion-spinner
+      name="ios-small"
+      *ngIf="isSubmitting"
+      color="light"
+    ></ion-spinner>
   </button>
 </ion-footer>

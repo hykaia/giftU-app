@@ -3,15 +3,15 @@
     <ion-row>
       <ion-col col-4>
         <img
-          *ngIf="!friend?.profile_image"
+          *ngIf="!friend.profile_image"
           src="assets/imgs/user.svg"
           class="friend-img"
         />
 
         <div
           class="img-wrapper"
-          *ngIf="friend?.profile_image"
-          [style.background-image]="'url(' + friend?.profile_image + ')'"
+          *ngIf="friend.profile_image"
+          [style.background-image]="'url(' + friend.profile_image + ')'"
         ></div>
       </ion-col>
       <ion-col col-8 align-self-center>
@@ -23,10 +23,10 @@
             class="normal-size"
             class="name"
           >
-            {{ friend?.name }}
+            {{ friend.name }}
           </div>
           <div ion-text color="gray" class="normal-size" class="status">
-            {{ friend?.status | truncate: 25 }}
+            {{ friend.status | truncate: 25 }}
           </div>
         </div>
       </ion-col>
@@ -37,13 +37,13 @@
     <div class="heart-wrapper">
       <ion-icon name="heart-outline"></ion-icon>
       <span ion-text color="primary" class="wishlist-txt normal-size"
-        >{{ friend?.giftsCount }} wishlist</span
+        >{{ friend.wish_list }} wishlist</span
       >
     </div>
     <div class="gift-wrapper">
       <ion-icon name="ios-help-buoy"></ion-icon>
       <span ion-text color="primary" class="gift-txt normal-size"
-        >{{ friend?.givenGiftsCount }} gifts</span
+        >{{ friend.given_gifts }} gifts</span
       >
     </div>
   </ion-col>

@@ -5,63 +5,89 @@
 </ion-header>
 
 <ion-content padding no-bounce>
-  <ion-grid class="verification-grid">
-    <ion-row>
-      <ion-col col-12>
-        <p class="verify-phone-number">Verfiy your phone number</p>
-        <div class="sms-message-txt">
-          Giftu will send an SMS message to verify your
-          <span ion-text color="secondary" class="whatsapp">WhatsApp</span> .
+  <form [formGroup]="verificationForm">
+    <ion-grid class="verification-grid">
+      <ion-row>
+        <ion-col col-12>
+          <p class="verify-phone-number">Verfiy your phone number</p>
+          <div class="sms-message-txt">
+            Giftu will send an SMS message to verify your
+            <span ion-text color="secondary" class="whatsapp">WhatsApp</span> .
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12>
+          <ion-item class="verify-item">
+            <ion-label color="light" stacked>Verify code</ion-label>
+            <ion-input
+              type="tel"
+              #passwordInput
+              formControlName="code"
+              [(ngModel)]="data.mobile_token"
+              placeholder="Code"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+        <div
+          class="form-control-feedback"
+          *ngIf="
+            !verificationForm.controls.code.valid &&
+            (verificationForm.controls.code.dirty ||
+              verificationForm.controls.code.touched)
+          "
+        >
+          <div
+            *ngIf="verificationForm.controls.code.errors.required"
+            class="my-error"
+          >
+            Your code is required.
+          </div>
+
+          <div
+            *ngIf="verificationForm.controls.code.errors.pattern"
+            class="my-error"
+          >
+            You must only enter numbers.
+          </div>
         </div>
-      </ion-col>
-    </ion-row>
+      </ion-row>
 
-    <ion-row>
-      <ion-col col-12>
-        <ion-item class="verify-item">
-          <ion-label color="light" stacked>Verify code</ion-label>
-          <ion-input
-            type="tel"
-            #passwordInput
-            [(ngModel)]="data.password"
-            placeholder="Code"
-          ></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="next-row">
-      <ion-col col-6 align-self-center>
-        <button
-          ion-button
-          color="secondary"
-          round
-          [disabled]="isDisabled"
-          class="resend-btn"
-          outline
-          (click)="resend()"
-        >
-          <span *ngIf="time > 0">Re-Send({{ time }})</span>
-          <span *ngIf="time == 0">Re-Send</span>
-        </button>
-      </ion-col>
-      <ion-col col-6>
-        <button
-          float-right
-          ion-button
-          round
-          color="purple"
-          class="next-btn"
-          (click)="verify()"
-        >
-          <span *ngIf="!isWaiting">Next</span>
-          <ion-spinner
-            name="ios-small"
-            *ngIf="isWaiting"
-            color="light"
-          ></ion-spinner>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+      <ion-row class="next-row">
+        <ion-col col-6 align-self-center>
+          <button
+            ion-button
+            color="secondary"
+            round
+            [disabled]="isDisabled"
+            class="resend-btn"
+            outline
+            (click)="resend()"
+          >
+            <span *ngIf="time > 0">Re-Send({{ time }})</span>
+            <span *ngIf="time == 0">Re-Send</span>
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button
+            float-right
+            ion-button
+            round
+            color="purple"
+            [disabled]="!verificationForm.valid"
+            class="next-btn"
+            (click)="verify()"
+          >
+            <span *ngIf="!isWaiting">Next</span>
+            <ion-spinner
+              name="ios-small"
+              *ngIf="isWaiting"
+              color="light"
+            ></ion-spinner>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

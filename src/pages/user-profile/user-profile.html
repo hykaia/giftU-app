@@ -27,14 +27,14 @@
     <ion-col col-3 align-self-center>
       <ion-icon name="heart-outline"></ion-icon>
       <span ion-text color="primary" class="normal-size"
-        >{{ userData.giftsCount }} wishlist</span
+        >{{ userData.wish_list }} wishlist</span
       >
     </ion-col>
 
     <ion-col col-3 align-self-center>
       <ion-icon name="ios-help-buoy"></ion-icon>
       <span ion-text color="primary" class="normal-size"
-        >{{ userData.givenGiftsCount }} gifts</span
+        >{{ userData.given_gifts }} gifts</span
       >
     </ion-col>
 
@@ -70,7 +70,7 @@
           <ion-col col-9 align-self-center>
             <div class="birthday-txt">{{ occasion.name }}</div>
             <div class="status-txt" ion-text color="gray">
-              {{ occasion.description }} {{ codes.birthday }}
+              {{ occasion.slogan }} {{ codes.birthday }}
             </div>
           </ion-col>
         </ion-row>
@@ -78,7 +78,7 @@
       <ion-col
         col-3
         no-padding
-        *ngIf="setting.getDateDifferenceInDays(occasion.occasion_date) >= 0"
+        *ngIf="setting.getDateDifferenceInDays(occasion.date) >= 0"
       >
         <button
           ion-button
@@ -87,7 +87,7 @@
           round
           block
         >
-          {{ setting.getDateDifferenceInDays(occasion.occasion_date) }} day left
+          {{ setting.getDateDifferenceInDays(occasion.date) }} day left
         </button>
       </ion-col>
     </ion-row>

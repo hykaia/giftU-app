@@ -4,7 +4,7 @@
       <ion-col col-4>
         <img
           *ngIf="!occasion?.image"
-          src="assets/imgs/user.svg"
+          [src]="occasion.user.profile_image"
           class="friend-img"
         />
 
@@ -23,10 +23,10 @@
             class="normal-size"
             class="name"
           >
-            {{ occasion?.username }}
+            {{ occasion.user.name }}
           </div>
           <div ion-text color="gray" class="normal-size" class="status">
-            {{ occasion?.status }}
+            {{ occasion.user.status }}
           </div>
         </div>
       </ion-col>
@@ -39,10 +39,7 @@
         <div [innerHTML]="getDifferenceDays(occasion)"></div>
       </ion-col>
       <ion-col col-8>
-        <img
-          src="{{ setting.imgBasedOnOccasionType(occasion?.type) }}"
-          class="occasion-img"
-        />
+        <img [src]="occasion.category.image" class="occasion-img" />
       </ion-col>
     </ion-row>
   </ion-col>

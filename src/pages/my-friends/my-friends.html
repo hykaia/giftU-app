@@ -74,11 +74,6 @@
       ></friend>
 
       <no-data *ngIf="Friends?.length == 0" data="No Friends Found !"></no-data>
-      <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-        <ion-infinite-scroll-content
-          loadingText="Loading..."
-        ></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
     </ion-grid>
 
     <!-- occasions -->
@@ -127,9 +122,9 @@
       </ion-row>
       <loading *ngIf="isLoading"></loading>
       <notification
-        *ngFor="let friend of Notifications"
+        *ngFor="let notification of Notifications"
         [hidden]="isLoading"
-        [friend]="friend"
+        [notification]="notification"
       ></notification>
     </ion-grid>
   </div>

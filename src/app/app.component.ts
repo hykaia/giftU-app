@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Platform } from "ionic-angular";
+import { Platform, Events } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { Keyboard } from "@ionic-native/keyboard";
@@ -10,17 +10,18 @@ import { Sim } from "@ionic-native/sim";
 })
 export class MyApp {
   // rootPage: string = "InviteYourFriendsPage";
-  rootPage: string = "LoginPage";
+  rootPage: string = "MyFriendsPage";
 
   constructor(
     private platform: Platform,
     private keyboard: Keyboard,
     private oneSignal: OneSignal,
     private simCard: Sim,
+    private event: Events,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen
   ) {
-    this.checkDefaultRoute();
+    // this.checkDefaultRoute();
     // this.setFakeUser();
     this.initialize();
   }
@@ -39,15 +40,7 @@ export class MyApp {
 
   checkDefaultRoute() {
     let isLogin = JSON.parse(localStorage.getItem("isLogin"));
-    let isProfileComplete = JSON.parse(
-      localStorage.getItem("isProfileComplete")
-    );
-
-    if (isLogin) {
-      this.rootPage = "MyFriendsPage";
-    } else {
-      this.rootPage = "LoginPage";
-    }
+    this.rootPage = isLogin ? "MyFriendsPage" : "LoginPage";
   }
 
   checkPushNotification() {
@@ -66,6 +59,7 @@ export class MyApp {
     // When a push notification is received handle
     // how the application will respond
     this.oneSignal.handleNotificationReceived().subscribe(msg => {
+      this.event.publish("notificationRecived");
       console.log("notification msg : ", JSON.stringify(msg));
     });
 

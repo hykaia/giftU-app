@@ -131,10 +131,8 @@ export class UpdateProfilePage {
   sendDataToServerUsingWithoutFileTransfer() {
     this.api.updateProfile(this.data).subscribe(
       data => {
-        if (data.code == "201") {
-          localStorage.setItem("userData", JSON.stringify(data.data));
-          this.dismiss();
-        }
+        localStorage.setItem("userData", JSON.stringify(data));
+        this.dismiss();
         this.isWaiting = false;
       },
       err => {
@@ -148,17 +146,20 @@ export class UpdateProfilePage {
     const fileTransfer: FileTransferObject = this.transfer.create();
     let options: FileUploadOptions = {
       fileKey: "profile_image",
-      fileName: `user_img`,
+      fileName: `user_img.jpeg`,
       chunkedMode: false,
+      httpMethod: "PUT",
       mimeType: "image/jpeg",
-      headers: {},
-      params: this.data
+      headers: {
+        Authorization: `${localStorage.getItem("access_token")}`
+      },
+      params: { data: JSON.stringify(this.data) }
     };
 
     fileTransfer
       .upload(
         this.data.imageUri,
-        `http://giftu.co/user/profile/${this.userData.id}`,
+        `https://api-giftu.hakaya.technology/users/${this.userData._id}`,
         options
       )
       .then(
@@ -168,10 +169,8 @@ export class UpdateProfilePage {
             JSON.stringify(data.response)
           );
           let response = JSON.parse(data.response);
-          if (response["code"] == "201") {
-            localStorage.setItem("userData", JSON.stringify(response["data"]));
-            this.dismiss();
-          }
+          localStorage.setItem("userData", JSON.stringify(response["data"]));
+          this.dismiss();
           this.isWaiting = false;
         },
         err => {

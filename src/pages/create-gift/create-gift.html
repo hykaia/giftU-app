@@ -3,7 +3,14 @@
     <ion-title *ngIf="!gift">Add new gift</ion-title>
     <ion-title *ngIf="gift">Edit gift</ion-title>
     <ion-buttons end>
-      <button ion-button round color="white" *ngIf="!gift" (click)="share()">
+      <button
+        ion-button
+        round
+        [disabled]="!createGiftForm.valid"
+        color="white"
+        *ngIf="!gift"
+        (click)="share()"
+      >
         Share
       </button>
       <button ion-button round color="white" *ngIf="gift" (click)="edit()">
@@ -14,48 +21,82 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-row class="inputs-wrapper">
-    <ion-col col-12>
-      <p class="take-photo" ion-text text-center>Take a photo</p>
-      <img
-        *ngIf="!gift && !base64Img"
-        src="assets/imgs/camera-img.png"
-        (click)="presentActionSheet()"
-        class="camera-img"
-      />
-      <img
-        *ngIf="gift && !base64Img"
-        [src]="gift.image"
-        (click)="presentActionSheet()"
-        class="uploaded-img"
-      />
-      <img
-        *ngIf="base64Img"
-        [src]="base64Img"
-        (click)="presentActionSheet()"
-        class="uploaded-img"
-      />
-    </ion-col>
-    <ion-col col-12 class="custom-col">
-      <ion-item class="custom-item">
-        <ion-label color="light" stacked>Gift Name</ion-label>
-        <ion-input
-          type="text"
-          [(ngModel)]="data.title"
-          placeholder="Gift Name"
-        ></ion-input>
-      </ion-item>
-    </ion-col>
+  <form [formGroup]="createGiftForm">
+    <ion-row class="inputs-wrapper">
+      <ion-col col-12>
+        <p class="take-photo" ion-text text-center>Take a photo</p>
+        <img
+          *ngIf="!gift && !base64Img"
+          src="assets/imgs/camera-img.png"
+          (click)="presentActionSheet()"
+          class="camera-img"
+        />
+        <img
+          *ngIf="gift && !base64Img"
+          [src]="gift.image"
+          (click)="presentActionSheet()"
+          class="uploaded-img"
+        />
+        <img
+          *ngIf="base64Img"
+          [src]="base64Img"
+          (click)="presentActionSheet()"
+          class="uploaded-img"
+        />
+      </ion-col>
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
+          <ion-label color="light" stacked>Gift Name</ion-label>
+          <ion-input
+            type="text"
+            formControlName="name"
+            [(ngModel)]="data.name"
+            placeholder="Gift Name"
+          ></ion-input>
+        </ion-item>
+        <div
+          class="form-control-feedback"
+          *ngIf="
+            !createGiftForm.controls.name.valid &&
+            (createGiftForm.controls.name.dirty ||
+              createGiftForm.controls.name.touched)
+          "
+        >
+          <div
+            *ngIf="createGiftForm.controls.name.errors.required"
+            class="my-error"
+          >
+            Name is required.
+          </div>
+        </div>
+      </ion-col>
 
-    <ion-col col-12 class="custom-col">
-      <ion-item class="custom-item">
-        <ion-label color="light" stacked>Post</ion-label>
-        <ion-input
-          type="text"
-          [(ngModel)]="data.description"
-          placeholder="Gift Description"
-        ></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+      <ion-col col-12 class="custom-col">
+        <ion-item class="custom-item">
+          <ion-label color="light" stacked>Post</ion-label>
+          <ion-input
+            type="text"
+            formControlName="post"
+            [(ngModel)]="data.post"
+            placeholder="Gift Description"
+          ></ion-input>
+        </ion-item>
+        <div
+          class="form-control-feedback"
+          *ngIf="
+            !createGiftForm.controls.post.valid &&
+            (createGiftForm.controls.post.dirty ||
+              createGiftForm.controls.post.touched)
+          "
+        >
+          <div
+            *ngIf="createGiftForm.controls.post.errors.required"
+            class="my-error"
+          >
+            Post is required.
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>

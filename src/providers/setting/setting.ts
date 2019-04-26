@@ -5,7 +5,7 @@ import { AlertController, ToastController } from "ionic-angular";
 import * as moment from "moment";
 @Injectable()
 export class SettingProvider {
-  URL: string = "http://giftu.co/";
+  URL: string = "https://api-giftu.hakaya.technology/";
   constructor(
     public http: HttpClient,
     private toastCtrl: ToastController,
@@ -50,20 +50,5 @@ export class SettingProvider {
     var end = moment(new Date()).format("YYYY-MM-DD");
     let final = moment.duration(start.diff(end)).asDays();
     return final;
-  }
-
-  imgBasedOnOccasionType(type) {
-    switch (type) {
-      case "wedding":
-        return "assets/imgs/wedding.png";
-      case "birthday":
-        return "assets/imgs/birthday.png";
-      case "job":
-        return "assets/imgs/promotion.png";
-      case "new_baby":
-        return "assets/imgs/wedding.png";
-      case "graduation":
-        return "assets/imgs/wedding.png";
-    }
   }
 }

@@ -4,13 +4,13 @@
       <ion-slide *ngFor="let gift of gifts">
         <ion-row class="gift-row-wrapper">
           <ion-col col-12>
-            <p ion-text color="primary">{{ gift.title }}</p>
+            <p ion-text color="primary">{{ gift.name }}</p>
             <div
               class="img-wrapper"
               [style.background-image]="'url(' + img + ')'"
             ></div>
             <div ion-text color="gray" class="wish-txt">
-              {{ gift.description | truncate: 33:"..." }} {{ Codes.love }}
+              {{ gift.post | truncate: 33:"..." }} {{ Codes.love }}
             </div>
           </ion-col>
           <ion-col col-12 class="btns-wrapper">

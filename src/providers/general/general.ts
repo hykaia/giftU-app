@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { AlertController, ToastController } from "ionic-angular";
 import * as moment from "moment";
 import { ApiProvider } from "../api/api";
+import * as _ from "lodash";
 @Injectable()
 export class GeneralProvider {
   lang: any = localStorage.getItem("lang");
@@ -11,8 +12,7 @@ export class GeneralProvider {
     private toastCtrl: ToastController,
     private api: ApiProvider,
     private alertCtrl: AlertController
-  ) {
-  }
+  ) {}
 
   presentToast(text) {
     let toast = this.toastCtrl.create({
@@ -23,22 +23,25 @@ export class GeneralProvider {
     toast.present();
   }
 
-  showError(errors) {
-    let text = "";
-    for (let key in errors) {
-      if (errors.hasOwnProperty(key)) {
-        console.log(key + " -> " + errors[key]);
-        text += errors[key] + "<br><br>";
+  showError(error) {
+    if (_.has(error, "details")) {
+      let text = "";
+      let errs = error.details;
+      for (let i = 0; i < errs.length; i++) {
+        text += errs[i].message + "<br><br>";
       }
+      console.log("a77a txt :", text);
+      this.showAlert(text);
+    } else {
+      this.presentToast(error.message);
     }
-    this.showAlert(text);
   }
 
   showAlert(text) {
     this.alertCtrl
       .create({
-        title: this.lang == "en" ? "Warning" : "تحذير",
-        message: text,
+        title: "Warning",
+        subTitle: text,
         buttons: ["Ok"]
       })
       .present();
@@ -92,15 +95,4 @@ export class GeneralProvider {
 
     return val;
   }
-
-  showErrors(err) {
-    if (err.error.hasOwnProperty('errors')) {
-      this.showError(err.error.errors)
-    } else {
-      this.presentToast(err.error.error)
-    }
-  }
-
-  
-
 }

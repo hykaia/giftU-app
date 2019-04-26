@@ -8,6 +8,7 @@ import {
   LoadingController
 } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
+import * as moment from "moment";
 
 @IonicPage()
 @Component({
@@ -16,6 +17,7 @@ import { ApiProvider } from "../../providers/api/api";
 })
 export class EditOccasionPage {
   data: any = this.navParams.get("occasion");
+  occasionCategories: any;
   loading: any;
   constructor(
     public navCtrl: NavController,
@@ -25,6 +27,8 @@ export class EditOccasionPage {
     private api: ApiProvider,
     public navParams: NavParams
   ) {
+    this.data.category = this.data.category._id;
+    this.getOccasionCategories();
     console.log("occasion data : ", this.data);
   }
 
@@ -34,30 +38,37 @@ export class EditOccasionPage {
 
   editOccasion() {
     this.presentLoading();
-    this.api.editOccasion(this.data).subscribe(data => {
-      console.log("response edit occasion : ", data);
-      if (data.code == "201") {
-        data.data.operationType = "update";
-        data.data.gifts = this.data.gifts;
+    let params = {
+      occasionId: this.data._id,
+      slogan: this.data.slogan,
+      name: this.data.name,
+      date: moment(this.data.date).format("YYYY-MM-DD"),
+      category: this.data.category
+    };
+    console.log("occasion date :", params);
+
+    this.api.editOccasion(params).subscribe(
+      data => {
+        console.log("response edit occasion : ", data);
+        data.operationType = "update";
+        data.gifts = this.data.gifts;
         this.loading.dismiss();
-        this.viewCtrl.dismiss(data.data);
-      }
-    }),
+        this.viewCtrl.dismiss(data);
+      },
       err => {
         this.loading.dismiss();
-      };
+      }
+    );
   }
 
   delete() {
     this.presentLoading();
-    this.api.deleteOccasion(this.data.id).subscribe(
+    this.api.deleteOccasion(this.data._id).subscribe(
       data => {
         console.log("delete data : ", data);
-        if (data.code == "201") {
-          this.loading.dismiss();
-          data.data.operationType = "delete";
-          this.viewCtrl.dismiss(data.data);
-        }
+        this.loading.dismiss();
+        data.operationType = "delete";
+        this.viewCtrl.dismiss(data);
       },
       err => {
         this.loading.dismiss();
@@ -94,5 +105,16 @@ export class EditOccasionPage {
     });
 
     this.loading.present();
+  }
+
+  getOccasionCategories() {
+    this.api.getOccasionCategories().subscribe(
+      data => {
+        this.occasionCategories = data;
+      },
+      err => {
+        console.log("get occasion categories err :", err);
+      }
+    );
   }
 }

@@ -1,125 +1,126 @@
 <ion-content padding>
-  <ion-grid class="verification-grid">
-    <ion-row>
-      <ion-col col-12>
-        <h4 class="verify-phone-number">Welcome again,</h4>
-        <div class="sms-message-txt">
-          Enter some information that helps your friends recognize you and
-          achieve your dreams
-        </div>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col col-12>
-        <img
-          *ngIf="!base64Img"
-          src="assets/imgs/camera-img.png"
-          (click)="presentActionSheet()"
-          class="uploaded-img"
-        />
-
-        <img
-          *ngIf="base64Img"
-          [src]="base64Img"
-          (click)="presentActionSheet()"
-          class="uploaded-img"
-        />
-
-        <!-- <div class="all-img-container" (click)="presentActionSheet()">
-          <img
-            src="assets/imgs/background-happy.png"
-            class="background-happy"
-          />
-          <div class="img-container">
-            <div *ngIf="!base64Img">
-              <img src="assets/imgs/upload.svg" class="upload-img" />
-              <div class="smile-img-wrapper">
-                <img src="assets/imgs/smill-face.png" class="smile-img" />
-              </div>
-            </div>
-
-            <div
-              *ngIf="base64Img"
-              class="img-wrapper"
-              [style.background-image]="'url(' + base64Img + ')'"
-              class="uploaded-img"
-            ></div>
+  <form [formGroup]="registrationForm">
+    <ion-grid class="verification-grid">
+      <ion-row>
+        <ion-col col-12>
+          <h4 class="verify-phone-number">Welcome again,</h4>
+          <div class="sms-message-txt">
+            Enter some information that helps your friends recognize you and
+            achieve your dreams
           </div>
-        </div> -->
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12>
+          <img
+            *ngIf="!base64Img"
+            src="assets/imgs/camera-img.png"
+            (click)="presentActionSheet()"
+            class="uploaded-img"
+          />
+
+          <img
+            *ngIf="base64Img"
+            [src]="base64Img"
+            (click)="presentActionSheet()"
+            class="uploaded-img"
+          />
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="info-row">
+        <!-- Your name -->
+        <ion-col col-12 class="custom-col">
+          <ion-item class="custom-item">
+            <ion-label color="light" stacked>Your Name</ion-label>
+            <ion-input
+              type="text"
+              formControlName="name"
+              placeholder="Your Name"
+            ></ion-input>
+          </ion-item>
+          <div
+            class="form-control-feedback"
+            *ngIf="
+              !registrationForm.controls.name.valid &&
+              (registrationForm.controls.name.dirty ||
+                registrationForm.controls.name.touched)
+            "
+          >
+            <div
+              *ngIf="registrationForm.controls.name.errors.required"
+              class="my-error"
+            >
+              Your name is required.
+            </div>
+          </div>
+        </ion-col>
+
+        <!-- Birth of date -->
+        <ion-col col-12 class="custom-col">
+          <ion-item class="custom-item">
+            <ion-label>Date of birth</ion-label>
+            <ion-datetime
+              #date
+              displayFormat="DDDD MMM D, YYYY"
+              min="1960"
+              max="2050"
+              [(ngModel)]="data.birth_date"
+              [ngModelOptions]="{ standalone: true }"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+
+        <!-- Gender -->
+        <ion-col col-12 class="custom-col">
+          <ion-item class="custom-item">
+            <ion-label color="light" stacked>Gender</ion-label>
+            <ion-select
+              [(ngModel)]="data.gender"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <ion-option value="male">Male</ion-option>
+              <ion-option value="female">Female</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+
+        <!-- Status -->
+        <ion-col col-12 class="custom-col">
+          <ion-item class="custom-item">
+            <ion-label color="light" stacked>Status</ion-label>
+            <ion-input
+              type="text"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="data.status"
+              placeholder="Status"
+              maxlength="25"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-row>
+      <ion-col col-12>
+        <button
+          [disabled]="!registrationForm.valid"
+          class="submit-btn"
+          ion-button
+          round
+          block
+          color="purple"
+          (click)="register()"
+        >
+          <span *ngIf="!isWaiting">Submit</span>
+          <ion-spinner
+            name="ios-small"
+            *ngIf="isWaiting"
+            color="light"
+          ></ion-spinner>
+        </button>
       </ion-col>
     </ion-row>
-
-    <ion-row class="info-row">
-      <!-- Your name -->
-      <ion-col col-12 class="custom-col">
-        <ion-item class="custom-item">
-          <ion-label color="light" stacked>Your Name</ion-label>
-          <ion-input
-            type="text"
-            [(ngModel)]="data.name"
-            placeholder="Your Name"
-          ></ion-input>
-        </ion-item>
-      </ion-col>
-
-      <!-- Birth of date -->
-      <ion-col col-12 class="custom-col">
-        <ion-item class="custom-item">
-          <ion-label>Date of birth</ion-label>
-          <ion-datetime
-            #date
-            displayFormat="DDDD MMM D, YYYY"
-            min="1960"
-            max="2050"
-            [(ngModel)]="data.date_of_birth"
-          ></ion-datetime>
-        </ion-item>
-      </ion-col>
-
-      <!-- Gender -->
-      <ion-col col-12 class="custom-col">
-        <ion-item class="custom-item">
-          <ion-label color="light" stacked>Gender</ion-label>
-          <ion-select [(ngModel)]="data.gender">
-            <ion-option value="male">Male</ion-option>
-            <ion-option value="female">Female</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-
-      <!-- Status -->
-      <ion-col col-12 class="custom-col">
-        <ion-item class="custom-item">
-          <ion-label color="light" stacked>Status</ion-label>
-          <ion-input
-            type="text"
-            [(ngModel)]="data.status"
-            placeholder="Status"
-            maxlength="25"
-          ></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-row>
-    <ion-col col-12>
-      <button
-        class="submit-btn"
-        ion-button
-        round
-        block
-        color="purple"
-        (click)="register()"
-      >
-        <span *ngIf="!isWaiting">Submit</span>
-        <ion-spinner
-          name="ios-small"
-          *ngIf="isWaiting"
-          color="light"
-        ></ion-spinner>
-      </button>
-    </ion-col>
-  </ion-row>
+  </form>
 </ion-content>

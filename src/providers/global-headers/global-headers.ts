@@ -22,7 +22,7 @@ export class globalInterceptor implements HttpInterceptor {
     });
     const newRequest = req.clone({
       setHeaders: {
-        // Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
         "Content-Type": "application/json",
         "Content-Language": `${
           localStorage.getItem("lang") ? localStorage.getItem("lang") : "en"

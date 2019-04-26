@@ -8,7 +8,7 @@ import {
   ModalController,
   Events
 } from "ionic-angular";
-import { Emotions, myGifts, occasionTypes, Slides } from "./mocks";
+import { Emotions, myGifts, Slides } from "./mocks";
 import { GeneralProvider } from "../../providers/general/general";
 import * as _ from "lodash";
 import * as moment from "moment";
@@ -31,7 +31,6 @@ export class MyProfilePage {
   currentIndex = 0;
   myGifts: any = myGifts;
   data: any = { privacy_type: "public" };
-  occasionTypes: any = occasionTypes;
   wishListGifts: any[] = [];
   Occasions: any[] = [];
   Emotions: any[] = Emotions;
@@ -142,22 +141,11 @@ export class MyProfilePage {
     this.navCtrl.push("UpdateProfilePage");
   }
 
-  selectOccasionType(occasion) {
-    this.occasionTypes.forEach(item => {
-      if (item.active) item.active = false;
-    });
-    if (occasion.active) {
-      occasion.active = false;
-    } else {
-      occasion.active = true;
-      this.data.type = occasion.value;
-    }
-  }
-
   getUserOccasions() {
-    this.api.getUserOccasions(this.userData.id).subscribe(data => {
+    let userId = localStorage.getItem("userId");
+    this.api.getUserOccasions(userId).subscribe(data => {
       console.log("user occasions are : ", data);
-      this.Occasions = data.data;
+      this.Occasions = data;
     });
   }
 
@@ -177,21 +165,6 @@ export class MyProfilePage {
       }
     });
     modal.present();
-  }
-
-  imgBasedOnOccasionType(type) {
-    switch (type) {
-      case "wedding":
-        return this.occasionTypes[0].img;
-      case "birthday":
-        return this.occasionTypes[1].img;
-      case "job":
-        return this.occasionTypes[2].img;
-      case "new_baby":
-        return this.occasionTypes[3].img;
-      case "graduation":
-        return this.occasionTypes[4].img;
-    }
   }
 
   getWishListGifts() {

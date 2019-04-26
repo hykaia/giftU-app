@@ -1,26 +1,33 @@
 import { Component, OnInit } from "@angular/core";
-import { occasionTypes } from "../../pages/my-profile/mocks";
 import { ApiProvider } from "../../providers/api/api";
 import { SettingProvider } from "../../providers/setting/setting";
 import { Events } from "ionic-angular";
 import * as _ from "lodash";
 import { GeneralProvider } from "../../providers/general/general";
+import { FormBuilder, Validators } from "@angular/forms";
 @Component({
   selector: "create-occasion",
   templateUrl: "create-occasion.html"
 })
 export class CreateOccasionComponent implements OnInit {
-  occasionTypes = occasionTypes;
-  data: any = {
-    privacy_type: "public"
-  };
+  occasionCategories: any;
+  createOccasionForm: any;
+  data: any = {};
   isWaiting: boolean = false;
   constructor(
     private api: ApiProvider,
+    public builder: FormBuilder,
     private setting: SettingProvider,
     private general: GeneralProvider,
     private event: Events
-  ) {}
+  ) {
+    this.getOccasionCategories();
+    this.createOccasionForm = this.builder.group({
+      name: ["", Validators.compose([Validators.required])],
+      slogan: ["", Validators.compose([Validators.required])],
+      date: ["", Validators.compose([Validators.required])]
+    });
+  }
 
   ngOnInit() {
     // code here
@@ -28,22 +35,21 @@ export class CreateOccasionComponent implements OnInit {
 
   addOccasion() {
     console.log("add occasion data : ", this.data);
-    if (!_.has(this.data, "type")) {
-      this.general.showCustomAlert("Warning", "Add Occasion Type First !");
-    } else if (!_.has(this.data, "occasion_date")) {
-      this.general.showCustomAlert("Warning", "Add Occasion Date First !");
+
+    if (!_.has(this.data, "category")) {
+      this.general.showCustomAlert("Warning", "Add Occasion Category First !");
     } else {
       this.isWaiting = true;
+      this.data.name = this.createOccasionForm.value.name;
+      this.data.slogan = this.createOccasionForm.value.slogan;
+      this.data.date = this.createOccasionForm.value.date;
       this.api.addOccasion(this.data).subscribe(
         data => {
-          console.log("response data is :", data);
           this.setting.presentToast("Occasion Created successfully");
           this.event.publish("occasionAdded");
           this.isWaiting = false;
         },
         err => {
-          this.setting.presentToast("Occasion Created successfully");
-          this.event.publish("occasionAdded");
           this.isWaiting = false;
           console.log("create occasion error :", err);
         }
@@ -51,17 +57,28 @@ export class CreateOccasionComponent implements OnInit {
     }
   }
 
-  selectOccasionType(occasion) {
-    this.occasionTypes.forEach((item: any) => {
-      if (item.active) {
-        item.active = false;
+  getOccasionCategories() {
+    this.api.getOccasionCategories().subscribe(
+      data => {
+        this.occasionCategories = data;
+      },
+      err => {
+        console.log("get occasion categories err :", err);
+      }
+    );
+  }
+
+  selectOccasionCategory(category) {
+    this.occasionCategories.forEach((category: any) => {
+      if (category.active) {
+        category.active = false;
       }
     });
-    if (occasion.active) {
-      occasion.active = false;
+    if (category.active) {
+      category.active = false;
     } else {
-      occasion.active = true;
-      this.data.type = occasion.value;
+      category.active = true;
+      this.data.category = category._id;
     }
   }
 }

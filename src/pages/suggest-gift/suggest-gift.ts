@@ -11,11 +11,13 @@ import { ApiProvider } from "../../providers/api/api";
 import { SettingProvider } from "../../providers/setting/setting";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { File } from "@ionic-native/file";
+import { FormBuilder, Validators } from "@angular/forms";
 import {
   FileTransfer,
   FileUploadOptions,
   FileTransferObject
 } from "@ionic-native/file-transfer";
+import { GeneralProvider } from "../../providers/general/general";
 
 @IonicPage()
 @Component({
@@ -25,16 +27,17 @@ import {
 export class SuggestGiftPage {
   giftData: any = this.navParams.get("giftData");
   base64Img: any = null;
+  suggestGiftForm: any;
   loader: any;
   data: any = {
-    title: "iPhone Xs Max",
-    description: "What do you think about this, my friend ?",
-    is_anonymous: 0
+    anonymous: 0
   };
   constructor(
     public navCtrl: NavController,
     private viewCtrl: ViewController,
     private api: ApiProvider,
+    public builder: FormBuilder,
+    private general: GeneralProvider,
     private file: File,
     private transfer: FileTransfer,
     private loadingCtrl: LoadingController,
@@ -44,20 +47,15 @@ export class SuggestGiftPage {
     private setting: SettingProvider,
     public navParams: NavParams
   ) {
-    this.fillGiftInfo();
+    this.suggestGiftForm = this.builder.group({
+      name: ["", Validators.compose([Validators.required])],
+      post: ["", Validators.compose([Validators.required])]
+    });
     console.log("giftData : ", this.giftData);
   }
-
-  fillGiftInfo() {
-    this.data.occasion_id = this.giftData.occasion_id;
-    this.data.userWhoReceiveGift = this.giftData.userId;
-    this.data.suggesting_user_id = JSON.parse(
-      localStorage.getItem("userData")
-    ).id;
-  }
-
   suggestGift() {
-    this.data.is_anonymous = this.data.is_anonymous ? 1 : 0;
+    this.data.anonymous = this.data.anonymous ? 1 : 0;
+    this.data.occasionId = this.giftData.occasion;
     if (this.data.imageUri) {
       this.sendToServerWithFileTransfer();
     } else {
@@ -67,12 +65,15 @@ export class SuggestGiftPage {
 
   sendDataToServerWithoutFileTransfer() {
     console.log("suggestion data  :", this.data);
-    this.api.suggestGift(this.data).subscribe(data => {
-      if (data.code == "201") {
+    this.api.suggestGift(this.data).subscribe(
+      data => {
         this.setting.presentToast("You have suggested gift successfully !");
-        this.viewCtrl.dismiss(data.data);
+        this.viewCtrl.dismiss(data);
+      },
+      err => {
+        this.general.showError(err.error);
       }
-    });
+    );
   }
   dismiss() {
     this.viewCtrl.dismiss();

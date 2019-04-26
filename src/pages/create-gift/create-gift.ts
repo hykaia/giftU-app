@@ -8,6 +8,7 @@ import {
   ActionSheetController
 } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
+import { FormBuilder, Validators } from "@angular/forms";
 import { SettingProvider } from "../../providers/setting/setting";
 import { File } from "@ionic-native/file";
 import {
@@ -25,18 +26,18 @@ import { GeneralProvider } from "../../providers/general/general";
 export class CreateGiftPage {
   occasionId: any = this.navParams.get("occasionId");
   loader: any;
+  createGiftForm: any;
   userData: any = JSON.parse(localStorage.getItem("userData"));
+  userId = localStorage.getItem("userId");
   gift: any = this.navParams.get("gift"); //update gift.
   base64Img: any = null;
-  data: any = {
-    title: "iPhone xs max",
-    description: "i want iPhone xs max - Black"
-  };
+  data: any = {};
   constructor(
     public navCtrl: NavController,
     private api: ApiProvider,
     private ngzone: NgZone,
     private file: File,
+    public builder: FormBuilder,
     private camera: Camera,
     private actionSheetCtrl: ActionSheetController,
     private setting: SettingProvider,
@@ -46,23 +47,44 @@ export class CreateGiftPage {
     private event: Events,
     public navParams: NavParams
   ) {
+    console.log("====================================");
+    console.log("occasion id :", this.occasionId);
+    console.log("====================================");
+    this.buildFormValidations();
     if (this.gift) {
       this.data = this.gift;
       console.log("this.gift : ", this.gift);
     }
   }
 
+  buildFormValidations() {
+    this.createGiftForm = this.builder.group({
+      name: ["", Validators.compose([Validators.required])],
+      post: ["", Validators.compose([Validators.required])]
+    });
+  }
+
   edit() {
     if (!this.data.imageUri) {
       this.editGiftWithoutFileUpload();
     } else {
-      this.sendToServer(`http://giftu.co/gift/update/${this.data.id}`);
+      this.sendToServer(
+        `https://api-giftu.hakaya.technology/users/${this.userId}/occasions/${
+          this.gift.occasion
+        }/gifts/${this.gift._id}`
+      );
     }
   }
 
   editGiftWithoutFileUpload() {
     this.presentLoading();
-    this.api.editGift(this.data).subscribe(
+    let params = {
+      occasion_id: this.gift.occasion,
+      name: this.createGiftForm.value.name,
+      post: this.createGiftForm.value.post,
+      gift_id: this.gift._id
+    };
+    this.api.editGift(params).subscribe(
       data => {
         this.event.publish("giftAdded");
         this.navCtrl.pop();
@@ -154,11 +176,18 @@ export class CreateGiftPage {
 
   share() {
     this.data.occasion_id = this.occasionId;
+    this.data.name = this.createGiftForm.value.name;
+    this.data.post = this.createGiftForm.value.post;
+    console.log("gift data : ", this.data);
     if (!this.data.imageUri) {
       this.addGift(); // test purpose
       // this.general.showCustomAlert("Warning", "You must upload gift image!");
     } else {
-      this.sendToServer(`http://giftu.co/gift/${this.userData.id}`);
+      this.sendToServer(
+        `https://api-giftu.hakaya.technology/users/${this.userId}/occasions/${
+          this.occasionId
+        }/gifts`
+      );
     }
   }
 
@@ -168,12 +197,8 @@ export class CreateGiftPage {
     });
     this.api.addGift(this.data).subscribe(
       data => {
-        if (data.code == "201") {
-          this.event.publish("giftAdded");
-          this.navCtrl.pop();
-        } else {
-          this.setting.presentToast("an error occur");
-        }
+        this.event.publish("giftAdded");
+        this.navCtrl.pop();
         loader.dismiss();
       },
       err => {
@@ -193,22 +218,21 @@ export class CreateGiftPage {
     const fileTransfer: FileTransferObject = this.transfer.create();
     let options: FileUploadOptions = {
       fileKey: "image",
-      fileName: `gift_img`,
+      fileName: `gift_img.jpeg`,
       chunkedMode: false,
       mimeType: "image/jpeg",
-      headers: {},
-      params: this.data
+      httpMethod: !this.gift ? "POST" : "PUT",
+      headers: {
+        Authorization: `${localStorage.getItem("access_token")}`
+      },
+      params: { data: JSON.stringify(this.data) }
     };
 
     fileTransfer.upload(this.data.imageUri, url, options).then(
       data => {
         let response = JSON.parse(data.response);
-        if (response["code"] == "201") {
-          this.event.publish("giftAdded");
-          this.navCtrl.pop();
-        } else {
-          this.setting.presentToast("an error occur");
-        }
+        this.event.publish("giftAdded");
+        this.navCtrl.pop();
         this.loader.dismiss();
       },
       err => {

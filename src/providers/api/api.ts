@@ -11,17 +11,11 @@ export class ApiProvider {
   ) {}
 
   login(params): Observable<any> {
-    return this.http.get(
-      `${this.settingService.URL}user/whatsapp/login?phone=${
-        params.countryCode
-      }${params.phone.replace(/^0+/, "")}`
-    );
+    return this.http.post(`${this.settingService.URL}login`, params);
   }
 
   verify(params): Observable<any> {
-    return this.http.get(
-      `${this.settingService.URL}user/verify/${params.verifyCode}`
-    );
+    return this.http.post(`${this.settingService.URL}verify`, params);
   }
 
   sendUserContacts(params): Observable<any> {
@@ -36,63 +30,89 @@ export class ApiProvider {
   }
 
   updateProfile(params): Observable<any> {
-    console.log("params is : ", params);
-    return this.http.post(
-      `${this.settingService.URL}user/profile/${params.id}`,
+    let userId = localStorage.getItem("userId");
+    return this.http.put(`${this.settingService.URL}users/${userId}`, params);
+  }
+
+  sendEmotion(params): Observable<any> {
+    let userId = localStorage.getItem("userId");
+    return this.http.put(
+      `${this.settingService.URL}users/${userId}/notifications/${
+        params.notificationId
+      }`,
       params
     );
   }
 
   getAllUserContacts(params): Observable<any> {
-    let userData = JSON.parse(localStorage.getItem("userData"));
-    return this.http.post(
-      `${this.settingService.URL}user/contacts/${userData.id}?stopTwilio=1`,
-      params
-    );
+    return this.http.post(`${this.settingService.URL}friends`, params);
+  }
+
+  inviteFriends(params): Observable<any> {
+    return this.http.post(`${this.settingService.URL}invitation`, params);
   }
 
   register(params): Observable<any> {
-    return this.http.post(`${this.settingService.URL}user`, params);
+    let userId = localStorage.getItem("userId");
+    return this.http.put(`${this.settingService.URL}users/${userId}`, params);
   }
 
   addOccasion(params): Observable<any> {
-    let userData = JSON.parse(localStorage.getItem("userData"));
+    let userId = localStorage.getItem("userId");
     return this.http.post(
-      `${this.settingService.URL}occasion/${userData.id}`,
+      `${this.settingService.URL}users/${userId}/occasions`,
       params
     );
   }
 
+  getOccasionCategories(): Observable<any> {
+    return this.http.get(`${this.settingService.URL}categories`);
+  }
+
   addGift(params): Observable<any> {
-    let userData = JSON.parse(localStorage.getItem("userData"));
+    let userId = localStorage.getItem("userId");
     return this.http.post(
-      `${this.settingService.URL}gift/${userData.id}`,
+      `${this.settingService.URL}users/${userId}/occasions/${
+        params.occasion_id
+      }/gifts`,
       params
     );
   }
 
   editGift(params): Observable<any> {
-    return this.http.post(
-      `${this.settingService.URL}gift/update/${params.id}`,
+    let userId = localStorage.getItem("userId");
+    return this.http.put(
+      `${this.settingService.URL}users/${userId}/occasions/${
+        params.occasion_id
+      }/gifts/${params.gift_id}`,
       params
     );
   }
 
+  getUserNotifications(): Observable<any> {
+    let userId = localStorage.getItem("userId");
+    return this.http.get(
+      `${this.settingService.URL}users/${userId}/notifications`
+    );
+  }
+
   suggestGift(params): Observable<any> {
+    let userId = localStorage.getItem("userId");
     return this.http.post(
-      `${this.settingService.URL}gift/${params.userWhoReceiveGift}`,
+      `${this.settingService.URL}users/${userId}/occasions/${
+        params.occasionId
+      }/gifts/suggest`,
       params
     );
   }
 
   getUserOccasions(userId): Observable<any> {
-    return this.http.get(`${this.settingService.URL}occasion/${userId}`);
+    return this.http.get(`${this.settingService.URL}users/${userId}/occasions`);
   }
 
-  myFriendsOccasions(page): Observable<any> {
-    let userData = JSON.parse(localStorage.getItem("userData"));
+  myFriendsOccasions(page, limit): Observable<any> {
     return this.http.get(
-      `${this.settingService.URL}occasion/friends/${userData.id}?page=${page}`
+      `${this.settingService.URL}occasions?page=${page}&limit=${limit}`
     );
   }
 
@@ -102,35 +122,43 @@ export class ApiProvider {
     );
   }
 
-  getUserFriends(page): Observable<any> {
-    let userData = JSON.parse(localStorage.getItem("userData"));
-    return this.http.get(
-      `${this.settingService.URL}user/profile/${
-        userData.id
-      }?friends=1&page=${page}`
-    );
+  getUserFriends(): Observable<any> {
+    let userId = localStorage.getItem("userId");
+    return this.http.get(`${this.settingService.URL}users/${userId}`);
   }
 
   editOccasion(params): Observable<any> {
-    return this.http.post(
-      `${this.settingService.URL}occasion/update/${params.id}`,
+    let userId = localStorage.getItem("userId");
+    return this.http.put(
+      `${this.settingService.URL}users/${userId}/occasions/${
+        params.occasionId
+      }`,
       params
     );
   }
 
-  deleteGift(giftId): Observable<any> {
-    return this.http.delete(`${this.settingService.URL}gift/${giftId}`);
+  deleteGift(params): Observable<any> {
+    let userId = localStorage.getItem("userId");
+    return this.http.delete(
+      `${this.settingService.URL}users/${userId}/occasions/${
+        params.occasionId
+      }/gifts/${params.giftId}`
+    );
   }
 
-  deleteOccasion(id): Observable<any> {
-    return this.http.delete(`${this.settingService.URL}occasion/${id}`);
+  deleteOccasion(occasionId): Observable<any> {
+    let userId = localStorage.getItem("userId");
+    return this.http.delete(
+      `${this.settingService.URL}users/${userId}/occasions/${occasionId}`
+    );
   }
 
-  giveGift(giftId): Observable<any> {
-    let userData = JSON.parse(localStorage.getItem("userData"));
-    let params = {};
+  giveGift(params): Observable<any> {
+    let userId = localStorage.getItem("userId");
     return this.http.put(
-      `${this.settingService.URL}gift/${giftId}/${userData.id}`,
+      `${this.settingService.URL}occasions/${params.occasion}/gifts/${
+        params._id
+      }`,
       JSON.stringify(params)
     );
   }

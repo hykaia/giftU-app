@@ -5,10 +5,11 @@ import {
   NavParams,
   Platform,
   ModalController,
-  LoadingController
+  LoadingController,
+  Events
 } from "ionic-angular";
 import * as moment from "moment";
-import { Friends, Occasions, Notifications, Slides } from "./mocks";
+import { Notifications, Slides } from "./mocks";
 import { ApiProvider } from "../../providers/api/api";
 import * as _ from "lodash";
 
@@ -30,10 +31,10 @@ export class MyFriendsPage {
   selectedSegment: any = "my_friends";
   Friends: any;
   isFriendsEmpty: boolean = false;
-  currentPage: number = 1;
-  currentPageOccasion: number = 1;
+  currentPageOccasion: number = 0;
+  limitOccasionResults: number = 50;
   Occasions: any[] = [];
-  Notifications: any = Notifications;
+  Notifications: any;
   Slides: any[] = Slides;
   currentIndex = 0;
   isLoading: boolean = true;
@@ -43,17 +44,26 @@ export class MyFriendsPage {
     private render: Renderer2,
     private contacts: Contacts,
     private general: GeneralProvider,
+    private event: Events,
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private api: ApiProvider,
     public navParams: NavParams
   ) {
+    this.checkEvents();
     this.myFriendsOccasions();
     this.getUserFriends();
+    this.getUserNotifications();
   }
 
   ngAfterViewInit(): void {
     this.fadeInContainer();
+  }
+
+  checkEvents() {
+    this.event.subscribe("notificationRecived", () => {
+      this.getUserNotifications();
+    });
   }
 
   swipe(event) {
@@ -90,58 +100,6 @@ export class MyFriendsPage {
     this.loader.present();
   }
 
-  getContacts(): void {
-    var code = localStorage.getItem("countryCode")
-      ? localStorage.getItem("countryCode")
-      : "2";
-    let contactList: any[] = [];
-    let options: any = {
-      multiple: true,
-      hasPhoneNumber: true
-    };
-    this.contacts
-      .find(["displayName", "phoneNumbers", "photos"], options)
-      .then(contacts => {
-        contacts.forEach(item => {
-          if (
-            Array.isArray(item.phoneNumbers) &&
-            item.phoneNumbers[0].value != null
-          ) {
-            var contact: any = {};
-            contact.name = item.name.formatted;
-            contact.img = "assets/imgs/user.svg";
-            contact.phone = item.phoneNumbers[0].value
-              .replace(/\s/g, "")
-              .replace(/-/g, "")
-              .replace(/\(/g, "")
-              .replace(/\)/g, "");
-            if (
-              contact.phone.substring(0, 1) != "+" &&
-              contact.phone.substring(0, 2) != "00"
-            ) {
-              contact.phone = `${this.countryCode}${contact.phone}`; //production purpose.
-            }
-            contactList.push(contact);
-          }
-        });
-        this.sendContactListToServer(contactList);
-      });
-  }
-
-  sendContactListToServer(contactList) {
-    var params = {
-      contacts: JSON.stringify(contactList)
-    };
-    this.api.getAllUserContacts(params).subscribe(
-      data => {
-        this.getUserFriends(true);
-      },
-      err => {
-        console.log("contacts error is : ", err);
-      }
-    );
-  }
-
   inviteBestFriends() {
     let modal = this.modalCtrl.create("InviteYourFriendsPage", {
       isModal: true
@@ -154,6 +112,13 @@ export class MyFriendsPage {
       Friends: this.Friends
     });
     modal.present();
+  }
+
+  getUserNotifications() {
+    this.api.getUserNotifications().subscribe(data => {
+      console.log("user notifications are :", data);
+      this.Notifications = data.notifications;
+    });
   }
 
   openUserProfile(friend) {
@@ -191,37 +156,33 @@ export class MyFriendsPage {
 
   // friends occasions
   myFriendsOccasions() {
-    this.api.myFriendsOccasions(this.currentPageOccasion).subscribe(
-      data => {
-        console.log("friends occasions are : ", data);
-        this.Occasions = data.data.data;
-        let total = data.data.total;
-        let per_page = data.data.per_page;
-        this.occasionsPagesCount = Math.ceil(total / per_page);
-        this.isOccasionsLoading = false;
-      },
-      err => {
-        console.log("error Occasions :", err);
-        this.isOccasionsLoading = false;
-      }
-    );
+    this.api
+      .myFriendsOccasions(this.currentPageOccasion, this.limitOccasionResults)
+      .subscribe(
+        data => {
+          console.log("friends occasions are : ", data);
+          this.Occasions = data.occasions;
+          this.isOccasionsLoading = false;
+        },
+        err => {
+          console.log("error Occasions :", err);
+          this.isOccasionsLoading = false;
+        }
+      );
   }
 
   getUserFriends(isUpdateFriends?) {
-    this.api.getUserFriends(this.currentPage).subscribe(
+    this.api.getUserFriends().subscribe(
       data => {
-        this.Friends = data.data.friends;
-        let total = data.data.friends_total_count;
-        let per_page = data.data.per_page;
-        this.friendsPagesCount = Math.ceil(total / per_page);
+        console.log("user friends data :", data);
+        this.Friends = data.friends;
         this.isLoading = false;
-        console.log("user friends are : ", this.Friends);
         if (isUpdateFriends) {
           this.loader.dismiss();
         }
       },
       err => {
-        console.log("friends error : ", err);
+        console.log("user friends error :", err);
         this.isLoading = false;
         if (isUpdateFriends) {
           this.loader.dismiss();
@@ -230,27 +191,55 @@ export class MyFriendsPage {
     );
   }
 
-  doInfinite(scroll) {
-    console.log("friends scroll");
-    this.currentPage += 1;
-    if (this.currentPage <= this.friendsPagesCount) {
-      this.api.getUserFriends(this.currentPage).subscribe(data => {
-        this.Friends = this.Friends.concat(data.data.friends);
-        scroll.complete();
+  getContacts(): void {
+    let contactList: any[] = [];
+    let options: any = {
+      multiple: true,
+      hasPhoneNumber: true
+    };
+    this.contacts
+      .find(["displayName", "phoneNumbers", "photos"], options)
+      .then(contacts => {
+        contacts.forEach(item => {
+          if (
+            Array.isArray(item.phoneNumbers) &&
+            item.phoneNumbers[0].value != null
+          ) {
+            var contact: any = {};
+            contact.phone = item.phoneNumbers[0].value
+              .replace(/\s/g, "")
+              .replace(/-/g, "")
+              .replace(/\(/g, "")
+              .replace(/\)/g, "")
+              .replace(/^0+/, "");
+            contactList.push(contact);
+          }
+        });
+        this.sendContactListToServer(contactList);
       });
-    } else {
-      scroll.complete();
-    }
+  }
+
+  sendContactListToServer(contactList) {
+    this.api.getAllUserContacts(contactList).subscribe(
+      data => {
+        this.getUserFriends(true);
+      },
+      err => {
+        console.log("contacts error is : ", err);
+      }
+    );
   }
 
   doInfiniteOccasions(scroll) {
     console.log("occasions scroll");
     this.currentPageOccasion += 1;
     if (this.currentPageOccasion <= this.occasionsPagesCount) {
-      this.api.myFriendsOccasions(this.currentPageOccasion).subscribe(data => {
-        this.Occasions = this.Occasions.concat(data.data.data);
-        scroll.complete();
-      });
+      this.api
+        .myFriendsOccasions(this.currentPageOccasion, this.limitOccasionResults)
+        .subscribe(data => {
+          this.Occasions = this.Occasions.concat(data.data.data);
+          scroll.complete();
+        });
     } else {
       scroll.complete();
     }
