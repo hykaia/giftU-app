@@ -23,7 +23,12 @@
                   round
                   (click)="giveGift(gift)"
                 >
-                  give away
+                  <span *ngIf="!gift.hasGiven">give away</span>
+                  <ion-spinner
+                    name="ios-small"
+                    *ngIf="gift.hasGiven"
+                    color="light"
+                  ></ion-spinner>
                 </button>
               </ion-col>
               <ion-col col-6>

@@ -102,7 +102,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <div class="sticky-image-wrapper">
+    <div class="sticky-image-wrapper" *ngIf="showBackgroundLogo">
       <img
         src="assets/imgs/happy.png"
         [class.guysImgWithKeyBoard]="isKeyBoardShow"

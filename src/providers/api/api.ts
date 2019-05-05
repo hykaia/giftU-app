@@ -89,10 +89,12 @@ export class ApiProvider {
     );
   }
 
-  getUserNotifications(): Observable<any> {
+  getUserNotifications(page, limit): Observable<any> {
     let userId = localStorage.getItem("userId");
     return this.http.get(
-      `${this.settingService.URL}users/${userId}/notifications`
+      `${
+        this.settingService.URL
+      }users/${userId}/notifications?page=${page}&limit=${limit}`
     );
   }
 

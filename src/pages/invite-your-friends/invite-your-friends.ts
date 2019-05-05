@@ -81,7 +81,7 @@ export class InviteYourFriendsPage {
   sendContactListToServer(contactList) {
     this.api.getAllUserContacts(contactList).subscribe(
       data => {
-        console.log("user contacts response : ", data);
+        // console.log("user contacts response : ", data);
         this.originalContacts = data;
         this.filterContacts = this.originalContacts;
         this.isLoading = false;
@@ -94,7 +94,7 @@ export class InviteYourFriendsPage {
   }
 
   inviteFriend(contact) {
-    console.log("contact is : ", JSON.stringify(contact));
+    // console.log("contact is : ", JSON.stringify(contact));
     let contacts: any[] = [contact];
     this.api.inviteFriends(contacts).subscribe(
       data => {
@@ -110,7 +110,6 @@ export class InviteYourFriendsPage {
     this.isWaiting = true;
     this.api.inviteFriends(this.originalContacts).subscribe(
       data => {
-        console.log("all friends invited");
         if (this.isModal) {
           this.dismiss();
         } else {

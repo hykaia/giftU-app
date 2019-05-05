@@ -25,11 +25,11 @@ export class SearchFriendsPage {
 
   Search() {
     this.filterFriends = this.Friends.filter(item => {
-      if (item.name != null && item.phone != null) {
+      if (item.name != null && item.mobile != null) {
         return (
           item.name.toLowerCase().indexOf(this.data.search.toLowerCase()) >
             -1 ||
-          item.phone.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1
+          item.mobile.toLowerCase().indexOf(this.data.search.toLowerCase()) > -1
         );
       }
     });

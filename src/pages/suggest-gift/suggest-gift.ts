@@ -26,6 +26,7 @@ import { GeneralProvider } from "../../providers/general/general";
 })
 export class SuggestGiftPage {
   giftData: any = this.navParams.get("giftData");
+  userId = localStorage.getItem("userId");
   base64Img: any = null;
   suggestGiftForm: any;
   loader: any;
@@ -54,27 +55,11 @@ export class SuggestGiftPage {
     console.log("giftData : ", this.giftData);
   }
   suggestGift() {
-    this.data.anonymous = this.data.anonymous ? 1 : 0;
-    this.data.occasionId = this.giftData.occasion;
-    if (this.data.imageUri) {
-      this.sendToServerWithFileTransfer();
-    } else {
-      this.sendDataToServerWithoutFileTransfer();
-    }
+    this.data.anonymous = this.data.anonymous;
+    this.data.occasion = this.giftData.occasion;
+    this.sendToServerWithFileTransfer();
   }
 
-  sendDataToServerWithoutFileTransfer() {
-    console.log("suggestion data  :", this.data);
-    this.api.suggestGift(this.data).subscribe(
-      data => {
-        this.setting.presentToast("You have suggested gift successfully !");
-        this.viewCtrl.dismiss(data);
-      },
-      err => {
-        this.general.showError(err.error);
-      }
-    );
-  }
   dismiss() {
     this.viewCtrl.dismiss();
   }
@@ -137,37 +122,44 @@ export class SuggestGiftPage {
   }
 
   sendToServerWithFileTransfer() {
+    console.log("kos dataaa is :", this.data);
+
     this.presentLoading();
     const fileTransfer: FileTransferObject = this.transfer.create();
     let options: FileUploadOptions = {
       fileKey: "image",
-      fileName: `gift_img`,
+      fileName: `gift_img.jpeg`,
+      httpMethod: "POST",
       chunkedMode: false,
       mimeType: "image/jpeg",
-      headers: {},
-      params: this.data
+      headers: {
+        Authorization: `${localStorage.getItem("access_token")}`
+      },
+      params: { data: JSON.stringify(this.data) }
     };
 
     fileTransfer
       .upload(
         this.data.imageUri,
-        `http://giftu.co/gift/${this.data.userWhoReceiveGift}`,
+        `https://api-giftu.hakaya.technology/users/${this.userId}/occasions/${
+          this.data.occasion
+        }/gifts/suggest`,
         options
       )
       .then(
         data => {
+          console.log("moooo");
+
           let response = JSON.parse(data.response);
-          if (response["code"] == "201") {
-            console.log("upload suggest gift :", JSON.stringify(response));
-            this.setting.presentToast("You have suggested gift successfully !");
-            this.viewCtrl.dismiss(response["data"]);
-          } else {
-            this.setting.presentToast("an error occur");
-          }
+          console.log("upload suggest gift :", JSON.stringify(response));
+          this.setting.presentToast("You have suggested gift successfully !");
+          this.viewCtrl.dismiss(response["data"]);
           this.loader.dismiss();
         },
         err => {
-          console.log(err);
+          console.log("tozzz");
+
+          console.log(JSON.stringify(err));
           this.loader.dismiss();
         }
       );

@@ -23,7 +23,7 @@ import { GeneralProvider } from "../../providers/general/general";
 })
 export class MyFriendsPage {
   @ViewChild("container") containerElem;
-  friendsPagesCount: any;
+  notificationsPagesCount: any;
   occasionsPagesCount: any;
   loader: any;
   countryCode: any;
@@ -32,7 +32,11 @@ export class MyFriendsPage {
   Friends: any;
   isFriendsEmpty: boolean = false;
   currentPageOccasion: number = 0;
-  limitOccasionResults: number = 50;
+  limitOccasionResults: number = 10;
+  // notification
+  currentPageNotification: number = 0;
+  limitNotificationResults: number = 10;
+  // end notification
   Occasions: any[] = [];
   Notifications: any;
   Slides: any[] = Slides;
@@ -115,10 +119,18 @@ export class MyFriendsPage {
   }
 
   getUserNotifications() {
-    this.api.getUserNotifications().subscribe(data => {
-      console.log("user notifications are :", data);
-      this.Notifications = data.notifications;
-    });
+    this.api
+      .getUserNotifications(
+        this.currentPageNotification,
+        this.limitNotificationResults
+      )
+      .subscribe(data => {
+        console.log("user notifications are :", data);
+        this.notificationsPagesCount = Math.ceil(
+          data.length / this.limitNotificationResults
+        );
+        this.Notifications = data.notifications;
+      });
   }
 
   openUserProfile(friend) {
@@ -152,23 +164,6 @@ export class MyFriendsPage {
 
   createOccasion() {
     this.navCtrl.push("MyProfilePage", { segmentName: "occasions" });
-  }
-
-  // friends occasions
-  myFriendsOccasions() {
-    this.api
-      .myFriendsOccasions(this.currentPageOccasion, this.limitOccasionResults)
-      .subscribe(
-        data => {
-          console.log("friends occasions are : ", data);
-          this.Occasions = data.occasions;
-          this.isOccasionsLoading = false;
-        },
-        err => {
-          console.log("error Occasions :", err);
-          this.isOccasionsLoading = false;
-        }
-      );
   }
 
   getUserFriends(isUpdateFriends?) {
@@ -230,6 +225,26 @@ export class MyFriendsPage {
     );
   }
 
+  // friends occasions
+  myFriendsOccasions() {
+    this.api
+      .myFriendsOccasions(this.currentPageOccasion, this.limitOccasionResults)
+      .subscribe(
+        data => {
+          console.log("friends occasions are : ", data);
+          this.Occasions = data.occasions;
+          this.occasionsPagesCount = Math.ceil(
+            data.length / this.limitOccasionResults
+          );
+          this.isOccasionsLoading = false;
+        },
+        err => {
+          console.log("error Occasions :", err);
+          this.isOccasionsLoading = false;
+        }
+      );
+  }
+
   doInfiniteOccasions(scroll) {
     console.log("occasions scroll");
     this.currentPageOccasion += 1;
@@ -237,7 +252,24 @@ export class MyFriendsPage {
       this.api
         .myFriendsOccasions(this.currentPageOccasion, this.limitOccasionResults)
         .subscribe(data => {
-          this.Occasions = this.Occasions.concat(data.data.data);
+          this.Occasions = this.Occasions.concat(data.occasions);
+          scroll.complete();
+        });
+    } else {
+      scroll.complete();
+    }
+  }
+
+  doInfiniteNotifications(scroll) {
+    this.currentPageNotification += 1;
+    if (this.currentPageNotification <= this.notificationsPagesCount) {
+      this.api
+        .getUserNotifications(
+          this.currentPageNotification,
+          this.limitNotificationResults
+        )
+        .subscribe(data => {
+          this.Notifications = this.Notifications.concat(data.notifications);
           scroll.complete();
         });
     } else {
@@ -248,5 +280,9 @@ export class MyFriendsPage {
   updateFriends() {
     this.presentLoading();
     this.getContacts();
+  }
+  openNoti() {
+    let modal = this.modalCtrl.create("NotificationsPage");
+    modal.present();
   }
 }

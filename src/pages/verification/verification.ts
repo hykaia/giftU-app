@@ -63,9 +63,8 @@ export class VerificationPage implements OnInit {
             localStorage.setItem("isLogin", JSON.stringify(true));
             this.navCtrl.setRoot("InviteYourFriendsPage"); //test purpose
           }
-          this.updateDeviceToken();
           localStorage.setItem("access_token", data.token);
-          localStorage.setItem("userId", data._id);
+          this.updateDeviceToken();
           this.isWaiting = false;
         },
         err => {
@@ -82,6 +81,8 @@ export class VerificationPage implements OnInit {
     let params = {
       one_signal_token: device_token ? device_token : ""
     };
+    console.log("my updated device token is :", device_token);
+    // alert("my updated device token is :" + device_token);
     this.api.register(params).subscribe(
       data => {
         console.log("device token updated");

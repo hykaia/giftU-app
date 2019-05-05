@@ -1,27 +1,30 @@
-import { Component } from "@angular/core";
-import { Platform, Events } from "ionic-angular";
+import { Component, ViewChild } from "@angular/core";
+import { Platform, Events, Nav, ModalController } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { Keyboard } from "@ionic-native/keyboard";
 import { OneSignal } from "@ionic-native/onesignal";
 import { Sim } from "@ionic-native/sim";
+import { ApiProvider } from "../providers/api/api";
 @Component({
   templateUrl: "app.html"
 })
 export class MyApp {
   // rootPage: string = "InviteYourFriendsPage";
-  rootPage: string = "MyFriendsPage";
-
+  rootPage: string = "LoginPage";
+  @ViewChild(Nav) nav: Nav;
   constructor(
     private platform: Platform,
     private keyboard: Keyboard,
     private oneSignal: OneSignal,
     private simCard: Sim,
+    private modalCtrl: ModalController,
+    private api: ApiProvider,
     private event: Events,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen
   ) {
-    // this.checkDefaultRoute();
+    this.checkDefaultRoute();
     // this.setFakeUser();
     this.initialize();
   }
@@ -40,7 +43,29 @@ export class MyApp {
 
   checkDefaultRoute() {
     let isLogin = JSON.parse(localStorage.getItem("isLogin"));
-    this.rootPage = isLogin ? "MyFriendsPage" : "LoginPage";
+    if (isLogin || isLogin != null) {
+      this.rootPage = "MyFriendsPage";
+      this.updateDeviceToken();
+    } else {
+      this.rootPage = "LoginPage";
+    }
+  }
+
+  updateDeviceToken() {
+    let device_token = localStorage.getItem("device_token");
+    let params = {
+      one_signal_token: device_token ? device_token : ""
+    };
+    console.log("my updated device token is :", device_token);
+    // alert("my updated device token is :" + device_token);
+    this.api.register(params).subscribe(
+      data => {
+        console.log("device token updated");
+      },
+      err => {
+        console.log("register error is :", JSON.stringify(err));
+      }
+    );
   }
 
   checkPushNotification() {
@@ -63,7 +88,10 @@ export class MyApp {
       console.log("notification msg : ", JSON.stringify(msg));
     });
 
-    this.oneSignal.handleNotificationOpened().subscribe(msg => {});
+    this.oneSignal.handleNotificationOpened().subscribe(msg => {
+      let modal = this.modalCtrl.create("NotificationsPage");
+      modal.present();
+    });
 
     //  this.oneSignal.handleNotificationOpened(notificationOpenedCallback)
     this.oneSignal.endInit();

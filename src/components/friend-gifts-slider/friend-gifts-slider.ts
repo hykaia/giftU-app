@@ -20,14 +20,16 @@ export class FriendGiftsSliderComponent {
   ) {}
 
   giveGift(gift) {
-    console.log("my gift : ", gift);
+    gift.hasGiven = true;
     this.api.giveGift(gift).subscribe(
       data => {
         this.setting.presentToast("You give gift successfully");
         let index = this.gifts.indexOf(gift);
         this.gifts.splice(index, 1);
+        gift.hasGiven = false;
       },
       err => {
+        gift.hasGiven = false;
         console.log("give gift error : ", err);
       }
     );
