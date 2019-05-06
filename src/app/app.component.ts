@@ -43,7 +43,7 @@ export class MyApp {
 
   checkDefaultRoute() {
     let isLogin = JSON.parse(localStorage.getItem("isLogin"));
-    if (isLogin || isLogin != null) {
+    if (isLogin) {
       this.rootPage = "MyFriendsPage";
       this.updateDeviceToken();
     } else {
@@ -57,7 +57,6 @@ export class MyApp {
       one_signal_token: device_token ? device_token : ""
     };
     console.log("my updated device token is :", device_token);
-    // alert("my updated device token is :" + device_token);
     this.api.register(params).subscribe(
       data => {
         console.log("device token updated");
@@ -74,7 +73,7 @@ export class MyApp {
     };
     this.oneSignal.startInit(
       "977f3f4e-4e84-4f23-bf12-c06fd9cf432c",
-      "377815980548"
+      "131172456512"
     );
 
     this.oneSignal.inFocusDisplaying(

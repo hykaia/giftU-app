@@ -125,13 +125,11 @@ page-my-friends {
   }
 
   .occasion-img {
-    width: 79%;
-    float: right;
-    margin-right: 1rem;
-    display: inline-block;
+    width: auto;
+    height: 40px;
     position: absolute;
-    bottom: -12px;
-    right: -6px;
+    bottom: 0;
+    right: 0;
   }
   .remaining-days-wrapper {
     display: inline-block;

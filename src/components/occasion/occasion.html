@@ -33,13 +33,15 @@
     </ion-row>
   </ion-col>
 
-  <ion-col col-5 align-self-center>
-    <ion-row>
+  <ion-col col-5 style="padding-bottom: 0;">
+    <ion-row style="height: 100%;">
       <ion-col col-4 align-self-center>
         <div [innerHTML]="getDifferenceDays(occasion)"></div>
       </ion-col>
-      <ion-col col-8>
-        <img [src]="occasion.category.image" class="occasion-img" />
+      <ion-col col-8 align-self-end>
+        <div>
+          <img [src]="occasion.category.image" class="occasion-img" />
+        </div>
       </ion-col>
     </ion-row>
   </ion-col>

@@ -9,9 +9,6 @@
         <ion-icon name="refresh"></ion-icon>
       </button>
 
-      <button ion-button (click)="openNoti()">
-        <ion-icon name="add"></ion-icon>
-      </button>
       <button ion-button (click)="openMyProfile()">
         <span class="dot"></span>
         <img
@@ -130,6 +127,10 @@
         [hidden]="isLoading"
         [notification]="notification"
       ></notification>
+      <no-data
+        *ngIf="Notifications.length == 0"
+        data="No Notifications Found !"
+      ></no-data>
       <ion-infinite-scroll (ionInfinite)="doInfiniteNotifications($event)">
         <ion-infinite-scroll-content
           loadingText="Loading..."

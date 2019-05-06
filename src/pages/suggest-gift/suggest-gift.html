@@ -40,6 +40,21 @@
             placeholder="Gift Name"
           ></ion-input>
         </ion-item>
+        <div
+          class="form-control-feedback"
+          *ngIf="
+            !suggestGiftForm.controls.name.valid &&
+            (suggestGiftForm.controls.name.dirty ||
+              suggestGiftForm.controls.name.touched)
+          "
+        >
+          <div
+            *ngIf="suggestGiftForm.controls.name.errors.required"
+            class="my-error"
+          >
+            Gift name is required.
+          </div>
+        </div>
       </ion-col>
 
       <ion-col col-12 class="custom-col">
@@ -52,6 +67,21 @@
             placeholder="Gift Description"
           ></ion-input>
         </ion-item>
+        <div
+          class="form-control-feedback"
+          *ngIf="
+            !suggestGiftForm.controls.post.valid &&
+            (suggestGiftForm.controls.post.dirty ||
+              suggestGiftForm.controls.post.touched)
+          "
+        >
+          <div
+            *ngIf="suggestGiftForm.controls.post.errors.required"
+            class="my-error"
+          >
+            Gift post is required.
+          </div>
+        </div>
       </ion-col>
     </ion-row>
 
@@ -65,12 +95,11 @@
         [ngModelOptions]="{ standalone: true }"
       ></ion-toggle>
     </ion-row>
-
+    <!-- || !data.imageUri -->
     <ion-row>
       <ion-col col-12>
         <button
           ion-button
-          round
           color="purple"
           block
           [disabled]="!suggestGiftForm.valid"
@@ -83,5 +112,3 @@
     </ion-row>
   </form>
 </ion-content>
-
-<ion-footer> </ion-footer>

@@ -35,6 +35,7 @@ export class globalInterceptor implements HttpInterceptor {
       error => {
         if (error.status == "401") {
           console.error("user is unauthorized");
+          localStorage.setItem("isLogin", JSON.stringify(false));
         }
         console.log("error message : ", JSON.stringify(error));
       }

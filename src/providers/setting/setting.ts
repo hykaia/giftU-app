@@ -51,4 +51,11 @@ export class SettingProvider {
     let final = moment.duration(start.diff(end)).asDays();
     return final;
   }
+
+  getDateDifferenceInNotificationDays(date) {
+    var start = moment(date, "YYYY-MM-DD");
+    var end = moment(new Date()).format("YYYY-MM-DD");
+    let final = moment.duration(start.diff(end)).asDays();
+    return final;
+  }
 }

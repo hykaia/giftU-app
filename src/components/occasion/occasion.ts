@@ -11,16 +11,14 @@ export class OccasionComponent {
 
   getDifferenceDays(occasion) {
     let date = this.setting.getDateDifferenceInDays(occasion.date);
-    var todayDate = moment(new Date()).format("YYYY-MM-DD");
-    if (occasion.date > todayDate) {
+    if (date > 0) {
       return `
         <div class="remaining-days-wrapper" [class.adjust-middle]="0">
           <div class="remaining-days">${date}</div>
           <div class="days-txt"> days </div>
         </div>
       `;
-    }
-    if (occasion.date == todayDate) {
+    } else if (date == 0) {
       return `
         <div class="remaining-days-wrapper">
           <div class="days-txt now"> Now </div>

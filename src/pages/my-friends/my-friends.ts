@@ -1,4 +1,4 @@
-import { Component, ViewChild, Renderer2 } from "@angular/core";
+import { Component, ViewChild, Renderer2, NgZone } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -47,6 +47,7 @@ export class MyFriendsPage {
     public navCtrl: NavController,
     private render: Renderer2,
     private contacts: Contacts,
+    private ngZone: NgZone,
     private general: GeneralProvider,
     private event: Events,
     private modalCtrl: ModalController,
@@ -54,19 +55,27 @@ export class MyFriendsPage {
     private api: ApiProvider,
     public navParams: NavParams
   ) {
-    this.checkEvents();
     this.myFriendsOccasions();
     this.getUserFriends();
     this.getUserNotifications();
+    this.checkEvents();
   }
 
   ngAfterViewInit(): void {
     this.fadeInContainer();
   }
 
+  ionViewWillEnter() {
+    this.userData = JSON.parse(localStorage.getItem("userData"));
+  }
+
   checkEvents() {
     this.event.subscribe("notificationRecived", () => {
-      this.getUserNotifications();
+      this.ngZone.run(() => {
+        this.getUserNotifications();
+        this.myFriendsOccasions();
+        this.isLoading = false;
+      });
     });
   }
 
@@ -124,13 +133,20 @@ export class MyFriendsPage {
         this.currentPageNotification,
         this.limitNotificationResults
       )
-      .subscribe(data => {
-        console.log("user notifications are :", data);
-        this.notificationsPagesCount = Math.ceil(
-          data.length / this.limitNotificationResults
-        );
-        this.Notifications = data.notifications;
-      });
+      .subscribe(
+        data => {
+          console.log("user notifications are :", data);
+          this.notificationsPagesCount = Math.ceil(
+            data.length / this.limitNotificationResults
+          );
+          this.Notifications = data.notifications;
+          this.isLoading = false;
+        },
+        err => {
+          this.isLoading = false;
+          console.log("notifications err :", err);
+        }
+      );
   }
 
   openUserProfile(friend) {
@@ -175,6 +191,7 @@ export class MyFriendsPage {
         if (isUpdateFriends) {
           this.loader.dismiss();
         }
+        this.isLoading = false;
       },
       err => {
         console.log("user friends error :", err);
@@ -182,6 +199,7 @@ export class MyFriendsPage {
         if (isUpdateFriends) {
           this.loader.dismiss();
         }
+        this.isLoading = false;
       }
     );
   }

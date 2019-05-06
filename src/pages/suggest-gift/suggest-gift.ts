@@ -31,7 +31,7 @@ export class SuggestGiftPage {
   suggestGiftForm: any;
   loader: any;
   data: any = {
-    anonymous: 0
+    anonymous: false
   };
   constructor(
     public navCtrl: NavController,
@@ -122,7 +122,7 @@ export class SuggestGiftPage {
   }
 
   sendToServerWithFileTransfer() {
-    console.log("kos dataaa is :", this.data);
+    console.log("final data : ", this.data);
 
     this.presentLoading();
     const fileTransfer: FileTransferObject = this.transfer.create();
@@ -148,8 +148,6 @@ export class SuggestGiftPage {
       )
       .then(
         data => {
-          console.log("moooo");
-
           let response = JSON.parse(data.response);
           console.log("upload suggest gift :", JSON.stringify(response));
           this.setting.presentToast("You have suggested gift successfully !");
@@ -157,8 +155,7 @@ export class SuggestGiftPage {
           this.loader.dismiss();
         },
         err => {
-          console.log("tozzz");
-
+          console.log("tozzz :", err);
           console.log(JSON.stringify(err));
           this.loader.dismiss();
         }

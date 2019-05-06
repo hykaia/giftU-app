@@ -1,8 +1,28 @@
 <ion-row class="notification-wrapper-row">
   <ion-col col-12>
     <ion-row>
-      <ion-col col-3 align-self-center>
-        <img [src]="notification.data.user.profile_image" class="friend-img" />
+      <ion-col col-3 align-self-center class="my-img-wrapper">
+        <img
+          [src]="
+            !notification.data.anonymous
+              ? notification.data?.user?.profile_image
+              : 'assets/imgs/anon.png'
+          "
+          class="friend-img"
+          [class.custom-img]="
+            notification.type == 'gift_given' ||
+            notification.type == 'suggested_gift'
+          "
+        />
+        <div
+          class="gift-img-wrapper"
+          *ngIf="
+            notification.type == 'gift_given' ||
+            notification.type == 'suggested_gift'
+          "
+        >
+          <img [src]="notification.data?.gift?.image" class="giftt-img" />
+        </div>
       </ion-col>
       <ion-col col-9 align-self-center>
         <div class="noti-name-wrapper">
@@ -20,20 +40,8 @@
           </div>
           <div ion-text color="secondary" class="noti-date" class="status">
             <span
-              *ngIf="
-                setting.getDateDifferenceInDays(notification.created_at) == 0
-              "
-              >Today</span
-            >
-            <span
-              *ngIf="
-                setting.getDateDifferenceInDays(notification.created_at) > 0
-              "
-              >{{
-                this.setting.getDateDifferenceInDays(notification.created_at)
-              }}
-              days</span
-            >
+              [innerHTML]="getDifferenceDays(notification.created_at)"
+            ></span>
           </div>
         </div>
       </ion-col>

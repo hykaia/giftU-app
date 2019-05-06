@@ -63,7 +63,7 @@ export class LoginPage {
       countryCodeObj = this.Countries.filter(item => {
         return item.code == countryCode;
       });
-      this.data.countryCode = countryCodeObj[0].dial_code.toString();
+      // this.data.countryCode = countryCodeObj[0].dial_code.toString();
       console.log("lol this.data.countryCode : ", this.data.countryCode);
     });
   }

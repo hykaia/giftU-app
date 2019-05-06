@@ -21,12 +21,23 @@ export class NotificationComponent {
       data => {
         this.Emotions = [];
         this.notification.respond = true;
-        console.log("response emotion is : ", data);
       },
       err => {
         console.log("emotion error is : ", err);
       }
     );
-    console.log("emotion is :", emotion);
+  }
+
+  getDifferenceDays(date) {
+    let finalDate = this.setting.getDateDifferenceInDays(date);
+    if (finalDate < 0) {
+      return `
+        <span> ${Math.abs(finalDate)} days </span>
+      `;
+    } else if (finalDate == 0) {
+      return `
+        <span> Today </span>
+      `;
+    }
   }
 }

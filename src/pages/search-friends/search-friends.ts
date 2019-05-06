@@ -3,7 +3,8 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  ViewController
+  ViewController,
+  App
 } from "ionic-angular";
 
 @IonicPage()
@@ -18,6 +19,7 @@ export class SearchFriendsPage {
   constructor(
     public navCtrl: NavController,
     private viewCtrl: ViewController,
+    private app: App,
     public navParams: NavParams
   ) {
     console.log("FriendsFriendsFriends : ", this.Friends);
@@ -40,10 +42,10 @@ export class SearchFriendsPage {
   }
 
   openUserProfile(friend) {
-    this.navCtrl.push(
-      "UserProfilePage",
-      { profile: friend },
-      { animate: false }
-    );
+    /** we use app because of Navigating from an Overlay Component   */
+    this.dismiss();
+    this.app
+      .getRootNavs()[0]
+      .push("UserProfilePage", { profile: friend }, { animate: false });
   }
 }

@@ -35,7 +35,9 @@ export class UpdateProfilePage {
     private actionSheetCtrl: ActionSheetController,
     private viewCtrl: ViewController,
     public navParams: NavParams
-  ) {}
+  ) {
+    console.log("yooo :", this.data);
+  }
 
   dismiss() {
     this.viewCtrl.dismiss();
@@ -166,10 +168,9 @@ export class UpdateProfilePage {
         data => {
           console.log(
             "update profile data response are : ",
-            JSON.stringify(data.response)
+            JSON.parse(data.response)
           );
-          let response = JSON.parse(data.response);
-          localStorage.setItem("userData", JSON.stringify(response["data"]));
+          localStorage.setItem("userData", data.response);
           this.dismiss();
           this.isWaiting = false;
         },

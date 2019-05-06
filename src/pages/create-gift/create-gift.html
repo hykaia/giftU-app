@@ -6,7 +6,7 @@
       <button
         ion-button
         round
-        [disabled]="!createGiftForm.valid"
+        [disabled]="!createGiftForm.valid || !data.imageUri"
         color="white"
         *ngIf="!gift"
         (click)="share()"

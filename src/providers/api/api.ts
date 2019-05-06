@@ -101,9 +101,9 @@ export class ApiProvider {
   suggestGift(params): Observable<any> {
     let userId = localStorage.getItem("userId");
     return this.http.post(
-      `${this.settingService.URL}users/${userId}/occasions/${
-        params.occasionId
-      }/gifts/suggest`,
+      `${this.settingService.URL}occasions/${params.occasion}/gifts/${
+        params._id
+      }`,
       params
     );
   }

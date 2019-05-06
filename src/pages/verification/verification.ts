@@ -82,7 +82,6 @@ export class VerificationPage implements OnInit {
       one_signal_token: device_token ? device_token : ""
     };
     console.log("my updated device token is :", device_token);
-    // alert("my updated device token is :" + device_token);
     this.api.register(params).subscribe(
       data => {
         console.log("device token updated");
