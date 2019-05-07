@@ -12,8 +12,39 @@
             <div ion-text color="gray" class="wish-txt">
               {{ gift.post | truncate: 33:"..." }} {{ Codes.love }}
             </div>
+            <div class="btns-wrapper">
+              <ion-row>
+                <ion-col col-6>
+                  <button
+                    ion-button
+                    color="secondary"
+                    class="custom-btn"
+                    round
+                    (click)="giveGift(gift)"
+                  >
+                    <span *ngIf="!gift.hasGiven">give away</span>
+                    <ion-spinner
+                      name="ios-small"
+                      *ngIf="gift.hasGiven"
+                      color="light"
+                    ></ion-spinner>
+                  </button>
+                </ion-col>
+                <ion-col col-6>
+                  <button
+                    ion-button
+                    color="purple"
+                    class="custom-btn"
+                    (click)="suggestGift(gift)"
+                    round
+                  >
+                    Suggestion
+                  </button>
+                </ion-col>
+              </ion-row>
+            </div>
           </ion-col>
-          <ion-col col-12 class="btns-wrapper">
+          <!-- <ion-col col-12 class="btns-wrapper">
             <ion-row>
               <ion-col col-6>
                 <button
@@ -43,7 +74,7 @@
                 </button>
               </ion-col>
             </ion-row>
-          </ion-col>
+          </ion-col> -->
         </ion-row>
       </ion-slide>
     </ion-slides>

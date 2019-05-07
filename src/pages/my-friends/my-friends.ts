@@ -67,6 +67,9 @@ export class MyFriendsPage {
 
   ionViewWillEnter() {
     this.userData = JSON.parse(localStorage.getItem("userData"));
+    this.getUserNotifications();
+    this.myFriendsOccasions();
+    this.getUserFriends();
   }
 
   checkEvents() {
@@ -74,6 +77,7 @@ export class MyFriendsPage {
       this.ngZone.run(() => {
         this.getUserNotifications();
         this.myFriendsOccasions();
+        this.getUserFriends();
         this.isLoading = false;
       });
     });
@@ -186,7 +190,9 @@ export class MyFriendsPage {
     this.api.getUserFriends().subscribe(
       data => {
         console.log("user friends data :", data);
-        this.Friends = data.friends;
+        this.Friends = _.filter(data.friends, friend => {
+          return _.has(friend, "name");
+        });
         this.isLoading = false;
         if (isUpdateFriends) {
           this.loader.dismiss();

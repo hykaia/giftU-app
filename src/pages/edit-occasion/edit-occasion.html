@@ -7,7 +7,7 @@
       </button>
     </ion-buttons>
 
-    <ion-buttons end>
+    <ion-buttons end *ngIf="!data.is_wish_list">
       <button ion-button ion-only (click)="presentConfirm()">
         <ion-icon name="trash"></ion-icon>
       </button>
@@ -17,7 +17,7 @@
 
 <ion-content padding>
   <ion-grid no-padding>
-    <ion-row class="occasion-row">
+    <ion-row class="occasion-row" *ngIf="!data.is_wish_list">
       <ion-col col-12 no-paddong>
         <ion-slides slidesPerView="4">
           <ion-slide *ngFor="let occasion of occasionTypes">
@@ -31,7 +31,7 @@
     </ion-row>
 
     <ion-row class="inputs-wrapper">
-      <ion-col col-12 class="custom-col">
+      <ion-col col-12 class="custom-col" *ngIf="!data.is_wish_list">
         <ion-item class="custom-item">
           <ion-label color="light" stacked>Category</ion-label>
           <ion-select [(ngModel)]="data.category">
@@ -65,7 +65,7 @@
           ></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col col-12 class="custom-col">
+      <ion-col col-12 class="custom-col" *ngIf="!data.is_wish_list">
         <ion-item class="custom-item">
           <ion-label>Date</ion-label>
           <ion-datetime

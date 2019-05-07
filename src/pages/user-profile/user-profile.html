@@ -44,11 +44,14 @@
 
     <ion-col col-10>
       <span ion-text color="primary" class="mutual">Mutual Friend</span>
-      <span ion-text color="gray">ahmed,mohamed,ali,+3</span>
+      <span ion-text color="gray" (click)="openMutualFriends()"
+        >{{ mutualFriendsWhoWillShow }}
+        <span *ngIf="reminderFriends > 0">+{{ reminderFriends }}</span>
+      </span>
     </ion-col>
 
     <ion-col col-2>
-      <div ion-text color="secondary">invite</div>
+      <div ion-text color="secondary" (click)="inviteFriends()">invite</div>
     </ion-col>
   </ion-row>
 </ion-header>
@@ -65,12 +68,21 @@
       <ion-col col-9 no-padding>
         <ion-row>
           <ion-col col-3>
-            <img src="assets/imgs/birthday.png" class="birthday-img" />
+            <img
+              *ngIf="!occasion.is_wish_list"
+              [src]="occasion.category.image"
+              class="birthday-img"
+            />
+            <img
+              *ngIf="occasion.is_wish_list"
+              src="assets/imgs/birthday.png"
+              class="birthday-img"
+            />
           </ion-col>
           <ion-col col-9 align-self-center>
             <div class="birthday-txt">{{ occasion.name }}</div>
             <div class="status-txt" ion-text color="gray">
-              {{ occasion.slogan }} {{ codes.birthday }}
+              {{ occasion.slogan }}
             </div>
           </ion-col>
         </ion-row>
@@ -99,37 +111,6 @@
     <no-occasion-found
       *ngIf="occasion.gifts.length == 0"
       data="No gifts found yet !"
-    ></no-occasion-found>
-  </ion-grid>
-
-  <!-- wishlist -->
-  <ion-grid>
-    <ion-row
-      class="wishlist-row-wrapper"
-      [class.moreMargin]="occasions.length == 0"
-    >
-      <ion-col col-12 no-padding>
-        <ion-row>
-          <ion-col col-2>
-            <img src="assets/imgs/wish.png" class="wish-img" />
-          </ion-col>
-          <ion-col col-10 align-self-center>
-            <div class="birthday-txt">My WishList</div>
-            <div class="status-txt" ion-text color="gray">
-              Some of my dreams are in your hands
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-    <friend-gifts-slider
-      [gifts]="wishListGifts"
-      [userData]="userData"
-      *ngIf="wishListGifts.length > 0"
-    ></friend-gifts-slider>
-    <no-occasion-found
-      *ngIf="wishListGifts.length == 0"
-      data="No wishlist found yet !"
     ></no-occasion-found>
   </ion-grid>
 </ion-content>

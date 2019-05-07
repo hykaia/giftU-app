@@ -5,7 +5,8 @@ import {
   NavController,
   NavParams,
   Platform,
-  ViewController
+  ViewController,
+  LoadingController
 } from "ionic-angular";
 import {
   Contacts,
@@ -29,6 +30,7 @@ export class InviteYourFriendsPage {
   isLoading: boolean = true;
   isModal: boolean = this.navParams.get("isModal");
   filterContacts: any;
+  loader: any;
   originalContacts: any;
   isWaiting: boolean = false;
   isSubmitting: boolean = false;
@@ -37,6 +39,7 @@ export class InviteYourFriendsPage {
     private contacts: Contacts,
     private api: ApiProvider,
     private render: Renderer2,
+    private loadingCtrl: LoadingController,
     private zone: NgZone,
     private sanitizer: DomSanitizer,
     private viewCtrl: ViewController,
@@ -94,14 +97,18 @@ export class InviteYourFriendsPage {
   }
 
   inviteFriend(contact) {
-    // console.log("contact is : ", JSON.stringify(contact));
+    console.log("contact is : ", JSON.stringify(contact));
+    this.presentLoading();
     let contacts: any[] = [contact];
     this.api.inviteFriends(contacts).subscribe(
       data => {
+        console.log("invite friend data :", data);
         contact.active = true;
+        this.loader.dismiss();
       },
       err => {
         console.log("invite friend error :", JSON.stringify(err));
+        this.loader.dismiss();
       }
     );
   }
@@ -153,5 +160,12 @@ export class InviteYourFriendsPage {
     setTimeout(() => {
       this.render.removeClass(blockElement, "ball");
     }, 500);
+  }
+
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Uploading..."
+    });
+    this.loader.present();
   }
 }

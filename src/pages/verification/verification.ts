@@ -58,7 +58,6 @@ export class VerificationPage implements OnInit {
           if (!_.has(data, "name")) {
             this.navCtrl.setRoot("RegisterPage");
           } else {
-            // this.navCtrl.setRoot("RegisterPage");
             localStorage.setItem("userData", JSON.stringify(data));
             localStorage.setItem("isLogin", JSON.stringify(true));
             this.navCtrl.setRoot("InviteYourFriendsPage"); //test purpose

@@ -36,9 +36,6 @@ export class GiftsSliderComponent {
   }
 
   deleteGift(gift) {
-    console.log("====================================");
-    console.log("delete data : ", gift);
-    console.log("====================================");
     this.presentLoadingDefault();
     let params = {
       occasionId: gift.occasion,

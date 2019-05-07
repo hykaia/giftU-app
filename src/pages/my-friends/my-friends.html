@@ -12,13 +12,13 @@
       <button ion-button (click)="openMyProfile()">
         <span class="dot"></span>
         <img
-          *ngIf="!userData.profile_image"
+          *ngIf="userData && !userData.profile_image"
           src="assets/imgs/user.svg"
           class="avatar-img"
         />
         <div
           class="user-profile-wrapper"
-          *ngIf="userData.profile_image"
+          *ngIf="userData && userData.profile_image"
           [style.background-image]="'url(' + userData.profile_image + ')'"
         ></div>
       </button>
@@ -89,9 +89,11 @@
       </ion-row>
       <loading *ngIf="isOccasionsLoading"></loading>
       <occasion
-        *ngFor="let occasion of Occasions"
+        *ngFor="let occasion of Occasions; let index = index"
         [hidden]="isOccasionsLoading && Occasions.length == 0"
         [occasion]="occasion"
+        id="friend_{{ index }}"
+        (click)="animateBlock(index, occasion.user)"
       ></occasion>
       <ion-infinite-scroll (ionInfinite)="doInfiniteOccasions($event)">
         <ion-infinite-scroll-content

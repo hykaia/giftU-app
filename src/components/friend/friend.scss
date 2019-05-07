@@ -8,4 +8,41 @@ friend {
     background-position: center center;
     border-radius: 100%;
   }
+
+  .friend-wrapper-row {
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 4px 2px #000000b8;
+  }
+  .friend-img {
+    width: 4.4rem;
+    height: 4.4rem;
+    display: block;
+    margin: auto;
+    border-radius: 100%;
+    box-shadow: 0px 1px 8px 0px #0808088f;
+  }
+  .heart-wrapper {
+    margin-bottom: 0.5rem;
+    margin-left: 4rem;
+  }
+
+  .ion-ios-heart-outline:before,
+  .ion-ios-help-buoy:before,
+  .ion-md-heart-outline:before,
+  .ion-md-help-buoy:before {
+    color: #7b2fff;
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 1.8rem;
+  }
+  .normal-size {
+    font-size: 1.4rem;
+    margin-left: 3px;
+  }
+
+  .gift-wrapper {
+    margin-left: 4rem;
+  }
 }

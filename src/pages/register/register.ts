@@ -143,6 +143,7 @@ export class RegisterPage {
       data => {
         console.log("register data : ", data);
         this.isWaiting = false;
+        localStorage.setItem("userData", data);
         this.navCtrl.setRoot("InviteYourFriendsPage");
       },
       err => {
@@ -176,6 +177,7 @@ export class RegisterPage {
       )
       .then(
         data => {
+          localStorage.setItem("userData", data.response);
           this.navCtrl.setRoot("InviteYourFriendsPage");
           this.isWaiting = false;
         },

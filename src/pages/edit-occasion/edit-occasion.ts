@@ -27,7 +27,10 @@ export class EditOccasionPage {
     private api: ApiProvider,
     public navParams: NavParams
   ) {
-    this.data.category = this.data.category._id;
+    if (!this.data.is_wish_list) {
+      this.data.category = this.data.category._id;
+    }
+
     this.getOccasionCategories();
     console.log("occasion data : ", this.data);
   }

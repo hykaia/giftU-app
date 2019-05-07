@@ -4,7 +4,7 @@
       <ion-col col-12>
         <img
           *ngIf="!userData.profile_image"
-          src="assets/imgs/1.jpg"
+          src="assets/imgs/user.svg"
           class="avatar-img"
         />
         <div
@@ -53,7 +53,16 @@
           <ion-col col-8 no-padding>
             <ion-row>
               <ion-col col-3>
-                <img [src]="occasion?.category?.image" class="birthday-img" />
+                <img
+                  *ngIf="occasion.is_wish_list"
+                  src="assets/imgs/wish.png"
+                  class="birthday-img-1"
+                />
+                <img
+                  *ngIf="!occasion.is_wish_list"
+                  [src]="occasion.category.image"
+                  class="birthday-img"
+                />
               </ion-col>
               <ion-col col-9 align-self-center>
                 <div class="birthday-txt">
@@ -72,6 +81,7 @@
           </ion-col>
           <ion-col col-3 no-padding align-self-center>
             <button
+              *ngIf="!occasion.is_wish_list"
               ion-button
               color="purple"
               class="remaining-days-btn"
@@ -85,7 +95,6 @@
               <span *ngIf="setting.getDateDifferenceInDays(occasion.date) == 0"
                 >Now</span
               >
-
               <span *ngIf="setting.getDateDifferenceInDays(occasion.date) < 0"
                 >Expired</span
               >
@@ -100,33 +109,6 @@
 
         <!-- Gifts Slider -->
         <gifts-slider [occasion]="occasion"></gifts-slider>
-      </ion-grid>
-      <!-- show wishlist section -->
-      <ion-grid>
-        <ion-row class="wishlist-row-wrapper" (swipe)="swipe($event)">
-          <ion-col col-11 no-padding>
-            <ion-row class="row-wishlist">
-              <ion-col col-2>
-                <img src="assets/imgs/wish.png" class="wish-img" />
-              </ion-col>
-              <ion-col col-10 align-self-center>
-                <div class="birthday-txt">My WishList</div>
-                <div class="status-txt" ion-text color="gray">
-                  Some of my dreams are in your hands
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-          <ion-col col-1 align-self-center (click)="AddGift(0)">
-            <div class="add-wrapper more-add">
-              <img src="assets/imgs/add.svg" />
-            </div>
-          </ion-col>
-        </ion-row>
-        <!-- Gifts Slider -->
-        <wishlist-gifts-slider
-          [wishlist]="wishListGifts"
-        ></wishlist-gifts-slider>
       </ion-grid>
     </ion-grid>
 

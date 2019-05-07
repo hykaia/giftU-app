@@ -91,9 +91,17 @@ page-my-profile {
     color: white;
     font-weight: bold;
   }
+  .status-txt {
+    line-height: 1.3;
+  }
   .gift-row-wrapper {
     background: white;
     border-radius: 3px;
+  }
+  .birthday-img-1 {
+    width: 2.3rem;
+    margin: auto;
+    display: block;
   }
 
   .gift-img {
@@ -107,7 +115,9 @@ page-my-profile {
   }
   .btns-wrapper {
     position: absolute;
-    bottom: -30px;
+    bottom: -26px;
+    left: 0;
+    right: 0;
   }
   .swiper-container {
     overflow: unset !important;

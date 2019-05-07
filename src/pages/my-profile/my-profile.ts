@@ -54,10 +54,8 @@ export class MyProfilePage {
   }
 
   ionViewWillEnter() {
-    console.log("toz");
     this.userData = JSON.parse(localStorage.getItem("userData"));
     this.getUserOccasions();
-    this.getWishListGifts();
     this.checkEvents();
   }
 
@@ -67,9 +65,6 @@ export class MyProfilePage {
       this.getUserOccasions();
     });
 
-    this.event.subscribe("giftDeletedFromWishList", () => {
-      this.getWishListGifts();
-    });
     // occasion added event
     this.event.subscribe("occasionAdded", () => {
       this.selectedSegment = "my_wishlist";
@@ -150,11 +145,12 @@ export class MyProfilePage {
   }
 
   editOccasion(occasion) {
+    console.log("my occ :", occasion);
+    const newOccasion = Object.assign({}, occasion);
     let modal = this.modalCtrl.create("EditOccasionPage", {
-      occasion: occasion
+      occasion: newOccasion
     });
     modal.onDidDismiss(data => {
-      console.log("data lol:", data);
       if (data) {
         let index = this.Occasions.indexOf(occasion);
         if (data.operationType == "update") {
@@ -165,11 +161,5 @@ export class MyProfilePage {
       }
     });
     modal.present();
-  }
-
-  getWishListGifts() {
-    this.api.generalWishlist(0, this.userData.id).subscribe(data => {
-      this.wishListGifts = data.data;
-    });
   }
 }

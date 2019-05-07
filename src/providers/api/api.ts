@@ -118,15 +118,13 @@ export class ApiProvider {
     );
   }
 
-  generalWishlist(occasionId, userId): Observable<any> {
-    return this.http.get(
-      `${this.settingService.URL}gift/${occasionId}/${userId}`
-    );
-  }
-
   getUserFriends(): Observable<any> {
     let userId = localStorage.getItem("userId");
     return this.http.get(`${this.settingService.URL}users/${userId}`);
+  }
+
+  getMutualFriends(userId): Observable<any> {
+    return this.http.get(`${this.settingService.URL}friends/${userId}/mutual`);
   }
 
   editOccasion(params): Observable<any> {

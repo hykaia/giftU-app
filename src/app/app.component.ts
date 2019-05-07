@@ -27,8 +27,14 @@ export class MyApp {
     this.checkDefaultRoute();
     // this.setFakeUser();
     this.initialize();
+    this.checkEvents();
   }
 
+  checkEvents() {
+    this.event.subscribe("logout", () => {
+      this.rootPage = "LoginPage";
+    });
+  }
   initialize() {
     this.platform.ready().then(() => {
       if (this.platform.is("cordova")) {
@@ -43,7 +49,7 @@ export class MyApp {
 
   checkDefaultRoute() {
     let isLogin = JSON.parse(localStorage.getItem("isLogin"));
-    if (isLogin) {
+    if (isLogin != null && isLogin) {
       this.rootPage = "MyFriendsPage";
       this.updateDeviceToken();
     } else {

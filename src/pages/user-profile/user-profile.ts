@@ -8,7 +8,7 @@ import {
 } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
 import { SettingProvider } from "../../providers/setting/setting";
-
+import * as _ from "lodash";
 @IonicPage()
 @Component({
   selector: "page-user-profile",
@@ -18,8 +18,10 @@ export class UserProfilePage {
   @ViewChild(Navbar) navBar: Navbar;
   userData: any = this.navParams.get("profile");
   waitingOccasions: boolean = true;
-  wishListGifts: any[] = [];
   occasions: any[] = [];
+  reminderFriends: any;
+  mutualFriends: any;
+  mutualFriendsWhoWillShow: any;
   codes: any = {
     birthday: String.fromCodePoint(0x1f60e),
     love: String.fromCodePoint(0x1f618)
@@ -31,8 +33,9 @@ export class UserProfilePage {
     private setting: SettingProvider,
     public navParams: NavParams
   ) {
-    console.log("user data is : ", this.userData);
-    this.getGeneralWishlist();
+    console.log("userData userData :", this.userData);
+
+    this.getMutualFriends();
   }
   ionViewDidEnter() {
     this.setBackButtonAction();
@@ -46,6 +49,30 @@ export class UserProfilePage {
     };
   }
 
+  getMutualFriends() {
+    this.api.getMutualFriends(this.userData._id).subscribe(data => {
+      console.log("mutual friends :", data);
+      this.mutualFriends = data;
+      let names: any[] = [];
+      let firstHalf;
+      for (let i = 0; i < data.length; i++) {
+        if (_.has(data[i], "name")) {
+          names.push(data[i].name);
+        }
+      }
+      firstHalf = names.slice(0, 2);
+      this.reminderFriends = names.length > 1 ? names.length - 2 : 0;
+      this.mutualFriendsWhoWillShow = firstHalf.join(", ");
+    });
+  }
+
+  inviteFriends() {
+    let modal = this.modalCtrl.create("InviteYourFriendsPage", {
+      isModal: true
+    });
+    modal.present();
+  }
+
   getUserOccasions() {
     this.api.getUserOccasions(this.userData._id).subscribe(data => {
       console.log("user occasions is : ", data);
@@ -54,10 +81,10 @@ export class UserProfilePage {
     });
   }
 
-  getGeneralWishlist() {
-    this.api.generalWishlist(0, this.userData.id).subscribe(data => {
-      console.log("general wishlist data are : ", data);
-      this.wishListGifts = data.data;
+  openMutualFriends() {
+    let modal = this.modalCtrl.create("MutualFriendsPage", {
+      friends: this.mutualFriends
     });
+    modal.present();
   }
 }
