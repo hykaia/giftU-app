@@ -27,6 +27,7 @@ export class MyProfilePage {
     : "my_wishlist";
   Gifts: any = new Array(0);
   userData: any = JSON.parse(localStorage.getItem("userData"));
+  lang = localStorage.getItem("lang");
   Slides = Slides;
   currentIndex = 0;
   myGifts: any = myGifts;
@@ -51,6 +52,7 @@ export class MyProfilePage {
     public navParams: NavParams
   ) {
     this.checkKeyBoardEvents();
+    console.log("my lang :", this.lang);
   }
 
   ionViewWillEnter() {

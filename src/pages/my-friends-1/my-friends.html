@@ -24,6 +24,9 @@
       </button>
     </ion-buttons>
     <ion-buttons start>
+      <button ion-button icon-only (click)="openSetting()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="Search()">
         <ion-icon name="search"></ion-icon>
       </button>
@@ -38,7 +41,7 @@
         *ngFor="let slide of Slides"
         (click)="segmentChanged(slide)"
       >
-        {{ slide.value }}
+        {{ lang == "en" ? slide.value : slide.arabicValue }}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -50,16 +53,13 @@
     <ion-grid *ngSwitchCase="'my_friends'" no-padding>
       <ion-row class="section-title">
         <ion-col>
-          <p ion-text color="white" class="my-friends">My Friends</p>
+          <p ion-text color="white" class="my-friends">
+            {{ "my_friends" | translate }}
+          </p>
         </ion-col>
         <ion-col align-self-center>
-          <p
-            float-right
-            ion-text
-            color="secondary"
-            (click)="inviteBestFriends()"
-          >
-            invite your best friends
+          <p text-end ion-text color="secondary" (click)="inviteBestFriends()">
+            {{ "invite_ur_best_friends" | translate }}
           </p>
         </ion-col>
       </ion-row>
@@ -81,10 +81,14 @@
     <ion-grid *ngSwitchCase="'occasions'" no-padding>
       <ion-row class="section-title">
         <ion-col>
-          <p ion-text color="white" class="my-friends">Occasions</p>
+          <p ion-text color="white" class="my-friends">
+            {{ "occasions" | translate }}
+          </p>
         </ion-col>
         <ion-col align-self-center (click)="createOccasion()">
-          <p float-right ion-text color="secondary">Create new occasion</p>
+          <p text-end ion-text color="secondary">
+            {{ "create_new_occasion" | translate }}
+          </p>
         </ion-col>
       </ion-row>
       <loading *ngIf="isOccasionsLoading"></loading>
@@ -92,12 +96,14 @@
         *ngFor="let occasion of Occasions; let index = index"
         [hidden]="isOccasionsLoading && Occasions.length == 0"
         [occasion]="occasion"
+        [days]="msgTranslation.days"
+        [now]="msgTranslation.now"
         id="friend_{{ index }}"
         (click)="animateBlock(index, occasion.user)"
       ></occasion>
       <ion-infinite-scroll (ionInfinite)="doInfiniteOccasions($event)">
         <ion-infinite-scroll-content
-          loadingText="Loading..."
+          loadingText="{{ 'loading' | translate }}"
         ></ion-infinite-scroll-content>
       </ion-infinite-scroll>
       <no-data
@@ -110,16 +116,13 @@
     <ion-grid *ngSwitchCase="'notifications'" no-padding>
       <ion-row class="section-title">
         <ion-col>
-          <p ion-text color="white" class="my-friends">Notifications</p>
+          <p ion-text color="white" class="my-friends">
+            {{ "notifications" | translate }}
+          </p>
         </ion-col>
         <ion-col align-self-center>
-          <p
-            float-right
-            ion-text
-            color="secondary"
-            (click)="inviteBestFriends()"
-          >
-            Invite your best friends
+          <p text-end ion-text color="secondary" (click)="inviteBestFriends()">
+            {{ "invite_ur_best_friends" | translate }}
           </p>
         </ion-col>
       </ion-row>
@@ -135,7 +138,7 @@
       ></no-data>
       <ion-infinite-scroll (ionInfinite)="doInfiniteNotifications($event)">
         <ion-infinite-scroll-content
-          loadingText="Loading..."
+          loadingText="{{ 'loading' | translate }}"
         ></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-grid>

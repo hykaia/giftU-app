@@ -8,10 +8,10 @@
       </ion-row>
       <ion-row>
         <ion-col col-12>
-          <h4 class="hello">Hello there,</h4>
+          <h4 class="hello">{{ "hello_there" | translate }}</h4>
           <p class="welcome-wrapper">
-            <span class="welcome-txt">Welcome to </span>
-            <span ion-text class="gift-txt">GiftU</span>
+            <span class="welcome-txt">{{ "welcome_to" | translate }}</span>
+            <span ion-text class="gift-txt">{{ "giftu" | translate }}</span>
           </p>
         </ion-col>
       </ion-row>
@@ -19,7 +19,7 @@
       <ion-row>
         <ion-col col-12>
           <div class="confirm-country-code">
-            Please Confrim the country code and enter your phone number
+            {{ "pls_confirm_country_code_and_phone_number" | translate }}
           </div>
         </ion-col>
       </ion-row>
@@ -27,7 +27,9 @@
       <ion-row>
         <ion-col col-3>
           <ion-item class="login-item">
-            <ion-label color="light" stacked>Code</ion-label>
+            <ion-label color="light" stacked>
+              {{ "code" | translate }}</ion-label
+            >
             <ion-select
               [(ngModel)]="data.countryCode"
               [ngModelOptions]="{ standalone: true }"
@@ -43,10 +45,12 @@
 
         <ion-col col-9>
           <ion-item class="login-item">
-            <ion-label color="light" stacked>Phone number</ion-label>
+            <ion-label color="light" stacked>
+              {{ "phone_number" | translate }}</ion-label
+            >
             <ion-input
               type="tel"
-              placeholder="Phone number"
+              placeholder="{{ 'phone_number' | translate }}"
               formControlName="phone"
               [(ngModel)]="data.phone"
             ></ion-input>
@@ -64,27 +68,27 @@
               *ngIf="loginForm.controls.phone.errors.required"
               class="my-error"
             >
-              Your phone is required.
+              {{ "phone_is_required" | translate }}
             </div>
             <div
               *ngIf="loginForm.controls.phone.errors.minlength"
               class="my-error"
             >
-              Your phone number at least 6 characters
+              {{ "phone_at_least_six_chars" | translate }}
             </div>
 
             <div
               *ngIf="loginForm.controls.phone.errors.pattern"
               class="my-error"
             >
-              You must only enter numbers.
+              {{ "must_enter_numbers" | translate }}
             </div>
           </div>
         </ion-col>
 
         <ion-col offset-6 col-6>
           <button
-            float-right
+            float-end
             ion-button
             round
             color="purple"
@@ -92,7 +96,7 @@
             class="login-btn"
             (click)="Login()"
           >
-            <span *ngIf="!isWaiting">Login</span>
+            <span *ngIf="!isWaiting"> {{ "login" | translate }}</span>
             <ion-spinner
               name="ios-small"
               *ngIf="isWaiting"

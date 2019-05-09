@@ -1,17 +1,26 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Emotions } from "./mocks";
 import { SettingProvider } from "../../providers/setting/setting";
 import { ApiProvider } from "../../providers/api/api";
-
+import { TranslateService } from "@ngx-translate/core";
 @Component({
   selector: "notification",
   templateUrl: "notification.html"
 })
-export class NotificationComponent {
+export class NotificationComponent implements OnInit {
   @Input() notification;
   Emotions: any = Emotions;
-  constructor(private setting: SettingProvider, private api: ApiProvider) {}
-
+  msgTranslation;
+  constructor(
+    private setting: SettingProvider,
+    private api: ApiProvider,
+    private translate: TranslateService
+  ) {}
+  ngOnInit() {
+    this.translate.get(["days", "today"]).subscribe(data => {
+      this.msgTranslation = data;
+    });
+  }
   selectEmotion(emotion) {
     let params = {
       emotion: emotion.type,
@@ -32,11 +41,11 @@ export class NotificationComponent {
     let finalDate = this.setting.getDateDifferenceInDays(date);
     if (finalDate < 0) {
       return `
-        <span> ${Math.abs(finalDate)} days </span>
+        <span> ${Math.abs(finalDate)} ${this.msgTranslation.days} </span>
       `;
     } else if (finalDate == 0) {
       return `
-        <span> Today </span>
+        <span> ${this.msgTranslation.today} </span>
       `;
     }
   }

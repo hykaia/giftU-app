@@ -3,16 +3,25 @@ import { Injectable } from "@angular/core";
 import { AlertController, ToastController } from "ionic-angular";
 import * as moment from "moment";
 import { ApiProvider } from "../api/api";
+import { TranslateService } from "@ngx-translate/core";
 import * as _ from "lodash";
 @Injectable()
 export class GeneralProvider {
   lang: any = localStorage.getItem("lang");
+  msgTranslation;
   constructor(
     public http: HttpClient,
     private toastCtrl: ToastController,
     private api: ApiProvider,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private translate: TranslateService
   ) {}
+
+  ionViewDidLoad() {
+    this.translate.get(["ok", "warning"]).subscribe(data => {
+      this.msgTranslation = data;
+    });
+  }
 
   presentToast(text) {
     let toast = this.toastCtrl.create({
@@ -30,7 +39,6 @@ export class GeneralProvider {
       for (let i = 0; i < errs.length; i++) {
         text += errs[i].message + "<br><br>";
       }
-      console.log("a77a txt :", text);
       this.showAlert(text);
     } else {
       this.presentToast(error.message);
@@ -40,9 +48,9 @@ export class GeneralProvider {
   showAlert(text) {
     this.alertCtrl
       .create({
-        title: "Warning",
+        title: this.msgTranslation.warning,
         subTitle: text,
-        buttons: ["Ok"]
+        buttons: [this.msgTranslation.ok]
       })
       .present();
   }
@@ -52,7 +60,7 @@ export class GeneralProvider {
       .create({
         title: title,
         subTitle: text,
-        buttons: ["Ok"]
+        buttons: [this.msgTranslation.ok]
       })
       .present();
   }

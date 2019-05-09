@@ -1,7 +1,10 @@
 <form [formGroup]="createOccasionForm">
   <ion-row class="occasion-row">
     <ion-col col-12 no-paddong>
-      <ion-slides slidesPerView="4" dir="ltr">
+      <ion-slides
+        slidesPerView="4"
+        [dir]="lang == 'en' || lang == null ? 'ltr' : 'rtl'"
+      >
         <ion-slide
           *ngFor="let category of occasionCategories"
           (click)="selectOccasionCategory(category)"
@@ -20,11 +23,11 @@
   <ion-row class="inputs-wrapper" (swipe)="swipe($event)">
     <ion-col col-12 class="custom-col">
       <ion-item class="custom-item">
-        <ion-label color="light" stacked>Name</ion-label>
+        <ion-label color="light" stacked>{{ "name" | translate }}</ion-label>
         <ion-input
           type="text"
           formControlName="name"
-          placeholder="Name"
+          placeholder="{{ 'name' | translate }}"
         ></ion-input>
       </ion-item>
       <div
@@ -39,18 +42,18 @@
           *ngIf="createOccasionForm.controls.name.errors.required"
           class="my-error"
         >
-          Your name is required.
+          {{ "ur_name_is_required" | translate }}
         </div>
       </div>
     </ion-col>
 
     <ion-col col-12 class="custom-col">
       <ion-item class="custom-item">
-        <ion-label color="light" stacked>Slogan</ion-label>
+        <ion-label color="light" stacked> {{ "slogan" | translate }}</ion-label>
         <ion-input
           type="text"
           formControlName="slogan"
-          placeholder="Slogan"
+          placeholder="{{ 'slogan' | translate }}"
         ></ion-input>
       </ion-item>
       <div
@@ -65,13 +68,13 @@
           *ngIf="createOccasionForm.controls.slogan.errors.required"
           class="my-error"
         >
-          Slogan is required.
+          {{ "slogan_is_required" | translate }}
         </div>
       </div>
     </ion-col>
     <ion-col col-12 class="custom-col">
       <ion-item class="custom-item">
-        <ion-label>Date</ion-label>
+        <ion-label> {{ "date" | translate }}</ion-label>
         <ion-datetime
           #date
           displayFormat="DDDD MMM D, YYYY"
@@ -92,7 +95,7 @@
           *ngIf="createOccasionForm.controls.date.errors.required"
           class="my-error"
         >
-          Date is required.
+          {{ "date_is_required" | translate }}
         </div>
       </div>
     </ion-col>
@@ -107,7 +110,7 @@
         class="create-occasion-btn"
         color="purple"
       >
-        <span *ngIf="!isWaiting">Create</span>
+        <span *ngIf="!isWaiting">{{ "create" | translate }}</span>
         <ion-spinner
           name="ios-small"
           *ngIf="isWaiting"

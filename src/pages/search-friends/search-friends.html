@@ -14,7 +14,7 @@
           debounce="100"
           [(ngModel)]="data.search"
           showCancelButton="false"
-          placeholder="Search"
+          placeholder="{{ 'search' | translate }}"
           (ionInput)="Search($event)"
           (ionCancel)="onCancel($event)"
         >

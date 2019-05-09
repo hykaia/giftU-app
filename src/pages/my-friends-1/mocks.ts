@@ -188,7 +188,7 @@ export const Notifications: any[] = [
 ];
 
 export const Slides: any[] = [
-  { id: "my_friends", value: "My friends" },
-  { id: "occasions", value: "Occasions" },
-  { id: "notifications", value: "Notifications" }
+  { id: "my_friends", value: "My friends", arabicValue: "اصدقائي" },
+  { id: "occasions", value: "Occasions", arabicValue: "المناسبات" },
+  { id: "notifications", value: "Notifications", arabicValue: "الأشعارات" }
 ];

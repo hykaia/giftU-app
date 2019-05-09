@@ -1,0 +1,214 @@
+page-my-notifications {
+  .title-image {
+    margin-top: 8px;
+    height: 27px;
+  }
+  .avatar-img {
+    width: 3rem;
+    border-radius: 100%;
+    box-shadow: 0px 1px 8px 0px #080808;
+  }
+
+  .ion-ios-refresh:before {
+    font-size: 4.4rem;
+    margin-right: 0.2rem;
+    margin-top: 0.6rem;
+  }
+
+  .user-profile-wrapper {
+    width: 3rem;
+    height: 3rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: auto;
+    background-position: center center;
+    border-radius: 100%;
+  }
+
+  .segment-button.segment-activated {
+    background-color: transparent !important;
+    border-bottom: 2px solid white !important;
+    border-radius: 0 !important;
+  }
+  .segment-button {
+    border-color: transparent !important;
+  }
+  .toolbar {
+    // padding: 14px;
+  }
+  .segment-button {
+    max-width: none !important;
+    color: white !important;
+    height: 3.6rem !important;
+  }
+  .segment-toolbar {
+    min-height: none !important;
+  }
+  .toolbar .segment {
+    bottom: -7px !important;
+  }
+
+  .ion-ios-heart-outline:before,
+  .ion-ios-help-buoy:before,
+  .ion-md-heart-outline:before,
+  .ion-md-help-buoy:before {
+    color: #7b2fff;
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 1.8rem;
+  }
+
+  .ion-ios-help-buoy:before,
+  .ion-md-help-buoy:before {
+    color: #132f4c;
+  }
+
+  .normal-size {
+    font-size: 1.4rem;
+    margin-left: 3px;
+  }
+  .friend-img {
+    width: 4.4rem;
+    height: 4.4rem;
+    display: block;
+    margin: auto;
+    border-radius: 100%;
+    box-shadow: 0px 1px 8px 0px #0808088f;
+  }
+
+  .friend-wrapper-row {
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 4px 2px #000000b8;
+  }
+  .notification-wrapper-row {
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  .heart-wrapper {
+    margin-bottom: 0.5rem;
+    margin-left: 4rem;
+  }
+  .gift-wrapper {
+    margin-left: 4rem;
+  }
+  .ion-ios-search:before {
+    font-size: 2.9rem !important;
+  }
+
+  .my-friends {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: white;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .spinner-ios-ios line,
+  .spinner-ios-ios-small line {
+    stroke: white;
+  }
+  .loading {
+    color: white;
+  }
+  .now {
+    position: relative;
+    top: 1.3rem;
+  }
+
+  .occasion-img {
+    width: auto;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    [dir="rtl"] & {
+      right: initial;
+      left: 0;
+    }
+  }
+  .remaining-days-wrapper {
+    display: inline-block;
+    background: #7b2fff;
+    color: white;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 100%;
+    text-align: center;
+    border: 1.5px solid white;
+    box-shadow: 0px 0px 8px 0px #b19090;
+    .remaining-days {
+      line-height: 0.5;
+      margin-top: 1rem;
+    }
+  }
+  .adjust-middle {
+    line-height: 3.8rem !important;
+  }
+  .noti-name-wrapper {
+    line-height: 1.4;
+  }
+  .noti-date {
+    font-size: 1.2rem !important;
+  }
+  .scroll-wrapper {
+    overflow: auto;
+    margin-left: 5px;
+    white-space: nowrap;
+    margin-top: -7px;
+    .emotion-box {
+      display: inline-block;
+      color: #142f4b;
+      text-align: center;
+      text-decoration: none;
+      background: #ddddf0;
+      padding: 7px;
+      margin: 7px;
+      border-radius: 3px;
+    }
+  }
+  .hr {
+    height: 1.15px;
+  }
+  .section-title {
+    margin-top: -16px;
+  }
+  .hr-col {
+    margin-top: -12px;
+  }
+
+  .fadeIn {
+    opacity: 0;
+    animation: fadeIn 1.8s forwards;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    30% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .infinite-loading-spinner .spinner-ios line,
+  .infinite-loading-spinner .spinner-ios-small line,
+  .infinite-loading-spinner .spinner-crescent circle {
+    stroke: #ffffff;
+  }
+  .infinite-loading-text {
+    color: #ffffff;
+  }
+}

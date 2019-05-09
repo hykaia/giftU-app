@@ -9,10 +9,15 @@
     <ion-grid class="verification-grid">
       <ion-row>
         <ion-col col-12>
-          <p class="verify-phone-number">Verfiy your phone number</p>
+          <p class="verify-phone-number">
+            {{ "verify_ur_phone_number" | translate }}
+          </p>
           <div class="sms-message-txt">
-            Giftu will send an SMS message to verify your
-            <span ion-text color="secondary" class="whatsapp">WhatsApp</span> .
+            {{ "giftu_will_send_sms_to_verify_your" | translate }}
+            <span ion-text color="secondary" class="whatsapp">{{
+              "whatsapp" | translate
+            }}</span>
+            .
           </div>
         </ion-col>
       </ion-row>
@@ -20,13 +25,15 @@
       <ion-row>
         <ion-col col-12>
           <ion-item class="verify-item">
-            <ion-label color="light" stacked>Verify code</ion-label>
+            <ion-label color="light" stacked>{{
+              "verify_code" | translate
+            }}</ion-label>
             <ion-input
               type="tel"
               #passwordInput
               formControlName="code"
               [(ngModel)]="data.mobile_token"
-              placeholder="Code"
+              placeholder="{{ 'verify_code' | translate }}"
             ></ion-input>
           </ion-item>
         </ion-col>
@@ -42,14 +49,14 @@
             *ngIf="verificationForm.controls.code.errors.required"
             class="my-error"
           >
-            Your code is required.
+            {{ "ur_code_is_required" | translate }}
           </div>
 
           <div
             *ngIf="verificationForm.controls.code.errors.pattern"
             class="my-error"
           >
-            You must only enter numbers.
+            {{ "must_enter_numbers" | translate }}
           </div>
         </div>
       </ion-row>
@@ -65,13 +72,15 @@
             outline
             (click)="resend()"
           >
-            <span *ngIf="time > 0">Re-Send({{ time }})</span>
-            <span *ngIf="time == 0">Re-Send</span>
+            <span *ngIf="time > 0">
+              {{ "resend" | translate }}({{ time }})</span
+            >
+            <span *ngIf="time == 0">{{ "resend" | translate }}</span>
           </button>
         </ion-col>
         <ion-col col-6>
           <button
-            float-right
+            float-end
             ion-button
             round
             color="purple"
@@ -79,7 +88,7 @@
             class="next-btn"
             (click)="verify()"
           >
-            <span *ngIf="!isWaiting">Next</span>
+            <span *ngIf="!isWaiting">{{ "next" | translate }}</span>
             <ion-spinner
               name="ios-small"
               *ngIf="isWaiting"

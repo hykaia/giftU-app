@@ -11,6 +11,7 @@ import { ApiProvider } from "../../providers/api/api";
 import { FormBuilder, Validators } from "@angular/forms";
 import { SettingProvider } from "../../providers/setting/setting";
 import { File } from "@ionic-native/file";
+import { TranslateService } from "@ngx-translate/core";
 import {
   FileTransfer,
   FileUploadOptions,
@@ -32,6 +33,7 @@ export class CreateGiftPage {
   gift: any = this.navParams.get("gift"); //update gift.
   base64Img: any = null;
   data: any = {};
+  msgTranslation: any;
   constructor(
     public navCtrl: NavController,
     private api: ApiProvider,
@@ -45,15 +47,12 @@ export class CreateGiftPage {
     private general: GeneralProvider,
     private loadingCtrl: LoadingController,
     private event: Events,
+    private translate: TranslateService,
     public navParams: NavParams
   ) {
-    console.log("====================================");
-    console.log("occasion id :", this.occasionId);
-    console.log("====================================");
     this.buildFormValidations();
     if (this.gift) {
       this.data = this.gift;
-      console.log("this.gift : ", this.gift);
     }
   }
 
@@ -62,6 +61,14 @@ export class CreateGiftPage {
       name: ["", Validators.compose([Validators.required])],
       post: ["", Validators.compose([Validators.required])]
     });
+  }
+
+  ionViewDidLoad() {
+    this.translate
+      .get(["uploading", "cancel", "gallery", "camera", "choose_gallery"])
+      .subscribe(data => {
+        this.msgTranslation = data;
+      });
   }
 
   edit() {
@@ -98,23 +105,23 @@ export class CreateGiftPage {
 
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: "Choose gallery",
+      title: this.msgTranslation.choose_gallery,
       buttons: [
         {
-          text: "Camera",
+          text: this.msgTranslation.camera,
           role: "Camera",
           handler: () => {
             this.uploadImage(0);
           }
         },
         {
-          text: "Gallery",
+          text: this.msgTranslation.gallery,
           handler: () => {
             this.uploadImage(1);
           }
         },
         {
-          text: "Cancel",
+          text: this.msgTranslation.cancel,
           role: "cancel",
           handler: () => {
             console.log("Cancel clicked");
@@ -143,7 +150,6 @@ export class CreateGiftPage {
 
     this.camera.getPicture(options).then(
       imageData => {
-        console.log("imageData : ", imageData);
         this.data.imageUri = imageData;
         this.convertFileToImg(imageData);
       },
@@ -178,10 +184,8 @@ export class CreateGiftPage {
     this.data.occasion_id = this.occasionId;
     this.data.name = this.createGiftForm.value.name;
     this.data.post = this.createGiftForm.value.post;
-    console.log("gift data : ", this.data);
     if (!this.data.imageUri) {
       this.addGift(); // test purpose
-      // this.general.showCustomAlert("Warning", "You must upload gift image!");
     } else {
       this.sendToServer(
         `https://api-giftu.hakaya.technology/users/${this.userId}/occasions/${
@@ -193,7 +197,7 @@ export class CreateGiftPage {
 
   addGift() {
     let loader = this.loadingCtrl.create({
-      content: "Uploading..."
+      content: this.msgTranslation.uploading
     });
     this.api.addGift(this.data).subscribe(
       data => {
@@ -209,7 +213,7 @@ export class CreateGiftPage {
 
   presentLoading() {
     this.loader = this.loadingCtrl.create({
-      content: "Uploading..."
+      content: this.msgTranslation.uploading
     });
     this.loader.present();
   }

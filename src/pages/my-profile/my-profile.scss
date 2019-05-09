@@ -168,9 +168,16 @@ page-my-profile {
     padding: 0.6rem;
     border-radius: 100%;
     display: inline-block;
+    [dir="rtl"] & {
+      margin-left: initial;
+      margin-right: 0.6rem;
+    }
   }
   .row-wishlist {
     margin-left: -1rem;
+  }
+  .left_days_txt {
+    font-size: 10px;
   }
   .more-add {
     margin-left: 0.5rem !important;
@@ -248,6 +255,10 @@ page-my-profile {
     margin-left: 0.6rem;
     position: relative;
     top: 2px;
+    [dir="rtl"] & {
+      margin-left: initial;
+      margin-right: 0.6rem;
+    }
   }
 
   .avatar-name {

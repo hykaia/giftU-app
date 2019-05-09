@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar color="purple">
+    <ion-title> <img height="30" src="assets/imgs/giftu-logo.png"/></ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openMyProfile()">
+        <span class="dot"></span>
+        <img
+          *ngIf="userData && !userData.profile_image"
+          src="assets/imgs/user.svg"
+          class="avatar-img"
+        />
+        <div
+          class="user-profile-wrapper"
+          *ngIf="userData && userData.profile_image"
+          [style.background-image]="'url(' + userData.profile_image + ')'"
+        ></div>
+      </button>
+    </ion-buttons>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="openSetting()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <loading *ngIf="isLoading"></loading>
+    <notification
+      *ngFor="let notification of Notifications"
+      [hidden]="isLoading"
+      [notification]="notification"
+    ></notification>
+    <no-data
+      *ngIf="!isLoading && Notifications.length == 0"
+      data="No Notifications Found !"
+    ></no-data>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content
+        loadingText="{{ 'loading' | translate }}"
+      ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-grid>
+</ion-content>

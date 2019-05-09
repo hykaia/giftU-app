@@ -7,10 +7,9 @@
   <ion-grid class="verification-grid">
     <ion-row>
       <ion-col col-12>
-        <h4 class="verify-phone-number">Welcome again,</h4>
+        <h4 class="verify-phone-number">{{ "welcome_again" | translate }}</h4>
         <div class="sms-message-txt">
-          Enter some information that helps your friends recognize you and
-          achieve your dreams
+          {{ "enter_some_info_to_help_ur_friends" | translate }}
         </div>
       </ion-col>
     </ion-row>
@@ -40,11 +39,13 @@
       <!-- Your name -->
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Your Name</ion-label>
+          <ion-label color="light" stacked>{{
+            "ur_name" | translate
+          }}</ion-label>
           <ion-input
             type="text"
             [(ngModel)]="data.name"
-            placeholder="Your Name"
+            placeholder="{{ 'ur_name' | translate }}"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -52,7 +53,7 @@
       <!-- Birth of date -->
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label>Date of birth</ion-label>
+          <ion-label>{{ "date_of_birth" | translate }}</ion-label>
           <ion-datetime
             #date
             displayFormat="DDDD MMM D, YYYY"
@@ -66,7 +67,9 @@
       <!-- Gender -->
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Gender</ion-label>
+          <ion-label color="light" stacked>{{
+            "gender" | translate
+          }}</ion-label>
           <ion-select [(ngModel)]="data.gender">
             <ion-option value="male">Male</ion-option>
             <ion-option value="female">Female</ion-option>
@@ -77,11 +80,13 @@
       <!-- Status -->
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Status</ion-label>
+          <ion-label color="light" stacked>{{
+            "status" | translate
+          }}</ion-label>
           <ion-input
             type="text"
             [(ngModel)]="data.status"
-            placeholder="Status"
+            placeholder="{{ 'status' | translate }}"
             maxlength="25"
           ></ion-input>
         </ion-item>
@@ -99,7 +104,7 @@
         color="purple"
         (click)="updateProfile()"
       >
-        <span *ngIf="!isWaiting">Update</span>
+        <span *ngIf="!isWaiting">{{ "update" | translate }}</span>
         <ion-spinner
           name="ios-small"
           *ngIf="isWaiting"

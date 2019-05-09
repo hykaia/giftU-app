@@ -1,12 +1,12 @@
 <ion-row>
   <ion-col col-12>
-    <ion-slides spaceBetween="10" slidesPerView="1">
+    <ion-slides slidesPerView="1">
       <!-- First Slide -->
       <ion-slide *ngIf="occasion.gifts.length == 0">
         <ion-row class="gift-row-wrapper">
           <ion-col col-12 class="custom-add-gift-col">
             <p ion-text color="primary" class="add-gift-txt">
-              Add your wishes and gifts you wish
+              {{ "add_ur_wishes_and_gifts_u_wish" | translate }}
             </p>
             <!-- add gift image -->
             <div class="all-img-container" (click)="AddGift(occasion._id)">
@@ -30,7 +30,7 @@
                   round
                   (click)="AddGift(occasion._id)"
                 >
-                  Add First Gift
+                  {{ "add_first_gift" | translate }}
                 </button>
               </ion-col>
             </ion-row>
@@ -44,13 +44,19 @@
             <p ion-text color="primary">{{ gift.name }}</p>
             <div
               class="img-wrapper"
+              (click)="openImg(gift.image)"
               [style.background-image]="
                 gift.image
                   ? 'url(' + gift.image + ')'
                   : 'url(' + defaultImg + ')'
               "
             ></div>
-            <div ion-text color="gray" class="wish-txt">
+            <div
+              ion-text
+              color="gray"
+              class="wish-txt"
+              (click)="showMore(gift.post)"
+            >
               {{ gift.post | truncate: 33:"..." }} {{ codes.love }}
             </div>
             <div class="btns-wrapper">

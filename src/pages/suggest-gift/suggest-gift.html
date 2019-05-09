@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="purple">
-    <ion-title>Suggest gift</ion-title>
+    <ion-title>{{ "suggest_gift" | translate }}</ion-title>
     <ion-buttons start>
       <button ion-button icon-only (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
@@ -13,7 +13,9 @@
   <form [formGroup]="suggestGiftForm">
     <ion-row>
       <ion-col col-12>
-        <p class="take-photo" ion-text text-center>Take a photo</p>
+        <p class="take-photo" ion-text text-center>
+          {{ "take_photo" | translate }}
+        </p>
         <img
           *ngIf="!base64Img"
           src="assets/imgs/camera-img.png"
@@ -32,7 +34,9 @@
     <ion-row class="inputs-wrapper">
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Gift Name</ion-label>
+          <ion-label color="light" stacked>{{
+            "gift_name" | translate
+          }}</ion-label>
           <ion-input
             type="text"
             formControlName="name"
@@ -52,14 +56,16 @@
             *ngIf="suggestGiftForm.controls.name.errors.required"
             class="my-error"
           >
-            Gift name is required.
+            {{ "gift_name_is_required" | translate }}
           </div>
         </div>
       </ion-col>
 
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Your Message</ion-label>
+          <ion-label color="light" stacked>{{
+            "ur_msg" | translate
+          }}</ion-label>
           <ion-input
             type="text"
             formControlName="post"
@@ -79,7 +85,7 @@
             *ngIf="suggestGiftForm.controls.post.errors.required"
             class="my-error"
           >
-            Gift post is required.
+            {{ "gift_post_is_required" | translate }}
           </div>
         </div>
       </ion-col>
@@ -87,7 +93,7 @@
 
     <ion-row class="toggle-wrapper">
       <ion-col col-3>
-        <div class="anon-txt">Anon</div>
+        <div class="anon-txt">{{ "anon" | translate }}</div>
       </ion-col>
       <ion-toggle
         checked
@@ -102,11 +108,11 @@
           ion-button
           color="purple"
           block
-          [disabled]="!suggestGiftForm.valid"
+          [disabled]="!suggestGiftForm.valid || !data.imageUri"
           class="send-btn"
           (click)="suggestGift()"
         >
-          Send
+          {{ "send" | translate }}
         </button>
       </ion-col>
     </ion-row>

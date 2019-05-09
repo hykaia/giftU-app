@@ -5,7 +5,7 @@ import { GeneralProvider } from "../../providers/general/general";
 import { FormBuilder, Validators } from "@angular/forms";
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import * as _ from "lodash";
-
+import { TranslateService } from "@ngx-translate/core";
 @IonicPage()
 @Component({
   selector: "page-verification",
@@ -18,6 +18,7 @@ export class VerificationPage implements OnInit {
   time: number = 15;
   verificationForm: any;
   subscription: any;
+  msgTranslation;
   data: any = {};
   loginData: any = this.navParams.get("loginData");
   constructor(
@@ -25,6 +26,7 @@ export class VerificationPage implements OnInit {
     private api: ApiProvider,
     private event: Events,
     public builder: FormBuilder,
+    private translate: TranslateService,
     private zone: NgZone,
     private general: GeneralProvider,
     public navParams: NavParams
@@ -38,7 +40,14 @@ export class VerificationPage implements OnInit {
         ])
       ]
     });
-    console.log("userId : ", this.loginData.userId);
+  }
+
+  ionViewDidLoad() {
+    this.translate
+      .get(["warning", "u_must_enter_verify_code"])
+      .subscribe(data => {
+        this.msgTranslation = data;
+      });
   }
 
   ngOnInit() {
@@ -47,14 +56,16 @@ export class VerificationPage implements OnInit {
 
   verify() {
     if (!this.data.mobile_token) {
-      this.general.showCustomAlert("Warning", "You must enter verify code");
+      this.general.showCustomAlert(
+        this.msgTranslation.warning,
+        this.msgTranslation.u_must_enter_verify_code
+      );
     } else {
       this.isWaiting = true;
       this.data.user = this.loginData.userId;
       this.data.mobile_token = Number(this.data.mobile_token);
       this.api.verify(this.data).subscribe(
         data => {
-          console.log("verify data :", data);
           if (!_.has(data, "name")) {
             this.navCtrl.setRoot("RegisterPage");
           } else {
@@ -80,7 +91,6 @@ export class VerificationPage implements OnInit {
     let params = {
       one_signal_token: device_token ? device_token : ""
     };
-    console.log("my updated device token is :", device_token);
     this.api.register(params).subscribe(
       data => {
         console.log("device token updated");

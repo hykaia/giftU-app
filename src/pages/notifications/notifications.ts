@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -13,7 +13,7 @@ import { ApiProvider } from "../../providers/api/api";
   selector: "page-notifications",
   templateUrl: "notifications.html"
 })
-export class NotificationsPage {
+export class NotificationsPage implements OnInit {
   Notifications: any;
   isLoading: boolean = true;
   notificationsPagesCount: any;
@@ -30,6 +30,10 @@ export class NotificationsPage {
     this.checkEvents();
   }
 
+  ngOnInit() {
+    this.getUserNotifications();
+  }
+
   checkEvents() {
     this.event.subscribe("notificationRecived", () => {
       this.getUserNotifications();
@@ -44,7 +48,6 @@ export class NotificationsPage {
       )
       .subscribe(
         data => {
-          console.log("user notifications are :", data);
           this.notificationsPagesCount = Math.ceil(
             data.length / this.limitNotificationResults
           );
@@ -52,6 +55,7 @@ export class NotificationsPage {
           this.isLoading = false;
         },
         err => {
+          alert("notification error :" + err);
           this.isLoading = false;
         }
       );

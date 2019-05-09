@@ -1,11 +1,13 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { codes } from "./mocks";
 import {
   NavController,
   Events,
   LoadingController,
-  AlertController
+  AlertController,
+  ModalController
 } from "ionic-angular";
+import { TranslateService } from "@ngx-translate/core";
 import { ApiProvider } from "../../providers/api/api";
 import { SettingProvider } from "../../providers/setting/setting";
 
@@ -13,19 +15,38 @@ import { SettingProvider } from "../../providers/setting/setting";
   selector: "gifts-slider",
   templateUrl: "gifts-slider.html"
 })
-export class GiftsSliderComponent {
+export class GiftsSliderComponent implements OnInit {
   @Input() occasion;
   codes: any = codes;
+  msgTranslation: any;
   defaultImg = "assets/imgs/iPhone-X.png";
   loading: any;
   constructor(
     private navCtrl: NavController,
     private api: ApiProvider,
     private alertCtrl: AlertController,
+    private translate: TranslateService,
+    private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private setting: SettingProvider,
     private event: Events
   ) {}
+
+  ngOnInit() {
+    this.translate
+      .get([
+        "confirm_delete",
+        "do_u_want_delete_this_gift",
+        "cancel",
+        "delete",
+        "ok",
+        "please_wait"
+      ])
+      .subscribe(data => {
+        this.msgTranslation = data;
+        console.log("msgTranslation :", this.msgTranslation);
+      });
+  }
 
   AddGift(id) {
     this.navCtrl.push("CreateGiftPage", { occasionId: id });
@@ -55,18 +76,18 @@ export class GiftsSliderComponent {
 
   presentDeleteConfirm(gift) {
     let alert = this.alertCtrl.create({
-      title: "Confirm remove",
-      message: "Do you want to delete this item?",
+      title: this.msgTranslation.confirm_delete,
+      message: this.msgTranslation.do_u_want_delete_this_gift,
       buttons: [
         {
-          text: "Cancel",
+          text: this.msgTranslation.cancel,
           role: "cancel",
           handler: () => {
             console.log("Cancel clicked");
           }
         },
         {
-          text: "Delete",
+          text: this.msgTranslation.delete,
           handler: () => {
             this.deleteGift(gift);
           }
@@ -78,8 +99,21 @@ export class GiftsSliderComponent {
 
   presentLoadingDefault() {
     this.loading = this.loadingCtrl.create({
-      content: "Please wait..."
+      content: this.msgTranslation.please_wait
     });
     this.loading.present();
+  }
+
+  showMore(text) {
+    this.alertCtrl
+      .create({
+        subTitle: text,
+        buttons: [this.msgTranslation.ok]
+      })
+      .present();
+  }
+  openImg(img) {
+    let modal = this.modalCtrl.create("ImgModalPage", { img: img });
+    modal.present();
   }
 }

@@ -31,7 +31,6 @@ export class MutualFriendsPage {
   }
 
   openFriendProfile(friend) {
-    console.log("friend profile : ", friend);
     this.dismiss();
     this.appCtrl
       .getRootNavs()[0]

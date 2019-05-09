@@ -27,14 +27,14 @@
     <ion-col col-3 align-self-center>
       <ion-icon name="heart-outline"></ion-icon>
       <span ion-text color="primary" class="normal-size"
-        >{{ userData.wish_list }} wishlist</span
+        >{{ userData.wish_list }} {{ "wishlist" | translate }}</span
       >
     </ion-col>
 
     <ion-col col-3 align-self-center>
       <ion-icon name="ios-help-buoy"></ion-icon>
       <span ion-text color="primary" class="normal-size"
-        >{{ userData.given_gifts }} gifts</span
+        >{{ userData.given_gifts }} {{ "gifts" | translate }}</span
       >
     </ion-col>
 
@@ -43,7 +43,9 @@
     </ion-col>
 
     <ion-col col-10>
-      <span ion-text color="primary" class="mutual">Mutual Friend</span>
+      <span ion-text color="primary" class="mutual">{{
+        "mutual_friend" | translate
+      }}</span>
       <span ion-text color="gray" (click)="openMutualFriends()"
         >{{ mutualFriendsWhoWillShow }}
         <span *ngIf="reminderFriends > 0">+{{ reminderFriends }}</span>
@@ -51,7 +53,9 @@
     </ion-col>
 
     <ion-col col-2>
-      <div ion-text color="secondary" (click)="inviteFriends()">invite</div>
+      <div ion-text color="secondary" (click)="inviteFriends()">
+        {{ "invite" | translate }}
+      </div>
     </ion-col>
   </ion-row>
 </ion-header>
@@ -99,7 +103,17 @@
           round
           block
         >
-          {{ setting.getDateDifferenceInDays(occasion.date) }} day left
+          <span
+            class="left_days_txt"
+            *ngIf="setting.getDateDifferenceInDays(occasion.date) > 0"
+            >{{ setting.getDateDifferenceInDays(occasion.date) }}
+            {{ "day_left" | translate }}</span
+          >
+          <span
+            class="left_days_txt"
+            *ngIf="setting.getDateDifferenceInDays(occasion.date) == 0"
+            >{{ "now" | translate }}</span
+          >
         </button>
       </ion-col>
     </ion-row>
@@ -110,7 +124,7 @@
     ></friend-gifts-slider>
     <no-occasion-found
       *ngIf="occasion.gifts.length == 0"
-      data="No gifts found yet !"
+      data="{{ 'no_gifts_found_yet' | translate }}"
     ></no-occasion-found>
   </ion-grid>
 </ion-content>

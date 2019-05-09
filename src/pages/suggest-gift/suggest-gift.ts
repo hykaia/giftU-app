@@ -7,6 +7,7 @@ import {
   ActionSheetController,
   LoadingController
 } from "ionic-angular";
+import { TranslateService } from "@ngx-translate/core";
 import { ApiProvider } from "../../providers/api/api";
 import { SettingProvider } from "../../providers/setting/setting";
 import { Camera, CameraOptions } from "@ionic-native/camera";
@@ -30,6 +31,7 @@ export class SuggestGiftPage {
   base64Img: any = null;
   suggestGiftForm: any;
   loader: any;
+  msgTranslation;
   data: any = {
     anonymous: false
   };
@@ -38,6 +40,7 @@ export class SuggestGiftPage {
     private viewCtrl: ViewController,
     private api: ApiProvider,
     public builder: FormBuilder,
+    private translate: TranslateService,
     private general: GeneralProvider,
     private file: File,
     private transfer: FileTransfer,
@@ -54,6 +57,15 @@ export class SuggestGiftPage {
     });
     console.log("giftData : ", this.giftData);
   }
+
+  ionViewDidLoad() {
+    this.translate
+      .get(["camera", "choose_gallery", "gallery", "cancel", "loading"])
+      .subscribe(data => {
+        this.msgTranslation = data;
+      });
+  }
+
   suggestGift() {
     this.data.anonymous = this.data.anonymous;
     this.data.occasion = this.giftData.occasion;
@@ -66,23 +78,23 @@ export class SuggestGiftPage {
 
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: "Choose gallery",
+      title: this.msgTranslation.choose_gallery,
       buttons: [
         {
-          text: "Camera",
+          text: this.msgTranslation.camera,
           role: "Camera",
           handler: () => {
             this.uploadImage(0);
           }
         },
         {
-          text: "Gallery",
+          text: this.msgTranslation.gallery,
           handler: () => {
             this.uploadImage(1);
           }
         },
         {
-          text: "Cancel",
+          text: this.msgTranslation.cancel,
           role: "cancel",
           handler: () => {
             console.log("Cancel clicked");
@@ -164,7 +176,7 @@ export class SuggestGiftPage {
 
   presentLoading() {
     this.loader = this.loadingCtrl.create({
-      content: "Uploading..."
+      content: this.msgTranslation.loading
     });
     this.loader.present();
   }

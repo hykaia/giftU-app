@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title *ngIf="!gift">Add new gift</ion-title>
-    <ion-title *ngIf="gift">Edit gift</ion-title>
+    <ion-title *ngIf="!gift">{{ "add_new_gift" | translate }}</ion-title>
+    <ion-title *ngIf="gift">{{ "edit_gift" | translate }}</ion-title>
     <ion-buttons end>
       <button
         ion-button
@@ -11,10 +11,10 @@
         *ngIf="!gift"
         (click)="share()"
       >
-        Share
+        {{ "share" | translate }}
       </button>
       <button ion-button round color="white" *ngIf="gift" (click)="edit()">
-        Edit
+        {{ "edit" | translate }}
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -24,7 +24,9 @@
   <form [formGroup]="createGiftForm">
     <ion-row class="inputs-wrapper">
       <ion-col col-12>
-        <p class="take-photo" ion-text text-center>Take a photo</p>
+        <p class="take-photo" ion-text text-center>
+          {{ "take_photo" | translate }}
+        </p>
         <img
           *ngIf="!gift && !base64Img"
           src="assets/imgs/camera-img.png"
@@ -46,12 +48,14 @@
       </ion-col>
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Gift Name</ion-label>
+          <ion-label color="light" stacked>{{
+            "gift_name" | translate
+          }}</ion-label>
           <ion-input
             type="text"
             formControlName="name"
             [(ngModel)]="data.name"
-            placeholder="Gift Name"
+            placeholder="{{ 'gift_name' | translate }}"
           ></ion-input>
         </ion-item>
         <div
@@ -66,19 +70,19 @@
             *ngIf="createGiftForm.controls.name.errors.required"
             class="my-error"
           >
-            Name is required.
+            {{ "gift_name_is_required" | translate }}
           </div>
         </div>
       </ion-col>
 
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Post</ion-label>
+          <ion-label color="light" stacked> {{ "post" | translate }}</ion-label>
           <ion-input
             type="text"
             formControlName="post"
             [(ngModel)]="data.post"
-            placeholder="Gift Description"
+            placeholder="{{ 'post' | translate }}"
           ></ion-input>
         </ion-item>
         <div
@@ -93,7 +97,7 @@
             *ngIf="createGiftForm.controls.post.errors.required"
             class="my-error"
           >
-            Post is required.
+            {{ "gift_post_is_required" | translate }}
           </div>
         </div>
       </ion-col>

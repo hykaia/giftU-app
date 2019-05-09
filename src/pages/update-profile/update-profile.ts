@@ -8,6 +8,7 @@ import {
   ActionSheetController
 } from "ionic-angular";
 import { File } from "@ionic-native/file";
+import { TranslateService } from "@ngx-translate/core";
 import {
   FileTransfer,
   FileUploadOptions,
@@ -24,19 +25,27 @@ export class UpdateProfilePage {
   data: any = JSON.parse(localStorage.getItem("userData"));
   userData: any = JSON.parse(localStorage.getItem("userData"));
   isWaiting: boolean = false;
+  msgTranslation;
   base64Img: any = null;
   constructor(
     public navCtrl: NavController,
     private camera: Camera,
     private api: ApiProvider,
     private ngzone: NgZone,
+    private translate: TranslateService,
     private file: File,
     private transfer: FileTransfer,
     private actionSheetCtrl: ActionSheetController,
     private viewCtrl: ViewController,
     public navParams: NavParams
-  ) {
-    console.log("yooo :", this.data);
+  ) {}
+
+  ionViewDidLoad() {
+    this.translate
+      .get(["camera", "choose_gallery", "gallery", "cancel"])
+      .subscribe(data => {
+        this.msgTranslation = data;
+      });
   }
 
   dismiss() {
@@ -54,23 +63,23 @@ export class UpdateProfilePage {
 
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: "Choose gallery",
+      title: this.msgTranslation.choose_gallery,
       buttons: [
         {
-          text: "Camera",
+          text: this.msgTranslation.camera,
           role: "Camera",
           handler: () => {
             this.uploadImage(0);
           }
         },
         {
-          text: "Gallery",
+          text: this.msgTranslation.gallery,
           handler: () => {
             this.uploadImage(1);
           }
         },
         {
-          text: "Cancel",
+          text: this.msgTranslation.cancel,
           role: "cancel",
           handler: () => {
             console.log("Cancel clicked");

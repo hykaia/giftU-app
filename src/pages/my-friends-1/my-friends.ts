@@ -9,6 +9,7 @@ import {
   Events
 } from "ionic-angular";
 import * as moment from "moment";
+import { TranslateService } from "@ngx-translate/core";
 import { Notifications, Slides } from "./mocks";
 import { ApiProvider } from "../../providers/api/api";
 import * as _ from "lodash";
@@ -27,6 +28,7 @@ export class MyFriendsPage {
   occasionsPagesCount: any;
   loader: any;
   countryCode: any;
+  lang = localStorage.getItem("lang");
   userData: any = JSON.parse(localStorage.getItem("userData"));
   selectedSegment: any = "my_friends";
   Friends: any;
@@ -41,12 +43,14 @@ export class MyFriendsPage {
   Notifications: any;
   Slides: any[] = Slides;
   currentIndex = 0;
+  msgTranslation;
   isLoading: boolean = true;
   isOccasionsLoading: boolean = true;
   constructor(
     public navCtrl: NavController,
     private render: Renderer2,
     private contacts: Contacts,
+    private translate: TranslateService,
     private ngZone: NgZone,
     private general: GeneralProvider,
     private event: Events,
@@ -59,6 +63,17 @@ export class MyFriendsPage {
     this.getUserFriends();
     this.getUserNotifications();
     this.checkEvents();
+  }
+
+  ionViewDidLoad() {
+    this.translate.get(["days", "now"]).subscribe(data => {
+      this.msgTranslation = data;
+      console.log("msgTranslation :", this.msgTranslation);
+    });
+  }
+
+  translateSlide(val) {
+    return;
   }
 
   ngAfterViewInit(): void {
@@ -139,7 +154,6 @@ export class MyFriendsPage {
       )
       .subscribe(
         data => {
-          console.log("user notifications are :", data);
           this.notificationsPagesCount = Math.ceil(
             data.length / this.limitNotificationResults
           );
@@ -189,7 +203,6 @@ export class MyFriendsPage {
   getUserFriends(isUpdateFriends?) {
     this.api.getUserFriends().subscribe(
       data => {
-        console.log("user friends data :", data);
         this.Friends = _.filter(data.friends, friend => {
           return _.has(friend, "name");
         });
@@ -255,7 +268,6 @@ export class MyFriendsPage {
       .myFriendsOccasions(this.currentPageOccasion, this.limitOccasionResults)
       .subscribe(
         data => {
-          console.log("friends occasions are : ", data);
           this.Occasions = data.occasions;
           this.occasionsPagesCount = Math.ceil(
             data.length / this.limitOccasionResults
@@ -308,5 +320,9 @@ export class MyFriendsPage {
   openNoti() {
     let modal = this.modalCtrl.create("NotificationsPage");
     modal.present();
+  }
+
+  openSetting() {
+    this.navCtrl.push("SettingsPage");
   }
 }

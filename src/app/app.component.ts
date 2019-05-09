@@ -6,6 +6,7 @@ import { Keyboard } from "@ionic-native/keyboard";
 import { OneSignal } from "@ionic-native/onesignal";
 import { Sim } from "@ionic-native/sim";
 import { ApiProvider } from "../providers/api/api";
+import { TranslateService } from "@ngx-translate/core";
 @Component({
   templateUrl: "app.html"
 })
@@ -21,11 +22,13 @@ export class MyApp {
     private modalCtrl: ModalController,
     private api: ApiProvider,
     private event: Events,
+    private translate: TranslateService,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen
   ) {
     this.checkDefaultRoute();
     // this.setFakeUser();
+    this.checkLanguage();
     this.initialize();
     this.checkEvents();
   }
@@ -47,10 +50,26 @@ export class MyApp {
     });
   }
 
+  checkLanguage() {
+    let lang = localStorage.getItem("lang");
+    console.log("my lang is : ", lang);
+    if (lang == "ar") {
+      localStorage.setItem("lang", "ar");
+      this.translate.use("ar");
+      this.platform.setDir("rtl", true);
+      this.platform.setLang("ar", true);
+    } else if (lang == "en" || !lang) {
+      localStorage.setItem("lang", "en");
+      this.translate.use("en");
+      this.platform.setDir("ltr", true);
+      this.platform.setLang("en", true);
+    }
+  }
+
   checkDefaultRoute() {
     let isLogin = JSON.parse(localStorage.getItem("isLogin"));
     if (isLogin != null && isLogin) {
-      this.rootPage = "MyFriendsPage";
+      this.rootPage = "TabsPage";
       this.updateDeviceToken();
     } else {
       this.rootPage = "LoginPage";

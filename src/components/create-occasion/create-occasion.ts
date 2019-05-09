@@ -13,6 +13,7 @@ export class CreateOccasionComponent implements OnInit {
   occasionCategories: any;
   createOccasionForm: any;
   data: any = {};
+  lang: any = localStorage.getItem("lang");
   isWaiting: boolean = false;
   constructor(
     private api: ApiProvider,
@@ -34,8 +35,6 @@ export class CreateOccasionComponent implements OnInit {
   }
 
   addOccasion() {
-    console.log("add occasion data : ", this.data);
-
     if (!_.has(this.data, "category")) {
       this.general.showCustomAlert("Warning", "Add Occasion Category First !");
     } else {

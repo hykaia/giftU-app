@@ -12,9 +12,18 @@ page-invite-your-friends {
   .invite-friends-txt {
     color: white;
     font-size: 2rem;
+    margin-left: 1rem;
+    [dir="rtl"] & {
+      margin-left: initial;
+      margin-right: 1rem;
+    }
   }
   .custom-row-wrapper {
-    margin-left: 1.3rem;
+    margin-left: 0.8rem;
+    // [dir="rtl"] & {
+    //   margin-left: initial;
+    //   margin-right: 0.8rem;
+    // }
     // margin-top: 2rem;
   }
   .line-2 {
@@ -25,7 +34,7 @@ page-invite-your-friends {
     margin-bottom: 1rem;
   }
   .searchbar {
-    padding-left: 0;
+    padding-left: 0 !important;
     background: none;
     width: 95%;
     margin: auto;
@@ -63,7 +72,7 @@ page-invite-your-friends {
 
   .submit-btn {
     width: 90%;
-    margin: auto;
+    margin: auto !important;
     // margin-bottom: 1rem;
   }
   .item {

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Edit Occasion</ion-title>
+    <ion-title>{{ "edit_occasion" | translate }}</ion-title>
     <ion-buttons start>
       <button ion-button ion-only (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
@@ -33,7 +33,9 @@
     <ion-row class="inputs-wrapper">
       <ion-col col-12 class="custom-col" *ngIf="!data.is_wish_list">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Category</ion-label>
+          <ion-label color="light" stacked>{{
+            "category" | translate
+          }}</ion-label>
           <ion-select [(ngModel)]="data.category">
             <ion-option
               [value]="cat._id"
@@ -46,7 +48,7 @@
 
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Name</ion-label>
+          <ion-label color="light" stacked>{{ "name" | translate }}</ion-label>
           <ion-input
             type="text"
             [(ngModel)]="data.name"
@@ -57,17 +59,19 @@
 
       <ion-col col-12 class="custom-col">
         <ion-item class="custom-item">
-          <ion-label color="light" stacked>Slogan</ion-label>
+          <ion-label color="light" stacked>{{
+            "slogan" | translate
+          }}</ion-label>
           <ion-input
             type="text"
             [(ngModel)]="data.slogan"
-            placeholder="Slogan"
+            placeholder="{{ 'slogan' | translate }}"
           ></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-12 class="custom-col" *ngIf="!data.is_wish_list">
         <ion-item class="custom-item">
-          <ion-label>Date</ion-label>
+          <ion-label>{{ "date" | translate }}</ion-label>
           <ion-datetime
             #date
             displayFormat="DDDD MMM D, YYYY"
@@ -87,7 +91,7 @@
           class="create-occasion-btn"
           color="purple"
         >
-          Edit
+          {{ "edit" | translate }}
         </button>
       </ion-col>
     </ion-row>

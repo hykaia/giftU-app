@@ -5,17 +5,20 @@
         <ion-icon name="close" (click)="dismiss()"></ion-icon>
       </ion-col>
       <ion-col col-8 align-self-center>
-        <div class="invite-friends-txt">Invite your friends</div>
+        <div ion-text text-start class="invite-friends-txt">
+          {{ "invite_ur_friends" | translate }}
+        </div>
       </ion-col>
       <ion-col col-4>
         <button
           ion-button
+          float-end
           round
           color="secondary"
           class="invite-btn"
           (click)="inviteFriends()"
         >
-          <span *ngIf="!isWaiting">Invite All</span>
+          <span *ngIf="!isWaiting">{{ "invite_all" | translate }}</span>
           <ion-spinner
             name="ios-small"
             *ngIf="isWaiting"
@@ -27,7 +30,10 @@
 
       <ion-col col-12>
         <div class="line-2" ion-text color="white">
-          Invite your friends to use the application and view your wish list
+          {{
+            "invite_ur_friends_to_use_the_application_and_view_your_wishlist"
+              | translate
+          }}
         </div>
         <ion-searchbar
           animated="true"
@@ -35,7 +41,7 @@
           debounce="100"
           [(ngModel)]="data.search"
           showCancelButton="false"
-          placeholder="Search"
+          placeholder="{{ 'search' | translate }}"
           (ionInput)="Search($event)"
           (ionCancel)="onCancel($event)"
         >
@@ -67,7 +73,7 @@
         (click)="inviteFriend(contact)"
         [disabled]="contact.active"
       >
-        Invite
+        {{ "invite" | translate }}
       </button>
     </ion-item>
   </ion-list>
@@ -82,7 +88,7 @@
     class="submit-btn"
     (click)="submit()"
   >
-    <span *ngIf="!isSubmitting">Skip</span>
+    <span *ngIf="!isSubmitting">{{ "skip" | translate }}</span>
     <ion-spinner
       name="ios-small"
       *ngIf="isSubmitting"

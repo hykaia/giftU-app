@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar color="black">
+    <!-- <ion-title>img-modal</ion-title> -->
+    <ion-buttons start>
+      <button class="close-btn" ion-button ion-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!-- <div class="img-wrapper"> -->
+  <img [src]="img" class="gift-img" />
+  <!-- </div> -->
+</ion-content>

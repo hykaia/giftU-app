@@ -15,6 +15,6 @@ export const myGifts = [
 ];
 
 export const Slides = [
-  { id: "my_wishlist", name: "My wishlist`s" },
-  { id: "occasions", name: "Add occasions" }
+  { id: "my_wishlist", name: "My wishlist`s", nameArabic: "امنياتي" },
+  { id: "occasions", name: "Add occasions", nameArabic: "اضف مناسبة" }
 ];

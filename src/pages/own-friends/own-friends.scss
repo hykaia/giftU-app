@@ -1,4 +1,4 @@
-page-my-friends {
+page-own-friends {
   .title-image {
     margin-top: 8px;
     height: 27px;
@@ -129,6 +129,10 @@ page-my-friends {
     position: absolute;
     bottom: 0;
     right: 0;
+    [dir="rtl"] & {
+      right: initial;
+      left: 0;
+    }
   }
   .remaining-days-wrapper {
     display: inline-block;

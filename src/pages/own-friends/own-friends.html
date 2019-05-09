@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="purple">
+    <ion-title> <img height="30" src="assets/imgs/giftu-logo.png"/></ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="updateFriends()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+      <button ion-button (click)="openMyProfile()">
+        <span class="dot"></span>
+        <img
+          *ngIf="userData && !userData.profile_image"
+          src="assets/imgs/user.svg"
+          class="avatar-img"
+        />
+        <div
+          class="user-profile-wrapper"
+          *ngIf="userData && userData.profile_image"
+          [style.background-image]="'url(' + userData.profile_image + ')'"
+        ></div>
+      </button>
+    </ion-buttons>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="openSetting()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="Search()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <loading *ngIf="isLoading"></loading>
+    <!-- openUserProfile(friend) , -->
+    <friend
+      *ngFor="let friend of Friends; let index = index"
+      (click)="animateBlock(index, friend)"
+      id="friend_{{ index }}"
+      [hidden]="isLoading && Friends.length == 0"
+      [friend]="friend"
+    ></friend>
+    <no-data *ngIf="Friends?.length == 0" data="No Friends Found !"></no-data>
+  </ion-grid>
+</ion-content>

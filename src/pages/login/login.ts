@@ -5,6 +5,7 @@ import { GeneralProvider } from "../../providers/general/general";
 import { Keyboard } from "@ionic-native/keyboard";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Countries } from "../../countries_codes";
+import { TranslateService } from "@ngx-translate/core";
 import { Sim } from "@ionic-native/sim";
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ import { Sim } from "@ionic-native/sim";
 export class LoginPage {
   isWaiting: boolean = false;
   loginForm: any;
+  msgTranslation;
   showBackgroundLogo: boolean = false;
   Countries: any[] = Countries;
   isKeyBoardShow: boolean = false;
@@ -27,6 +29,7 @@ export class LoginPage {
     private platform: Platform,
     private keyboard: Keyboard,
     public builder: FormBuilder,
+    private translate: TranslateService,
     private simCard: Sim,
     private general: GeneralProvider,
     private api: ApiProvider,
@@ -47,6 +50,13 @@ export class LoginPage {
     this.checkKeyBoardEvents();
   }
 
+  ionViewDidLoad() {
+    this.translate
+      .get(["warning", "u_must_enter_phone_number"])
+      .subscribe(data => {
+        this.msgTranslation = data;
+      });
+  }
   checkBackgroundLogo() {
     if (this.platform.is("android")) {
       this.showBackgroundLogo = false;
@@ -64,7 +74,6 @@ export class LoginPage {
         return item.code == countryCode;
       });
       this.data.countryCode = countryCodeObj[0].dial_code.toString();
-      console.log("lol this.data.countryCode : ", this.data.countryCode);
     });
   }
   checkKeyBoardEvents() {
@@ -84,13 +93,15 @@ export class LoginPage {
       mobile: `${this.data.countryCode}${this.data.phone.replace(/^0+/, "")}`
     };
     if (!this.data.phone) {
-      this.general.showCustomAlert("Warning", "You must enter phone number");
+      this.general.showCustomAlert(
+        this.msgTranslation.warning,
+        this.msgTranslation.u_must_enter_phone_number
+      );
     } else {
       this.isWaiting = true;
       this.data.phone = this.general.convertNumber(this.data.phone);
       this.api.login(params).subscribe(
         data => {
-          console.log("login  response is : ", data);
           alert(data.mobile_token);
           let loginParams = {
             userId: data.id,

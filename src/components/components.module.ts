@@ -11,6 +11,7 @@ import { FriendComponent } from "./friend/friend";
 import { OccasionComponent } from "./occasion/occasion";
 import { NotificationComponent } from "./notification/notification";
 import { EmotionComponent } from "./emotion/emotion";
+import { TranslateModule } from "@ngx-translate/core";
 @NgModule({
   declarations: [
     LoadingComponent,
@@ -24,7 +25,7 @@ import { EmotionComponent } from "./emotion/emotion";
     NotificationComponent,
     EmotionComponent
   ],
-  imports: [IonicModule, TruncateModule],
+  imports: [IonicModule, TruncateModule, TranslateModule.forChild()],
   exports: [
     LoadingComponent,
     NoDataComponent,

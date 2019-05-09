@@ -12,6 +12,7 @@ import {
   NavParams,
   ActionSheetController
 } from "ionic-angular";
+import { TranslateService } from "@ngx-translate/core";
 import { ApiProvider } from "../../providers/api/api";
 import { GeneralProvider } from "../../providers/general/general";
 import { Camera, CameraOptions } from "@ionic-native/camera";
@@ -29,10 +30,12 @@ export class RegisterPage {
   };
   registrationForm: any;
   base64Img: any = null;
+  msgTranslation;
   constructor(
     public navCtrl: NavController,
     private api: ApiProvider,
     public builder: FormBuilder,
+    private translate: TranslateService,
     private file: File,
     private transfer: FileTransfer,
     private ngzone: NgZone,
@@ -46,25 +49,33 @@ export class RegisterPage {
     });
   }
 
+  ionViewDidLoad() {
+    this.translate
+      .get(["camera", "choose_gallery", "gallery", "cancel"])
+      .subscribe(data => {
+        this.msgTranslation = data;
+      });
+  }
+
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: "Choose gallery",
+      title: this.msgTranslation.choose_gallery,
       buttons: [
         {
-          text: "Camera",
+          text: this.msgTranslation.camera,
           role: "Camera",
           handler: () => {
             this.uploadImage(0);
           }
         },
         {
-          text: "Gallery",
+          text: this.msgTranslation.gallery,
           handler: () => {
             this.uploadImage(1);
           }
         },
         {
-          text: "Cancel",
+          text: this.msgTranslation.cancel,
           role: "cancel",
           handler: () => {
             console.log("Cancel clicked");
@@ -111,7 +122,6 @@ export class RegisterPage {
           var reader = new FileReader();
           reader.onload = (encodedFile: any) => {
             var src = encodedFile.target.result;
-            console.log("hi mo");
             this.ngzone.run(() => {
               this.base64Img = src;
             });
@@ -141,7 +151,6 @@ export class RegisterPage {
   sendDataToServerWithoutFileTransfer() {
     this.api.register(this.data).subscribe(
       data => {
-        console.log("register data : ", data);
         this.isWaiting = false;
         localStorage.setItem("userData", data);
         this.navCtrl.setRoot("InviteYourFriendsPage");

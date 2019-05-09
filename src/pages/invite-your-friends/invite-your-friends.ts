@@ -18,6 +18,7 @@ import {
 } from "@ionic-native/contacts";
 import { DomSanitizer } from "@angular/platform-browser";
 import * as _ from "lodash";
+import { TranslateService } from "@ngx-translate/core";
 import { ApiProvider } from "../../providers/api/api";
 import { ContactList } from "./mocks";
 @IonicPage()
@@ -32,12 +33,14 @@ export class InviteYourFriendsPage {
   filterContacts: any;
   loader: any;
   originalContacts: any;
+  msgTranslation;
   isWaiting: boolean = false;
   isSubmitting: boolean = false;
   constructor(
     public navCtrl: NavController,
     private contacts: Contacts,
     private api: ApiProvider,
+    private translate: TranslateService,
     private render: Renderer2,
     private loadingCtrl: LoadingController,
     private zone: NgZone,
@@ -49,6 +52,12 @@ export class InviteYourFriendsPage {
     if (this.platform.is("cordova")) {
       this.getContacts();
     }
+  }
+
+  ionViewDidLoad() {
+    this.translate.get(["uploading"]).subscribe(data => {
+      this.msgTranslation = data;
+    });
   }
 
   getContacts(): void {
@@ -97,12 +106,10 @@ export class InviteYourFriendsPage {
   }
 
   inviteFriend(contact) {
-    console.log("contact is : ", JSON.stringify(contact));
     this.presentLoading();
     let contacts: any[] = [contact];
     this.api.inviteFriends(contacts).subscribe(
       data => {
-        console.log("invite friend data :", data);
         contact.active = true;
         this.loader.dismiss();
       },
@@ -164,7 +171,7 @@ export class InviteYourFriendsPage {
 
   presentLoading() {
     this.loader = this.loadingCtrl.create({
-      content: "Uploading..."
+      content: this.msgTranslation.uploading
     });
     this.loader.present();
   }

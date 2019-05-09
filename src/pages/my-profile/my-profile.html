@@ -20,7 +20,7 @@
     </ion-row>
     <ion-buttons end>
       <button ion-button icon-only (click)="openMyProfile()">
-        <ion-icon name="cog"></ion-icon>
+        <ion-icon name="contact"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -33,7 +33,7 @@
         *ngFor="let slide of Slides"
         (click)="segmentChanged(slide)"
       >
-        {{ slide.name }}
+        {{ lang == "ar" || lang == null ? slide.nameArabic : slide.name }}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -88,16 +88,25 @@
               round
               block
             >
-              <span *ngIf="setting.getDateDifferenceInDays(occasion.date) > 0">
+              <span
+                class="left_days_txt"
+                *ngIf="setting.getDateDifferenceInDays(occasion.date) > 0"
+              >
                 {{ setting.getDateDifferenceInDays(occasion.date) }}
-                day left
+                {{ "day_left" | translate }}
               </span>
-              <span *ngIf="setting.getDateDifferenceInDays(occasion.date) == 0"
-                >Now</span
+              <span
+                class="left_days_txt"
+                *ngIf="setting.getDateDifferenceInDays(occasion.date) == 0"
               >
-              <span *ngIf="setting.getDateDifferenceInDays(occasion.date) < 0"
-                >Expired</span
+                {{ "now" | translate }}
+              </span>
+              <span
+                class="left_days_txt"
+                *ngIf="setting.getDateDifferenceInDays(occasion.date) < 0"
               >
+                {{ "expired" | translate }}
+              </span>
             </button>
           </ion-col>
           <ion-col col-1 align-self-center>
@@ -117,7 +126,9 @@
       <!-- Code here -->
       <ion-row (swipe)="swipe($event)">
         <ion-col col-12>
-          <p ion-text color="white" class="my-friends">Create new Occasions</p>
+          <p ion-text color="white" class="my-friends">
+            {{ "create_new_occasion" | translate }}
+          </p>
         </ion-col>
       </ion-row>
       <create-occasion></create-occasion>

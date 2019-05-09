@@ -5,6 +5,7 @@ import { Component, Input } from "@angular/core";
   templateUrl: "emotion.html"
 })
 export class EmotionComponent {
+  lang = localStorage.getItem("lang");
   @Input() emotion;
   constructor() {}
 }

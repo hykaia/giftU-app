@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar color="purple">
+    <ion-title>
+      <ion-title> <img height="30" src="assets/imgs/giftu-logo.png"/></ion-title
+    ></ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openMyProfile()">
+        <span class="dot"></span>
+        <img
+          *ngIf="userData && !userData.profile_image"
+          src="assets/imgs/user.svg"
+          class="avatar-img"
+        />
+        <div
+          class="user-profile-wrapper"
+          *ngIf="userData && userData.profile_image"
+          [style.background-image]="'url(' + userData.profile_image + ')'"
+        ></div>
+      </button>
+    </ion-buttons>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="openSetting()">
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <loading *ngIf="isOccasionsLoading"></loading>
+    <occasion
+      *ngFor="let occasion of Occasions; let index = index"
+      [hidden]="isLoading && Occasions.length == 0"
+      [occasion]="occasion"
+      [days]="msgTranslation.days"
+      [now]="msgTranslation.now"
+      id="friend_{{ index }}"
+      (click)="animateBlock(index, occasion.user)"
+    ></occasion>
+    <no-data
+      *ngIf="!isLoading && Occasions.length == 0"
+      data="No Occasions Found !"
+    ></no-data>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content
+        loadingText="{{ 'loading' | translate }}"
+      ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-grid>
+</ion-content>

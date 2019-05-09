@@ -1,12 +1,12 @@
 @font-face {
-  font-family: "Asap";
-  src: url("../assets/font/Asap-Regular.ttf");
+  font-family: "proxima";
+  src: url("../assets/fonts/JF_FLAT_REGULAR.otf");
   font-weight: normal;
   font-style: normal;
 }
 
 * {
-  font-family: "Asap";
+  font-family: "proxima";
 }
 
 .scroll-content {
@@ -155,4 +155,30 @@ ion-content.padding.scroll-content.ionic-scroll.has-header.has-tabs {
   font-size: 1.2rem !important;
   padding-top: 5px;
   color: red;
+}
+
+.text-input {
+  [dir="rtl"] & {
+    text-align: right;
+  }
+}
+
+.searchbar-input {
+  [dir="rtl"] & {
+    text-align: right;
+  }
+}
+
+.tabbar {
+  background: #7b2fff !important;
+}
+
+.tabs-ios .tab-button:hover:not(.disable-hover),
+.tabs-ios .tab-button[aria-selected="true"] {
+  color: #fff;
+  border-bottom: 3px solid #fff;
+}
+
+.tabs-ios .tab-button {
+  color: #fff;
 }
