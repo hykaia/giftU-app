@@ -17,11 +17,11 @@ export class GeneralProvider {
     private translate: TranslateService
   ) {}
 
-  ionViewDidLoad() {
-    this.translate.get(["ok", "warning"]).subscribe(data => {
-      this.msgTranslation = data;
-    });
-  }
+  // ionViewDidLoad() {
+  //   this.translate.get(["ok", "warning"]).subscribe(data => {
+  //     this.msgTranslation = data;
+  //   });
+  // }
 
   presentToast(text) {
     let toast = this.toastCtrl.create({
@@ -48,9 +48,9 @@ export class GeneralProvider {
   showAlert(text) {
     this.alertCtrl
       .create({
-        title: this.msgTranslation.warning,
+        title: "Warning",
         subTitle: text,
-        buttons: [this.msgTranslation.ok]
+        buttons: ["Ok"]
       })
       .present();
   }
@@ -60,7 +60,7 @@ export class GeneralProvider {
       .create({
         title: title,
         subTitle: text,
-        buttons: [this.msgTranslation.ok]
+        buttons: ["Ok"]
       })
       .present();
   }

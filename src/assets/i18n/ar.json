@@ -95,5 +95,10 @@
   "like": "انا معجب بك",
   "thanks": "شكرا",
   "best_friend": "اعز الاصدقاء",
-  "u_give_gift_success": "تم اضافة الهدية بنجاح"
+  "u_give_gift_success": "تم اضافة الهدية بنجاح",
+  "male": "ذكر",
+  "female": "انثي",
+  "no_occasions_found": "لا يوجد مناسبات !",
+  "no_notification_found": "لا يوجد اشعارات !",
+  "no_friends_found": "لا يوجد اصدقاء !"
 }

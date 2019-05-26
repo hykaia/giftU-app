@@ -1,3 +1,4 @@
+<!--  -->
 <ion-content ion-fixed>
   <form [formGroup]="loginForm">
     <ion-grid class="login-grid">
@@ -33,11 +34,13 @@
             <ion-select
               [(ngModel)]="data.countryCode"
               [ngModelOptions]="{ standalone: true }"
+              cancelText="{{ 'cancel' | translate }}"
+              okText="{{ 'ok' | translate }}"
             >
               <ion-option
-                [value]="code.code"
-                *ngFor="let code of countrCodes"
-                >{{ code.code }}</ion-option
+                [value]="code.dial_code"
+                *ngFor="let code of countries"
+                >{{ code.dial_code }}</ion-option
               >
             </ion-select>
           </ion-item>

@@ -152,7 +152,7 @@ export class RegisterPage {
     this.api.register(this.data).subscribe(
       data => {
         this.isWaiting = false;
-        localStorage.setItem("userData", data);
+        localStorage.setItem("userData", JSON.stringify(data));
         this.navCtrl.setRoot("InviteYourFriendsPage");
       },
       err => {

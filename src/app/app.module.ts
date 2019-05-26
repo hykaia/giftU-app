@@ -32,6 +32,7 @@ import {
   FileTransferObject
 } from "@ionic-native/file-transfer";
 import { File } from "@ionic-native/file";
+import { ContactsProvider } from '../providers/contacts/contacts';
 
 @NgModule({
   declarations: [MyApp],
@@ -77,7 +78,8 @@ import { File } from "@ionic-native/file";
     OneSignal,
     Device,
     Sim,
-    GeneralProvider
+    GeneralProvider,
+    ContactsProvider
   ]
 })
 export class AppModule {}

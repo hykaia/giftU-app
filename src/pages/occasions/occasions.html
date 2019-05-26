@@ -28,7 +28,7 @@
 
 <ion-content padding>
   <ion-grid>
-    <loading *ngIf="isOccasionsLoading"></loading>
+    <loading *ngIf="isLoading"></loading>
     <occasion
       *ngFor="let occasion of Occasions; let index = index"
       [hidden]="isLoading && Occasions.length == 0"
@@ -40,7 +40,7 @@
     ></occasion>
     <no-data
       *ngIf="!isLoading && Occasions.length == 0"
-      data="No Occasions Found !"
+      data="{{ 'no_occasions_found' | translate }}"
     ></no-data>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content

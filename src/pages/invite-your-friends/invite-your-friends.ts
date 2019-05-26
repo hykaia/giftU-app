@@ -127,7 +127,7 @@ export class InviteYourFriendsPage {
         if (this.isModal) {
           this.dismiss();
         } else {
-          this.navCtrl.setRoot("MyFriendsPage");
+          this.navCtrl.setRoot("TabsPage");
         }
         this.isWaiting = false;
       },
@@ -152,7 +152,7 @@ export class InviteYourFriendsPage {
 
   submit() {
     this.isSubmitting = true;
-    this.navCtrl.setRoot("MyFriendsPage").then(() => {
+    this.navCtrl.setRoot("TabsPage").then(() => {
       this.isSubmitting = false;
     });
   }

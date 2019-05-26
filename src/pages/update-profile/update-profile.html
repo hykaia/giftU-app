@@ -70,9 +70,13 @@
           <ion-label color="light" stacked>{{
             "gender" | translate
           }}</ion-label>
-          <ion-select [(ngModel)]="data.gender">
-            <ion-option value="male">Male</ion-option>
-            <ion-option value="female">Female</ion-option>
+          <ion-select
+            [(ngModel)]="data.gender"
+            cancelText="{{ 'cancel' | translate }}"
+            okText="{{ 'ok' | translate }}"
+          >
+            <ion-option value="male">{{ "male" | translate }}</ion-option>
+            <ion-option value="female">{{ "female" | translate }}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>

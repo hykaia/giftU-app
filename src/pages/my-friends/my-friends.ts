@@ -10,13 +10,12 @@ import { ApiProvider } from "../../providers/api/api";
 import * as _ from "lodash";
 
 import { Contacts } from "@ionic-native/contacts";
-
 @IonicPage()
 @Component({
-  selector: "page-own-friends",
-  templateUrl: "own-friends.html"
+  selector: "page-my-friends",
+  templateUrl: "my-friends.html"
 })
-export class OwnFriendsPage {
+export class MyFriendsPage {
   userData: any = JSON.parse(localStorage.getItem("userData"));
   Friends: any;
   loader: any;

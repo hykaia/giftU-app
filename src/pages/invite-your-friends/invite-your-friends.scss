@@ -60,6 +60,11 @@ page-invite-your-friends {
     padding: 0 1.3rem !important;
     margin: auto;
     display: block;
+    [dir="rtl"] & {
+      margin-left: 1rem;
+      margin-left: initial;
+      margin-right: 1rem;
+    }
     .button-inner {
       font-size: 1.3rem;
     }

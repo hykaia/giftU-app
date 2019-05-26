@@ -1,5 +1,5 @@
-import { Component, Renderer2 } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { Component, Renderer2, NgZone } from "@angular/core";
+import { IonicPage, NavController, NavParams, Events } from "ionic-angular";
 import { ApiProvider } from "../../providers/api/api";
 import { TranslateService } from "@ngx-translate/core";
 @IonicPage()
@@ -17,12 +17,15 @@ export class OccasionsPage {
   Occasions: any;
   constructor(
     public navCtrl: NavController,
+    private event: Events,
     public navParams: NavParams,
     private render: Renderer2,
+    private ngZone: NgZone,
     private translate: TranslateService,
     private api: ApiProvider
   ) {
     this.myFriendsOccasions();
+    this.checkEvents();
   }
 
   ionViewDidLoad() {
@@ -34,6 +37,13 @@ export class OccasionsPage {
     this.myFriendsOccasions();
   }
 
+  checkEvents() {
+    this.event.subscribe("notificationRecived", () => {
+      this.ngZone.run(() => {
+        this.myFriendsOccasions();
+      });
+    });
+  }
   // friends occasions
   myFriendsOccasions() {
     this.api.myFriendsOccasions(this.currentPage, this.limitResults).subscribe(

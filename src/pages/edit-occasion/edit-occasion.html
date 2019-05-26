@@ -36,7 +36,11 @@
           <ion-label color="light" stacked>{{
             "category" | translate
           }}</ion-label>
-          <ion-select [(ngModel)]="data.category">
+          <ion-select
+            [(ngModel)]="data.category"
+            cancelText="{{ 'cancel' | translate }}"
+            okText="{{ 'ok' | translate }}"
+          >
             <ion-option
               [value]="cat._id"
               *ngFor="let cat of occasionCategories"

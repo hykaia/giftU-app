@@ -34,7 +34,7 @@
     ></notification>
     <no-data
       *ngIf="!isLoading && Notifications.length == 0"
-      data="No Notifications Found !"
+      data="{{ 'no_notification_found' | translate }}"
     ></no-data>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content

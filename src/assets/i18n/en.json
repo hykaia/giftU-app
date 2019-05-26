@@ -96,5 +96,10 @@
   "like": "i like you",
   "thanks": "thanks",
   "best_friend": "Best friends",
-  "u_give_gift_success": "You give gift successfully"
+  "u_give_gift_success": "You give gift successfully",
+  "male": "Male",
+  "female": "Female",
+  "no_occasions_found": "No Occasions Found !",
+  "no_notification_found": "No Notifications Found !",
+  "no_friends_found": "No Friends Found !"
 }

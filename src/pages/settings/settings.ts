@@ -67,7 +67,7 @@ export class SettingsPage {
   updateProfile(userLang) {
     this.api.updateProfile(this.data).subscribe(
       data => {
-        this.navCtrl.setRoot("MyFriendsPage");
+        this.navCtrl.setRoot("TabsPage");
         this.trans(userLang);
       },
       err => {
@@ -85,7 +85,7 @@ export class SettingsPage {
       this.translate.use("ar");
       this.translate.reloadLang("ar");
       this.splashScreen.show();
-      this.navCtrl.setRoot("MyFriendsPage").then(() => {
+      this.navCtrl.setRoot("TabsPage").then(() => {
         window.location.reload();
       });
     } else {
@@ -96,7 +96,7 @@ export class SettingsPage {
       this.translate.use("en-US");
       this.translate.reloadLang("en-US");
       this.splashScreen.show();
-      this.navCtrl.setRoot("MyFriendsPage").then(() => {
+      this.navCtrl.setRoot("TabsPage").then(() => {
         window.location.reload();
       });
     }

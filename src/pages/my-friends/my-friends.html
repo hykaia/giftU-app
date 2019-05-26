@@ -41,6 +41,9 @@
       [hidden]="isLoading && Friends.length == 0"
       [friend]="friend"
     ></friend>
-    <no-data *ngIf="Friends?.length == 0" data="No Friends Found !"></no-data>
+    <no-data
+      *ngIf="Friends?.length == 0"
+      data="{{ 'no_friends_found' | translate }}"
+    ></no-data>
   </ion-grid>
 </ion-content>

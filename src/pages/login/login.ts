@@ -4,9 +4,10 @@ import { ApiProvider } from "../../providers/api/api";
 import { GeneralProvider } from "../../providers/general/general";
 import { Keyboard } from "@ionic-native/keyboard";
 import { FormBuilder, Validators } from "@angular/forms";
-import { Countries } from "../../countries_codes";
 import { TranslateService } from "@ngx-translate/core";
 import { Sim } from "@ionic-native/sim";
+import { countries } from "./mocks";
+
 @IonicPage()
 @Component({
   selector: "page-login",
@@ -16,14 +17,13 @@ export class LoginPage {
   isWaiting: boolean = false;
   loginForm: any;
   msgTranslation;
+  isLoading: boolean = true;
   showBackgroundLogo: boolean = false;
-  Countries: any[] = Countries;
+  countries: any[] = countries;
   isKeyBoardShow: boolean = false;
   data: any = {
     countryCode: "+20"
   };
-
-  countrCodes: any[] = [{ code: "+20" }, { code: "+966" }];
   constructor(
     public navCtrl: NavController,
     private platform: Platform,
@@ -66,15 +66,32 @@ export class LoginPage {
   }
 
   getCountryCode() {
-    this.simCard.getSimInfo().then(data => {
-      let countryCodeObj: any;
-      let countryCode: any = data.countryCode;
-      countryCode = countryCode.toUpperCase();
-      countryCodeObj = this.Countries.filter(item => {
-        return item.code == countryCode;
-      });
-      this.data.countryCode = countryCodeObj[0].dial_code.toString();
-    });
+    this.simCard.requestReadPermission().then(
+      () => {
+        this.simCard.getSimInfo().then(
+          data => {
+            let countryCodeObj: any;
+            let countryCode: any = data.countryCode;
+            countryCode = countryCode.toUpperCase();
+            this.isLoading = false;
+            countryCodeObj = this.countries.filter(item => {
+              return item.code == countryCode;
+            });
+            this.data.countryCode = countryCodeObj[0].dial_code.toString();
+          },
+          err => {
+            console.log("sim err is :", err);
+          }
+        );
+      },
+      () => {
+        this.general.showCustomAlert(
+          "Alert",
+          "You must have sim card in your device to select your country code"
+        );
+        console.log("Permission denied");
+      }
+    );
   }
   checkKeyBoardEvents() {
     this.keyboard.onKeyboardWillShow().subscribe(() => {

@@ -82,6 +82,8 @@
             <ion-select
               [(ngModel)]="data.gender"
               [ngModelOptions]="{ standalone: true }"
+              cancelText="{{ 'cancel' | translate }}"
+              okText="{{ 'ok' | translate }}"
             >
               <ion-option value="male">Male</ion-option>
               <ion-option value="female">Female</ion-option>
