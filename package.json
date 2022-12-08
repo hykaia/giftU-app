@@ -36,7 +36,7 @@
     "@ionic/storage": "2.2.0",
     "angular2-moment": "^1.9.0",
     "cordova-android": "7.1.4",
-    "cordova-browser": "5.0.4",
+    "cordova-browser": "6.0.0",
     "cordova-ios": "4.5.4",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-contacts": "3.0.1",
